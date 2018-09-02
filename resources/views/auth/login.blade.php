@@ -9,8 +9,8 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <link href="{{url('assets/vendors/base/vendors.bundle.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{url('assets/demo/default/base/style.bundle.css')}}" rel="stylesheet" type="text/css" />
-    <link rel="shortcut icon" href="{{url('assets/demo/default/media/img/logo/favicon.ico')}}" />
+    <link href="{{url('assets/massagem/default/base/style.bundle.css')}}" rel="stylesheet" type="text/css" />
+    <link rel="shortcut icon" href="{{url('assets/massagem/default/media/img/logo/favicon.ico')}}" />
 </head>
 
 <body  class="m--skin- m-header--fixed m-header--fixed-mobile m-aside-left--enabled m-aside-left--skin-dark m-aside-left--offcanvas m-footer--push m-aside--offcanvas-default"  >
@@ -22,7 +22,7 @@
                         <div class="m-login__wrapper">
                             <div class="m-login__logo">
                                 <a href="#">
-                                    <img src="{{url('assets/app/media/img//logos/logo-2.png')}}">
+                                    <img src="{{url('assets/app/media/img/logos/logo-2.png')}}">
                                 </a>
                             </div>
                             <div class="m-login__signin">
@@ -103,7 +103,7 @@
                     </div>
                 </div>
             </div>
-            <div class="m-grid__item m-grid__item--fluid m-grid m-grid--center m-grid--hor m-grid__item--order-tablet-and-mobile-1	m-login__content" style="background-image: url({{url('assets/app/media/img//bg/bg-1.jpg')}})">
+            <div class="m-grid__item m-grid__item--fluid m-grid m-grid--center m-grid--hor m-grid__item--order-tablet-and-mobile-1	m-login__content" style="background-image: url({{url('assets/app/media/img/bg/bg-1.jpg')}})">
                 <div class="m-grid__item m-grid__item--middle">
                     <h3 class="m-login__welcome">
                         Título de impacto
@@ -128,7 +128,7 @@
         });
     </script>
     <script src="{{url('assets/vendors/base/vendors.bundle.js')}}" type="text/javascript"></script>
-    <script src="{{url('assets/demo/default/base/scripts.bundle.js')}}" type="text/javascript"></script>
+    <script src="{{url('assets/massagem/default/base/scripts.bundle.js')}}" type="text/javascript"></script>
     <script src="{{url('assets/snippets/custom/pages/user/login.js')}}" type="text/javascript"></script>
 </body>
 </html>

@@ -15,6 +15,72 @@
                     </span>
                 </a>
             </li>
+            <li class="m-menu__item" aria-haspopup="true" >
+                <a href="{{url('/dashboard')}}" class="m-menu__link ">
+                    <i class="m-menu__link-icon flaticon-users"></i>
+                    <span class="m-menu__link-title">
+                        <span class="m-menu__link-wrap">
+                            <span class="m-menu__link-text">Clientes</span>
+                        </span>
+                    </span>
+                </a>
+            </li>
+            <li class="m-menu__item  m-menu__item--submenu" aria-haspopup="true"  m-menu-submenu-toggle="hover">
+                <a  href="javascript:;" class="m-menu__link m-menu__toggle">
+                    <i class="m-menu__link-icon flaticon-map-location"></i>
+                    <span class="m-menu__link-text">Unidades</span>
+                    <i class="m-menu__ver-arrow la la-angle-right"></i>
+                </a>
+                <div class="m-menu__submenu ">
+                    <span class="m-menu__arrow"></span>
+                    <ul class="m-menu__subnav">
+                        <li class="m-menu__item " aria-haspopup="true" >
+                            <a  href="components/base/state.html" class="m-menu__link ">
+                                <i class="m-menu__link-icon flaticon-cogwheel"></i>
+                                <span class="m-menu__link-text">Gerenciar</span>
+                            </a>
+                        </li>
+                        <li class="m-menu__item " aria-haspopup="true" >
+                            <a  href="components/base/state.html" class="m-menu__link ">
+                                <i class="m-menu__link-icon flaticon-profile-1"></i>
+                                <span class="m-menu__link-text">Funcionários</span>
+                            </a>
+                        </li>
+                        <li class="m-menu__item " aria-haspopup="true" >
+                            <a  href="components/base/state.html" class="m-menu__link ">
+                                <i class="m-menu__link-icon flaticon-squares-4"></i>
+                                <span class="m-menu__link-text">Salas</span>
+                            </a>
+                        </li>
+                        <li class="m-menu__item " aria-haspopup="true" >
+                            <a  href="components/base/state.html" class="m-menu__link ">
+                                <i class="m-menu__link-icon flaticon-like"></i>
+                                <span class="m-menu__link-text">Serviços</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+            <li class="m-menu__item" aria-haspopup="true" >
+                <a href="{{url('/dashboard')}}" class="m-menu__link ">
+                    <i class="m-menu__link-icon flaticon-event-calendar-symbol"></i>
+                    <span class="m-menu__link-title">
+                        <span class="m-menu__link-wrap">
+                            <span class="m-menu__link-text">Atendimentos</span>
+                        </span>
+                    </span>
+                </a>
+            </li>
+            <li class="m-menu__item" aria-haspopup="true" >
+                <a href="{{url('/dashboard')}}" class="m-menu__link ">
+                    <i class="m-menu__link-icon flaticon-piggy-bank"></i>
+                    <span class="m-menu__link-title">
+                        <span class="m-menu__link-wrap">
+                            <span class="m-menu__link-text">Financeiro</span>
+                        </span>
+                    </span>
+                </a>
+            </li>
         </ul>
     </div>
 </div>
