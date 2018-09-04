@@ -8,9 +8,9 @@
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
+    <link rel="shortcut icon" href="{{url('img/favicon.png')}}" type="image/x-icon">
     <link href="{{url('assets/vendors/base/vendors.bundle.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{url('assets/massagem/default/base/style.bundle.css')}}" rel="stylesheet" type="text/css" />
-    <link rel="shortcut icon" href="{{url('assets/massagem/default/media/img/logo/favicon.ico')}}" />
 </head>
 
 <body  class="m--skin- m-header--fixed m-header--fixed-mobile m-aside-left--enabled m-aside-left--skin-dark m-aside-left--offcanvas m-footer--push m-aside--offcanvas-default"  >

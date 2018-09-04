@@ -8,9 +8,9 @@
 
     <title>{{ config('app.name', 'Laravel') }} | Dashboard</title>
 
+    <link rel="shortcut icon" href="{{url('img/favicon.png')}}" type="image/x-icon">
     <link href="{{url('assets/vendors/base/vendors.bundle.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{url('assets/massagem/default/base/style.bundle.css')}}" rel="stylesheet" type="text/css" />
-    <link rel="shortcut icon" href="{{url('assets/massagem/default/media/img/logo/favicon.ico')}}" />
 </head>
 <body class="m-page--fluid m--skin- m-content--skin-light2 m-header--fixed m-header--fixed-mobile m-aside-left--enabled m-aside-left--skin-dark m-aside-left--offcanvas m-footer--push m-aside--offcanvas-default"  >
     <!-- begin:: Page -->
@@ -24,7 +24,7 @@
                         <div class="m-stack m-stack--ver m-stack--general">
                             <div class="m-stack__item m-stack__item--middle m-brand__logo">
                                 <a href="index.html" class="m-brand__logo-wrapper">
-                                    <img alt="" src="assets/massagem/default/media/img/logo/logo_default_dark.png"/>
+                                    <img alt="" src="{{url('img/logo2.png')}}"/>
                                 </a>
                             </div>
                             <div class="m-stack__item m-stack__item--middle m-brand__tools">

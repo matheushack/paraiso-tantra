@@ -12,7 +12,7 @@
                 <div class="m-dropdown__wrapper">
                     <span class="m-dropdown__arrow m-dropdown__arrow--right m-dropdown__arrow--adjust"></span>
                     <div class="m-dropdown__inner">
-                        <div class="m-dropdown__header m--align-center" style="background: #7948e1;">
+                        <div class="m-dropdown__header m--align-center" style="background: #65246D;">
                             <div class="m-card-user m-card-user--skin-dark">
                                 <div class="m-card-user__pic">
                                     <img src="{{url('assets/app/media/img/users/eu.jpg')}}" class="m--img-rounded m--marginless" alt=""/>
