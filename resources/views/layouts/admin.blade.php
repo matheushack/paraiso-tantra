@@ -8,9 +8,7 @@
 
     <title>{{ config('app.name', 'Laravel') }} | Dashboard</title>
 
-    <link rel="shortcut icon" href="{{url('img/favicon.png')}}" type="image/x-icon">
-    <link href="{{url('assets/vendors/base/vendors.bundle.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{url('assets/massagem/default/base/style.bundle.css')}}" rel="stylesheet" type="text/css" />
+    @include('includes.styles')
 </head>
 <body class="m-page--fluid m--skin- m-content--skin-light2 m-header--fixed m-header--fixed-mobile m-aside-left--enabled m-aside-left--skin-dark m-aside-left--offcanvas m-footer--push m-aside--offcanvas-default"  >
     <!-- begin:: Page -->

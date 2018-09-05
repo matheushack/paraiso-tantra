@@ -2,11 +2,18 @@
 
 namespace App\Modules\Usuarios\Controllers;
 
+use App\Modules\Usuarios\Services\ServiceUsuarios;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 class UsuariosController extends Controller
 {
+    private $serviceUsuario;
+
+    function __construct()
+    {
+        $this->serviceUsuario = new ServiceUsuarios();
+    }
 
     /**
      * Display a listing of the resource.
@@ -15,7 +22,12 @@ class UsuariosController extends Controller
      */
     public function index()
     {
-        return view("Usuarios::index");
+        return view("Usuarios::index", dataTableUsers());
+    }
+
+    public function dataTable()
+    {
+        return $this->serviceUsuario->dataTable();
     }
 
     /**

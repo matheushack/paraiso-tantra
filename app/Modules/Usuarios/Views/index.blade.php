@@ -12,15 +12,8 @@
     </div>
 
     <div class="m-content">
-        <div id="usuarios"></div>
+        @include('includes.alert')
+
+        @include('includes.dataTable')
     </div>
 @endsection
-
-@push('scripts')
-<script>
-    var options = {
-
-    }
-    var datatable = $('#usuarios').mDatatable(options);
-</script>
-@endpush
