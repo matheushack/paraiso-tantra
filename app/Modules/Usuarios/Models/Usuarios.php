@@ -1,13 +1,15 @@
 <?php
 
-namespace App;
+namespace App\Modules\Usuarios\Models;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class User extends Authenticatable
+class Usuarios extends Authenticatable
 {
     use Notifiable;
+
+    protected $table = 'users';
 
     /**
      * The attributes that are mass assignable.
@@ -27,3 +29,4 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 }
+

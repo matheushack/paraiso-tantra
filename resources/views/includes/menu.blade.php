@@ -91,7 +91,7 @@
                     <span class="m-menu__arrow"></span>
                     <ul class="m-menu__subnav">
                         <li class="m-menu__item " aria-haspopup="true" >
-                            <a  href="components/base/state.html" class="m-menu__link ">
+                            <a  href="{{url('usuarios')}}" class="m-menu__link ">
                                 <i class="m-menu__link-icon flaticon-cogwheel"></i>
                                 <span class="m-menu__link-text">Usuários</span>
                             </a>
