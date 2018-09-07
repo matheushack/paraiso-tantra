@@ -11,7 +11,7 @@
             <div class="m-portlet__head-tools">
                 <ul class="m-portlet__nav">
                     <li class="m-portlet__nav-item">
-                        <a href="{{$dBtnNew}}" class="btn btn-primary m-btn m-btn--custom m-btn--icon m-btn--air">
+                        <a href="{{$dBtnNew}}" class="btn btn-success m-btn m-btn--custom m-btn--icon m-btn--air">
                             <span>
                                 <i class="la la-plus"></i>
                                 <span>
@@ -31,7 +31,7 @@
             <tr id="columns-dataTable">
                 @if(isset($dColumns))
                     @foreach($dColumns as $column)
-                        <th data-field="{{$column['field']}}">
+                        <th data-field="{{$column['field']}}" data-width="{{isset($column['width']) ? $column['width'] : ''}}" data-class="{{isset($column['class']) ? $column['class'] : ''}}" class="{{isset($column['class']) ? $column['class'] : ''}}">
                             {{$column['label']}}
                         </th>
                     @endforeach
@@ -48,5 +48,6 @@
 
 @push('scripts')
     <script src="{{url('assets/vendors/custom/datatables/datatables.bundle.js')}}" type="text/javascript"></script>
+    <script src="{{url('assets/massagem/default/custom/crud/datatables/extensions/buttons.js')}}" type="text/javascript"></script>
     <script src="{{url('js/dataTable.js')}}" type="text/javascript"></script>
 @endpush

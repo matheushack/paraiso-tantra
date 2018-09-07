@@ -1,14 +1,22 @@
 <?php
 
-namespace App\Modules\Usuarios\Models;
+namespace App\Modules\Users\Models;
 
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class Usuarios extends Authenticatable
+/**
+ * Class User
+ * @package App\Modules\Users\Models
+ */
+class User extends Authenticatable
 {
     use Notifiable;
 
+    /**
+     * @var string
+     */
     protected $table = 'users';
 
     /**
@@ -28,5 +36,13 @@ class Usuarios extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    /**
+     * @param $pass
+     */
+    public function setPasswordAttribute($pass)
+    {
+        $this->attributes['password'] = Hash::make($pass);
+    }
 }
 

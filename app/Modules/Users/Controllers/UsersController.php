@@ -1,18 +1,28 @@
 <?php
 
-namespace App\Modules\Usuarios\Controllers;
+namespace App\Modules\Users\Controllers;
 
-use App\Modules\Usuarios\Services\ServiceUsuarios;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Modules\Users\Services\ServiceUsers;
 
-class UsuariosController extends Controller
+/**
+ * Class UsersController
+ * @package App\Modules\Users\Controllers
+ */
+class UsersController extends Controller
 {
-    private $serviceUsuario;
+    /**
+     * @var ServiceUsers
+     */
+    private $serviceUsers;
 
+    /**
+     * UsersController constructor.
+     */
     function __construct()
     {
-        $this->serviceUsuario = new ServiceUsuarios();
+        $this->serviceUsers = new ServiceUsers();
     }
 
     /**
@@ -22,12 +32,15 @@ class UsuariosController extends Controller
      */
     public function index()
     {
-        return view("Usuarios::index", dataTableUsers());
+        return view("Users::index", dataTableUsers());
     }
 
+    /**
+     * @return mixed
+     */
     public function dataTable()
     {
-        return $this->serviceUsuario->dataTable();
+        return $this->serviceUsers->dataTable();
     }
 
     /**
@@ -37,7 +50,7 @@ class UsuariosController extends Controller
      */
     public function create()
     {
-        //
+        return view("Users::create");
     }
 
     /**
@@ -48,7 +61,15 @@ class UsuariosController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required',
+            'email' => 'required|email',
+            'password' => 'required'
+        ]);
+
+        $return = $this->serviceUsers->store($request);
+
+        return response()->json($return, 200);
     }
 
     /**
@@ -94,5 +115,15 @@ class UsuariosController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    /**
+     * @param Request $request
+     */
+    public function pictureUpload(Request $request)
+    {
+        echo "<pre>";
+        print_r('asda');
+        exit;
     }
 }
