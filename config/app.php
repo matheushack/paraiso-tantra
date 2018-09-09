@@ -160,7 +160,8 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         ArtemSchander\L5Modular\ModuleServiceProvider::class,
-        Yajra\DataTables\HtmlServiceProvider::class
+        Yajra\DataTables\HtmlServiceProvider::class,
+        Spatie\Permission\PermissionServiceProvider::class,
 
     ],
 

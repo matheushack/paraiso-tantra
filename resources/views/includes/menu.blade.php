@@ -62,7 +62,7 @@
                 </div>
             </li>
             <li class="m-menu__item" aria-haspopup="true" >
-                <a href="{{url('/dashboard')}}" class="m-menu__link ">
+                <a href="{{route('calls')}}" class="m-menu__link ">
                     <i class="m-menu__link-icon flaticon-event-calendar-symbol"></i>
                     <span class="m-menu__link-title">
                         <span class="m-menu__link-wrap">
@@ -91,7 +91,7 @@
                     <span class="m-menu__arrow"></span>
                     <ul class="m-menu__subnav">
                         <li class="m-menu__item  m-menu__item--active" aria-haspopup="true" >
-                            <a  href="{{url('usuarios')}}" class="m-menu__link ">
+                            <a  href="{{route('users')}}" class="m-menu__link ">
                                 <i class="m-menu__link-icon flaticon-users"></i>
                                 <span class="m-menu__link-text">Usuários</span>
                             </a>

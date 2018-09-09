@@ -14,8 +14,9 @@ class UsersSeeder extends Seeder
     {
         $users[] = [
             'name' => 'Matheus Hack',
+            'img_profile' => 'assets/app/media/img/users/eu.jpg',
             'email' => 'matheushackdiniz@hotmail.com',
-            'password' => Hash::make('Diniz05102014')
+            'password' => 'Diniz05102014'
         ];
 
         foreach($users as $user){
