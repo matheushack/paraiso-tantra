@@ -27,17 +27,26 @@ class ServiceUsers
     public function dataTable()
     {
         return DataTables::of(User::query())
-            ->editColumn('img_profile',  function ($user) {
-                return imgProfileUsers($user);
-            })
             ->editColumn('created_at',  function ($user) {
                 return Carbon::parse($user->created_at)->format('d/m/Y H:i:s');
+            })
+            ->addColumn('img_profile',  function ($user) {
+                return imgProfileUsers($user);
             })
             ->addColumn('actions', function ($user){
                 return actionsUsers($user);
             })
             ->rawColumns(['img_profile', 'created_at', 'actions'])
             ->make(true);
+    }
+
+    /**
+     * @param $id
+     * @return mixed
+     */
+    public function find($id)
+    {
+        return User::find($id);
     }
 
     /**
@@ -63,6 +72,55 @@ class ServiceUsers
             return [
                 'message' => $e->getMessage(),
                 'save' => false
+            ];
+        }
+    }
+
+    /**
+     * @param Request $request
+     * @return array
+     */
+    public function update(Request $request)
+    {
+        try {
+            Capsule::transaction(function () use ($request) {
+                $user = User::find($request->input('id'));
+                $user->name = $request->input('name');
+
+                if (!$user->save())
+                    throw new \Exception('Não foi possível editar o novo usuário. Por favor, tente mais tarde!');
+            });
+
+            return [
+                'message' => 'Usuário editado com sucesso!',
+                'save' => true
+            ];
+        }catch(\Exception $e){
+            return [
+                'message' => $e->getMessage(),
+                'save' => false
+            ];
+        }
+    }
+
+    /**
+     * @param $id
+     * @return array
+     */
+    public function destroy($id)
+    {
+        try {
+            $user = User::find($id);
+            $user->delete();
+
+            return [
+                'message' => 'Usuário deletado com sucesso!',
+                'deleted' => true
+            ];
+        }catch(\Exception $e){
+            return [
+                'message' => $e->getMessage(),
+                'deleted' => false
             ];
         }
     }

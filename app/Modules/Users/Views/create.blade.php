@@ -49,7 +49,7 @@
                 </div>
             </div>
             <!--begin::Form-->
-            <form class="m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed" id="form-user" enctype="multipart/form-data">
+            <form class="m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed" id="form-user">
                 @csrf
                 <div class="m-portlet__body">
                     <div class="form-group m-form__group row">
@@ -60,66 +60,27 @@
                             <input name="name" type="text" class="form-control m-input" id="name" placeholder="">
                         </div>
                         <div class="col-lg-4">
-                            <label class="">
+                            <label>
                                 Email
                             </label>
                             <input name="email" type="email" class="form-control m-input mask-email" id="email" placeholder="">
                         </div>
-                        <div class="col-lg-2">
+                        <div class="col-lg-4">
                             <label>
-                                Telefone
-                            </label>
-                            <input name="phone" type="text" class="form-control m-input" id="phone" placeholder="">
-                        </div>
-                        <div class="col-lg-2">
-                            <label>
-                                Celular
-                            </label>
-                            <input name="cell_phone" type="text" class="form-control m-input" id="cell_phone" placeholder="">
-                        </div>
-                    </div>
-                    <div class="form-group m-form__group row">
-                        <div class="col-lg-4">
-                            <label class="">
-                                Senha
-                            </label>
-                            <input name="password" type="password" class="form-control m-input" id="password" placeholder="Enter contact number">
-                        </div>
-                        <div class="col-lg-4">
-                            <label class="">
-                                Confirmar senha
-                            </label>
-                            <input name="confirm_password" type="password" class="form-control m-input" id="confirm_password" placeholder="">
-                        </div>
-                        <div class="col-lg-4">
-                            <label class="">
                                 Perfil
                             </label>
-                            <select name="profile" class="form-control m-bootstrap-select" id="profile">
+                            <select name="profile_id" class="form-control m-bootstrap-select" id="profile_id">
                                 <option value="">Selecione</option>
-                                <option value="">Administrador</option>
-                                <option value="">Funcionário</option>
-                                <option value="">Financeiro</option>
+                                <option value="1">Administrador</option>
                             </select>
                         </div>
                     </div>
                     <div class="form-group m-form__group row">
-                        <div class="col-lg-12">
-                            <label class="">
-                                Foto perfil
+                        <div class="col-lg-4">
+                            <label>
+                                Senha
                             </label>
-                            <div class="col-lg-4 col-md-9 col-sm-12">
-                                <div class="m-dropzone dropzone m-dropzone--success" action="{{route('users.upload.picture')}}" id="profile_picture">
-                                    <div class="m-dropzone__msg dz-message needsclick">
-                                        <h3 class="m-dropzone__msg-title">
-                                            Arraste a imagem de perfil
-                                        </h3>
-                                        <span class="m-dropzone__msg-desc">
-                                            Apenas arquivos de imagem são permitidos para upload
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
+                            <input name="password" type="password" class="form-control m-input" id="password" placeholder="">
                         </div>
                     </div>
                 </div>
@@ -131,7 +92,7 @@
                                 <button type="submit" class="btn btn-success">
                                     <i class="fa fa-save"></i> Salvar
                                 </button>
-                                <button type="reset" class="btn btn-secondary">
+                                <button type="button" class="btn btn-secondary" onclick="window.location='{{route('users')}}'">
                                     Cancelar
                                 </button>
                             </div>
@@ -147,15 +108,7 @@
 @push('scripts')
     <script>
         $(document).ready(function(){
-            $('#profile').selectpicker();
-
-            Dropzone.options.mDropzoneThree = {
-                paramName: "file",
-                maxFiles: 1,
-                maxFilesize: 2, // MB
-                addRemoveLinks: true,
-                acceptedFiles: "image/*"
-            };
+            $('#profile_id').selectpicker();
 
             $("#form-user").validate({
                 rules: {
@@ -165,16 +118,7 @@
                     email: {
                         required: true
                     },
-                    phone: {
-                        required: true
-                    },
-                    cellPhone: {
-                        required: true
-                    },
                     password: {
-                        required: true
-                    },
-                    confirm_password: {
                         required: true
                     },
                     profile: {

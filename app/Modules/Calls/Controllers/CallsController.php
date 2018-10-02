@@ -4,6 +4,7 @@ namespace App\Modules\Calls\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\View;
 use App\Modules\Calls\Services\ServiceCalls;
 
 /**
@@ -23,6 +24,7 @@ class CallsController extends Controller
      */
     function __construct()
     {
+        View::share('menu_active', 'calls');
         $this->serviceCalls = new ServiceCalls();
     }
 

@@ -1,12 +1,12 @@
 <?php
 
-Route::group(['module' => 'Users', 'middleware' => ['web', 'auth'], 'namespace' => 'App\Modules\Users\Controllers'], function() {
+Route::group(['prefix' => 'usuarios', 'module' => 'Users', 'middleware' => ['web', 'auth'], 'namespace' => 'App\Modules\Users\Controllers'], function() {
 
-    Route::get('usuarios', 'UsersController@index')->name('users');
-    Route::get('usuarios/novo', 'UsersController@create')->name('users.create');
-    Route::get('usuarios/datatable', 'UsersController@dataTable')->name('users.dataTable');
-    Route::post('usuarios/upload/foto/perfil', 'UsersController@pictureUpload')->name('users.upload.picture');
-
-    Route::post('usuarios/salvar', 'UsersController@store')->name('users.store');
-
+    Route::get('/', 'UsersController@index')->name('users');
+    Route::get('novo', 'UsersController@create')->name('users.create');
+    Route::get('editar/{id}', 'UsersController@edit');
+    Route::get('datatable', 'UsersController@dataTable')->name('users.dataTable');
+    Route::post('salvar', 'UsersController@store')->name('users.store');
+    Route::post('atualizar', 'UsersController@update')->name('users.update');
+    Route::post('deletar/{id}', 'UsersController@destroy')->name('users.destroy');
 });

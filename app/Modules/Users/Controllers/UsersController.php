@@ -4,6 +4,7 @@ namespace App\Modules\Users\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\View;
 use App\Modules\Users\Services\ServiceUsers;
 
 /**
@@ -22,6 +23,8 @@ class UsersController extends Controller
      */
     function __construct()
     {
+        View::share('menu_active', 'users');
+        View::share('menu_parent_active', 'system');
         $this->serviceUsers = new ServiceUsers();
     }
 
@@ -73,17 +76,6 @@ class UsersController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
@@ -91,7 +83,8 @@ class UsersController extends Controller
      */
     public function edit($id)
     {
-        //
+        $user = $this->serviceUsers->find($id);
+        return view("Users::edit", ['user' => $user]);
     }
 
     /**
@@ -101,9 +94,15 @@ class UsersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required'
+        ]);
+
+        $return = $this->serviceUsers->update($request);
+
+        return response()->json($return, 200);
     }
 
     /**
@@ -114,16 +113,7 @@ class UsersController extends Controller
      */
     public function destroy($id)
     {
-        //
-    }
-
-    /**
-     * @param Request $request
-     */
-    public function pictureUpload(Request $request)
-    {
-        echo "<pre>";
-        print_r('asda');
-        exit;
+        $return = $this->serviceUsers->destroy($id);
+        return response()->json($return, 200);
     }
 }
