@@ -57,19 +57,19 @@
                             <label>
                                 CNPJ
                             </label>
-                            <input name="cnpj" type="text" class="form-control m-input" id="cnpj" placeholder="">
+                            <input name="cnpj" type="text" class="form-control m-input" id="cnpj" placeholder="" required>
                         </div>
                         <div class="col-lg-5">
                             <label>
                                 Razão social
                             </label>
-                            <input name="social_name" type="text" class="form-control m-input" id="social_name" placeholder="">
+                            <input name="social_name" type="text" class="form-control m-input" id="social_name" placeholder="" required>
                         </div>
                         <div class="col-lg-4">
                             <label>
                                 Nome fantasia
                             </label>
-                            <input name="name" type="text" class="form-control m-input" id="name" placeholder="">
+                            <input name="name" type="text" class="form-control m-input" id="name" placeholder="" required>
                         </div>
                     </div>
 
@@ -80,19 +80,19 @@
                             <label>
                                 CEP
                             </label>
-                            <input name="cep" type="text" class="form-control m-input" id="cep" placeholder="">
+                            <input name="cep" type="text" class="form-control m-input" id="cep" placeholder="" required>
                         </div>
                         <div class="col-lg-5">
                             <label>
                                 Endereço
                             </label>
-                            <input name="address" type="text" class="form-control m-input" id="address" placeholder="" readonly>
+                            <input name="address" type="text" class="form-control m-input" id="address" placeholder="" readonly required>
                         </div>
                         <div class="col-lg-2">
                             <label>
                                 Número
                             </label>
-                            <input name="number" type="text" class="form-control m-input" id="number" placeholder="">
+                            <input name="number" type="text" class="form-control m-input" id="number" placeholder="" required>
                         </div>
                         <div class="col-lg-3">
                             <label>
@@ -106,19 +106,19 @@
                             <label>
                                 Bairro
                             </label>
-                            <input name="neighborhood" type="text" class="form-control m-input" id="neighborhood" placeholder="" readonly>
+                            <input name="neighborhood" type="text" class="form-control m-input" id="neighborhood" placeholder="" readonly required>
                         </div>
                         <div class="col-lg-4">
                             <label>
                                 Cidade
                             </label>
-                            <input name="city" type="text" class="form-control m-input" id="city" placeholder="" readonly>
+                            <input name="city" type="text" class="form-control m-input" id="city" placeholder="" readonly required>
                         </div>
                         <div class="col-lg-4">
                             <label>
                                 Estado
                             </label>
-                            <input name="state" type="text" class="form-control m-input" id="state" placeholder="" readonly>
+                            <input name="state" type="text" class="form-control m-input" id="state" placeholder="" readonly required>
                         </div>
                     </div>
 
@@ -129,24 +129,24 @@
                             <label>
                                 Email
                             </label>
-                            <input name="email" type="email" class="form-control m-input" id="email" placeholder="">
+                            <input name="email" type="email" class="form-control m-input" id="email" placeholder="" required>
                         </div>
                         <div class="col-lg-4">
                             <label>
                                 Telefone
                             </label>
-                            <input name="phone" type="text" class="form-control m-input" id="phone" placeholder="">
+                            <input name="phone" type="text" class="form-control m-input" id="phone" placeholder="" required>
                         </div>
                         <div class="col-lg-4">
                             <label>
                                 Celular
                             </label>
-                            <input name="cell_phone" type="text" class="form-control m-input" id="cell_phone" placeholder="">
+                            <input name="cell_phone" type="text" class="form-control m-input" id="cell_phone" placeholder="" required>
                         </div>
                     </div>
 
                     <div id="operating_hours">
-                        <div data-repeater-list="" >
+                        <div data-repeater-list="operating" >
                             <div data-repeater-item class="form-group m-form__group row align-items-center">
                                 <div class="col-lg-2">
                                     <label>
@@ -158,30 +158,30 @@
                                     <label>
                                         Fechamento
                                     </label>
-                                    <input type="text" class="form-control m-input" placeholder="">
+                                    <input type="text" class="form-control m-input" name="close" placeholder="">
                                 </div>
                                 <div class="col-lg-7">
                                     <div class="m-radio-inline">
                                         <label class="m-checkbox">
-                                            <input type="checkbox">Seg<span></span>
+                                            <input type="checkbox" name="week" value="seg">Seg<span></span>
                                         </label>
                                         <label class="m-checkbox">
-                                            <input type="checkbox">Ter<span></span>
+                                            <input type="checkbox" name="week" value="ter">Ter<span></span>
                                         </label>
                                         <label class="m-checkbox">
-                                            <input type="checkbox">Qua<span></span>
+                                            <input type="checkbox" name="week" value="qua">Qua<span></span>
                                         </label>
                                         <label class="m-checkbox">
-                                            <input type="checkbox">Qui<span></span>
+                                            <input type="checkbox" name="week" value="qui">Qui<span></span>
                                         </label>
                                         <label class="m-checkbox">
-                                            <input type="checkbox">Sex<span></span>
+                                            <input type="checkbox" name="week" value="sex">Sex<span></span>
                                         </label>
                                         <label class="m-checkbox">
-                                            <input type="checkbox">Sab<span></span>
+                                            <input type="checkbox" name="week" value="sab">Sab<span></span>
                                         </label>
                                         <label class="m-checkbox">
-                                            <input type="checkbox">Dom<span></span>
+                                            <input type="checkbox" name="week" value="dom">Dom<span></span>
                                         </label>
                                     </div>
                                 </div>
@@ -230,9 +230,6 @@
 
             $("#operating_hours").repeater({
                 initEmpty: !1,
-                defaultValues: {
-                    "text-input": "foo"
-                },
                 show: function() {
                     $(this).slideDown();
                     $(this).find('.btn-delete-operating').show();
@@ -243,21 +240,6 @@
             });
 
             $("#form-unity").validate({
-                rules: {
-                    name: {
-                        required: true
-                    },
-                    email: {
-                        required: true
-                    },
-                    password: {
-                        required: true
-                    },
-                    profile: {
-                        required: true
-                    },
-                },
-
                 invalidHandler: function(event, validator) {
                     mApp.scrollTo("#form-unity");
 
@@ -271,7 +253,7 @@
 
                 submitHandler: function (form) {
                     $.ajax({
-                        url: '{{route('users.store')}}',
+                        url: '{{route('units.store')}}',
                         type: 'POST',
                         data: $(form).serialize(),
                         beforeSend: function(xhr, type) {
@@ -300,6 +282,10 @@
 
                     return false;
                 }
+            });
+
+            $('input[required]').each(function(key, item){
+                $(item).rules('add', {required: true});
             });
 
         });
