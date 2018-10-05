@@ -69,9 +69,74 @@ var DataTable = function() {
         });
     };
 
+
+    var deleteButton = function(){
+        $('body').on('click', '.btn-delete-register', function(e) {
+            e.preventDefault();
+            var name = $(this).data('register-name');
+            var registerId = $(this).data('register-id');
+            var deleteUrl = $(this).data('delete-url');
+            var title = $(this).data('title');
+            var urlReturn = $(this).data('url-return');
+
+            swal({
+                type: 'warning',
+                title: 'Deletar registro',
+                text: 'Deseja deletar o registro '+name+'?',
+                showConfirmButton: true,
+                showCancelButton: true,
+                confirmButtonText: '<i class="fa fa-trash"></i> Sim',
+                cancelButtonText: 'Não',
+                confirmButtonClass: 'btn btn-danger m-btn m-btn--icon m-btn--air',
+                cancelButtonClass: 'btn m-btn m-btn--icon m-btn--air',
+            }).then((willDelete) => {
+                    if (willDelete.value) {
+                        $.ajax({
+                            url: deleteUrl,
+                            type: 'POST',
+                            data: {id: registerId},
+                            dataType: 'json',
+                            beforeSend: function(xhr, type) {
+                                if (!type.crossDomain) {
+                                    xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'));
+                                }
+                            },
+                            success: function (data) {
+                                if(data.deleted){
+                                    swal({
+                                        title: 'Deletar registro',
+                                        text: data.message,
+                                        type: 'success'
+                                    }).then(results => {
+                                        window.location = urlReturn;
+                                    });
+                                }else{
+                                    swal({
+                                        title: title,
+                                        text: data.message,
+                                        type: 'error'
+                                    })
+                                }
+                            },
+                            error: function(request, status, error)
+                            {
+                                swal({
+                                    title: title,
+                                    text: 'Não foi possível deletar o registro. Por favor, tente mais tarde!',
+                                    type: 'error'
+                                })
+                            }
+                        });
+                    }
+                }
+            );
+        });
+    };
+
     return {
         init: function() {
             construct();
+            deleteButton();
         },
 
     };

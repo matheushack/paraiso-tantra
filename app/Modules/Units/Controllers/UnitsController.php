@@ -64,17 +64,6 @@ class UnitsController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
@@ -82,7 +71,8 @@ class UnitsController extends Controller
      */
     public function edit($id)
     {
-        //
+        $unity = $this->serviceUnits->find($id);
+        return view("Units::edit", ['unity' => $unity, 'operating_hours' => json_decode($unity->operating_hours)]);
     }
 
     /**
@@ -92,9 +82,15 @@ class UnitsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+//        $request->validate([
+//            'name' => 'required'
+//        ]);
+
+        $return = $this->serviceUnits->update($request);
+
+        return response()->json($return, 200);
     }
 
     /**
@@ -105,6 +101,7 @@ class UnitsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $return = $this->serviceUnits->destroy($id);
+        return response()->json($return, 200);
     }
 }

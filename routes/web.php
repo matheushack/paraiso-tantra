@@ -18,19 +18,5 @@ Route::get('/', function () {
 });
 
 Route::post('cep/busca', function(\Illuminate\Http\Request $request){
-    try {
-        if (empty($request->input('cep')))
-            throw new Exception('Necessário informar um CEP válido');
-
-        $location = zipcode($request->input('cep'))->getArray();
-
-        return response()->json([
-            'success' => true,
-            'cep' => $location
-        ], 200);
-    }catch (Exception $e){
-        return response()->json([
-            'success' => false
-        ], 200);
-    }
+    return app(\App\Services\ServiceLocations::class)->find($request);
 })->name('cep');

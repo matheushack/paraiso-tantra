@@ -26,6 +26,11 @@ class ServiceUnits
             ->make(true);
     }
 
+    public function find($id)
+    {
+        return Units::find($id);
+    }
+
     public function store(Request $request)
     {
         try {
@@ -40,10 +45,7 @@ class ServiceUnits
                 $request->merge(['state' => $cep->uf]);
 
                 $request->merge(['cnpj' => onlyNumber($request->input('cnpj'))]);
-                $request->merge(['cep' => onlyNumber($request->input('cep'))]);
                 $request->merge(['operating_hours' => json_encode($request->input('operating'))]);
-
-//                dd($request->all());
 
                 if (!Units::create($request->all()))
                     throw new \Exception('Não foi possível cadastrar uma nova unidade. Por favor, tente mais tarde!');
@@ -57,6 +59,62 @@ class ServiceUnits
             return [
                 'message' => $e->getMessage(),
                 'save' => false
+            ];
+        }
+    }
+
+    public function update(Request $request)
+    {
+        try {
+            Capsule::transaction(function () use ($request) {
+                $unity = Units::find($request->input('id'));
+                $unity->cnpj = $request->input('cnpj');
+                $unity->social_name = $request->input('social_name');
+
+                $cep = ZipCode::find($request->input('cep'))->getObject();
+                $unity->cep = $request->input('cep');
+                $unity->address = $cep->logradouro;
+                $unity->number = $request->input('number');
+                $unity->complement = $request->input('complement');
+                $unity->neighborhood = $cep->bairro;
+                $unity->city = $cep->localidade;
+                $unity->state = $cep->uf;
+
+                $unity->email = $request->input('email');
+                $unity->phone = $request->input('phone');
+                $unity->cell_phone = $request->input('cell_phone');
+                $unity->operating_hours = json_encode($request->input('operating'));
+
+                if (!$unity->save())
+                    throw new \Exception('Não foi possível editar a unidade. Por favor, tente mais tarde!');
+            });
+
+            return [
+                'message' => 'Unidade editada com sucesso!',
+                'save' => true
+            ];
+        }catch(\Exception $e){
+            return [
+                'message' => $e->getMessage(),
+                'save' => false
+            ];
+        }
+    }
+
+    public function destroy($id)
+    {
+        try {
+            $unit = Units::find($id);
+            $unit->delete();
+
+            return [
+                'message' => 'Unidade deletada com sucesso!',
+                'deleted' => true
+            ];
+        }catch(\Exception $e){
+            return [
+                'message' => $e->getMessage(),
+                'deleted' => false
             ];
         }
     }
