@@ -12,7 +12,7 @@
         "laravel/tinker": "^1.0",
         "spatie/laravel-permission": "^2.18",
         "yajra/laravel-datatables-html": "^3.0",
-        "cagartner/correios-consulta": "0.1.*"
+        "canducci/zipcode": "1.*"
     },
     "require-dev": {
         "filp/whoops": "^2.0",

@@ -75,52 +75,8 @@
 
                     <div class="m-form__seperator m-form__seperator--dashed"></div>
 
-                    <div class="form-group m-form__group row">
-                        <div class="col-lg-2">
-                            <label>
-                                CEP
-                            </label>
-                            <input name="cep" type="text" class="form-control m-input" id="cep" placeholder="" required>
-                        </div>
-                        <div class="col-lg-5">
-                            <label>
-                                Endereço
-                            </label>
-                            <input name="address" type="text" class="form-control m-input" id="address" placeholder="" readonly required>
-                        </div>
-                        <div class="col-lg-2">
-                            <label>
-                                Número
-                            </label>
-                            <input name="number" type="text" class="form-control m-input" id="number" placeholder="" required>
-                        </div>
-                        <div class="col-lg-3">
-                            <label>
-                                Complemento
-                            </label>
-                            <input name="complement" type="text" class="form-control m-input" id="complement" placeholder="">
-                        </div>
-                    </div>
-                    <div class="form-group m-form__group row">
-                        <div class="col-lg-4">
-                            <label>
-                                Bairro
-                            </label>
-                            <input name="neighborhood" type="text" class="form-control m-input" id="neighborhood" placeholder="" readonly required>
-                        </div>
-                        <div class="col-lg-4">
-                            <label>
-                                Cidade
-                            </label>
-                            <input name="city" type="text" class="form-control m-input" id="city" placeholder="" readonly required>
-                        </div>
-                        <div class="col-lg-4">
-                            <label>
-                                Estado
-                            </label>
-                            <input name="state" type="text" class="form-control m-input" id="state" placeholder="" readonly required>
-                        </div>
-                    </div>
+                    @component('components.locations')
+                    @endcomponent
 
                     <div class="m-form__seperator m-form__seperator--dashed"></div>
 

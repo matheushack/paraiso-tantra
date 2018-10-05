@@ -16,3 +16,21 @@ Auth::routes();
 Route::get('/', function () {
     return redirect('/login');
 });
+
+Route::post('cep/busca', function(\Illuminate\Http\Request $request){
+    try {
+        if (empty($request->input('cep')))
+            throw new Exception('Necessário informar um CEP válido');
+
+        $location = zipcode($request->input('cep'))->getArray();
+
+        return response()->json([
+            'success' => true,
+            'cep' => $location
+        ], 200);
+    }catch (Exception $e){
+        return response()->json([
+            'success' => false
+        ], 200);
+    }
+})->name('cep');
