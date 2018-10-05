@@ -41,3 +41,10 @@ if(!function_exists('actionsUnits')){
         ';
     }
 }
+
+if(!function_exists('onlyNumber')){
+    function onlyNumber($string = '')
+    {
+        return preg_replace("/[^0-9]/", "", $string);
+    }
+}

@@ -15,6 +15,16 @@ var ParaisoTantra = function() {
                 }
             }
         });
+
+        $(".mask-cnpj").inputmask({
+            mask: ['99.999.999/9999-99'],
+            keepStatic: true
+        });
+
+        $('.mask-time').inputmask('99:99');
+        $('.mask-cep').inputmask('99999-999');
+        $('.mask-phone').inputmask('(99)9999-9999');
+        $('.mask-cell-phone').inputmask('(99)9999[9]-9999');
     };
 
     return {

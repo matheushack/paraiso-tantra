@@ -57,7 +57,7 @@
                             <label>
                                 CNPJ
                             </label>
-                            <input name="cnpj" type="text" class="form-control m-input" id="cnpj" placeholder="" required>
+                            <input name="cnpj" type="text" class="form-control m-input mask-cnpj" id="cnpj" placeholder="" required>
                         </div>
                         <div class="col-lg-5">
                             <label>
@@ -85,19 +85,19 @@
                             <label>
                                 Email
                             </label>
-                            <input name="email" type="email" class="form-control m-input" id="email" placeholder="" required>
+                            <input name="email" type="email" class="form-control m-input mask-email" id="email" placeholder="" required>
                         </div>
                         <div class="col-lg-4">
                             <label>
                                 Telefone
                             </label>
-                            <input name="phone" type="text" class="form-control m-input" id="phone" placeholder="" required>
+                            <input name="phone" type="text" class="form-control m-input mask-phone" id="phone" placeholder="" required>
                         </div>
                         <div class="col-lg-4">
                             <label>
                                 Celular
                             </label>
-                            <input name="cell_phone" type="text" class="form-control m-input" id="cell_phone" placeholder="" required>
+                            <input name="cell_phone" type="text" class="form-control m-input mask-cell-phone" id="cell_phone" placeholder="" required>
                         </div>
                     </div>
 
@@ -108,13 +108,13 @@
                                     <label>
                                         Abertura
                                     </label>
-                                    <input type="text" class="form-control m-input" name="open" placeholder="">
+                                    <input type="text" class="form-control m-input mask-time" name="open" placeholder="">
                                 </div>
                                 <div class="col-lg-2">
                                     <label>
                                         Fechamento
                                     </label>
-                                    <input type="text" class="form-control m-input" name="close" placeholder="">
+                                    <input type="text" class="form-control m-input mask-time" name="close" placeholder="">
                                 </div>
                                 <div class="col-lg-7">
                                     <div class="m-radio-inline">
@@ -183,12 +183,14 @@
 @push('scripts')
     <script>
         $(document).ready(function(){
+            ParaisoTantra.masks();
 
             $("#operating_hours").repeater({
                 initEmpty: !1,
                 show: function() {
                     $(this).slideDown();
                     $(this).find('.btn-delete-operating').show();
+                    ParaisoTantra.masks();
                 },
                 hide: function(e) {
                     $(this).slideUp(e)

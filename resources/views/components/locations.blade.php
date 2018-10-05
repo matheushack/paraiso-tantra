@@ -4,9 +4,9 @@
             CEP
         </label>
         <div class="input-group">
-            <input name="cep" type="text" class="form-control m-input" id="cep" placeholder="" required>
+            <input name="cep" type="text" class="form-control m-input mask-cep" id="cep" placeholder="" required>
             <div class="input-group-append">
-                <button class="btn btn-secondary" id="btn-cep" type="button">
+                <button class="btn btn-info" id="btn-cep" type="button">
                     <i class="fa fa-search"></i>
                 </button>
             </div>
@@ -59,6 +59,7 @@
 @push('scripts')
     <script>
         $(document).ready(function(){
+            ParaisoTantra.masks();
             $('#state').selectpicker();
 
             $("body").on("click", "#btn-cep", function(){

@@ -11,4 +11,8 @@ class Units extends Model {
      */
     protected $table = 'units';
 
+    protected $fillable = [
+        'cnpj', 'name', 'social_name', 'cep', 'address', 'number', 'complement', 'neighborhood', 'city', 'state', 'email', 'phone', 'cell_phone', 'operating_hours'
+    ];
+
 }

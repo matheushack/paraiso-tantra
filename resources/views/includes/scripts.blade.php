@@ -9,4 +9,5 @@
 </script>
 <script src="{{url('assets/vendors/base/vendors.bundle.js')}}" type="text/javascript"></script>
 <script src="{{url('assets/massagem/default/base/scripts.bundle.js')}}" type="text/javascript"></script>
+<script src="{{url('js/custom.js')}}" type="text/javascript"></script>
 @stack('scripts')

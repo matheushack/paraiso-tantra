@@ -52,11 +52,11 @@ class UnitsController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'name' => 'required',
-            'email' => 'required|email',
-            'password' => 'required'
-        ]);
+//        $request->validate([
+//            'name' => 'required',
+//            'email' => 'required|email',
+//            'password' => 'required'
+//        ]);
 
         $return = $this->serviceUnits->store($request);
 
