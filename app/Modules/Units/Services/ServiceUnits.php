@@ -8,6 +8,7 @@
 
 namespace App\Modules\Units\Services;
 
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 use App\Modules\Units\Models\Units;
@@ -110,6 +111,11 @@ class ServiceUnits
             return [
                 'message' => 'Unidade deletada com sucesso!',
                 'deleted' => true
+            ];
+        }catch(QueryException $e){
+            return [
+                'message' => 'Não foi possível deletar a unidade, pois existem registros atrelados a ela',
+                'deleted' => false
             ];
         }catch(\Exception $e){
             return [

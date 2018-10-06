@@ -5,13 +5,18 @@ namespace App\Modules\Employees\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\View;
+use App\Modules\Employees\Services\ServiceEmployees;
 
 class EmployeesController extends Controller
 {
+    private $serviceEmployees;
+
     function __construct()
     {
         View::share('menu_active', 'employees');
         View::share('menu_parent_active', 'units');
+
+        $this->serviceEmployees = new ServiceEmployees();
     }
 
     /**
@@ -21,7 +26,12 @@ class EmployeesController extends Controller
      */
     public function index()
     {
-        return view("Employees::index");
+        return view("Employees::index", dataTableEmployees());
+    }
+
+    public function dataTable()
+    {
+        return $this->serviceEmployees->dataTable();
     }
 
     /**
@@ -31,7 +41,7 @@ class EmployeesController extends Controller
      */
     public function create()
     {
-        //
+        return view("Employees::create");
     }
 
     /**
@@ -42,18 +52,16 @@ class EmployeesController extends Controller
      */
     public function store(Request $request)
     {
-        //
-    }
+//        $request->validate([
+//            'name' => 'required',
+//            'amount' => 'required',
+//            'duration' => 'required',
+//            'is_active' => 'required',
+//        ]);
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
+        $return = $this->serviceEmployees->store($request);
+
+        return response()->json($return, 200);
     }
 
     /**
@@ -64,7 +72,8 @@ class EmployeesController extends Controller
      */
     public function edit($id)
     {
-        //
+        $service = $this->serviceEmployees->find($id);
+        return view("Employees::edit", ['service' => $service]);
     }
 
     /**
@@ -74,9 +83,18 @@ class EmployeesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+//        $request->validate([
+//            'name' => 'required',
+//            'amount' => 'required',
+//            'duration' => 'required',
+//            'is_active' => 'required',
+//        ]);
+
+        $return = $this->serviceEmployees->update($request);
+
+        return response()->json($return, 200);
     }
 
     /**
@@ -87,6 +105,7 @@ class EmployeesController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $return = $this->serviceEmployees->destroy($id);
+        return response()->json($return, 200);
     }
 }
