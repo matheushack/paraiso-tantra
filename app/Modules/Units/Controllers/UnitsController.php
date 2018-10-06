@@ -52,11 +52,16 @@ class UnitsController extends Controller
      */
     public function store(Request $request)
     {
-//        $request->validate([
-//            'name' => 'required',
-//            'email' => 'required|email',
-//            'password' => 'required'
-//        ]);
+        $request->validate([
+            'cnpj' => 'required',
+            'name' => 'required',
+            'social_name' => 'required',
+            'cep' => 'required',
+            'number' => 'required',
+            'email' => 'required|email',
+            'phone' => 'required',
+            'cell_phone' => 'required'
+        ]);
 
         $return = $this->serviceUnits->store($request);
 
@@ -84,9 +89,16 @@ class UnitsController extends Controller
      */
     public function update(Request $request)
     {
-//        $request->validate([
-//            'name' => 'required'
-//        ]);
+        $request->validate([
+            'cnpj' => 'required',
+            'name' => 'required',
+            'social_name' => 'required',
+            'cep' => 'required',
+            'number' => 'required',
+            'email' => 'required|email',
+            'phone' => 'required',
+            'cell_phone' => 'required'
+        ]);
 
         $return = $this->serviceUnits->update($request);
 

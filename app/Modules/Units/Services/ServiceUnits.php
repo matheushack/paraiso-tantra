@@ -44,7 +44,7 @@ class ServiceUnits
                 $request->merge(['city' => $cep->localidade]);
                 $request->merge(['state' => $cep->uf]);
 
-                $request->merge(['cnpj' => onlyNumber($request->input('cnpj'))]);
+                $request->merge(['cnpj' => $request->input('cnpj')]);
                 $request->merge(['operating_hours' => json_encode($request->input('operating'))]);
 
                 if (!Units::create($request->all()))

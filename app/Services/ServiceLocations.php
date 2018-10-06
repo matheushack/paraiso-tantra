@@ -19,7 +19,7 @@ class ServiceLocations
     {
         try {
             if (empty($request->input('cep')))
-                throw new Exception('Necessário informar um CEP válido');
+                throw new \Exception('Necessário informar um CEP válido');
 
             if(Cache::has($request->input('cep')))
                 return response()->json([
@@ -47,7 +47,7 @@ class ServiceLocations
                 'success' => true,
                 'cep' => $cep
             ], 200);
-        }catch (Exception $e){
+        }catch (\Exception $e){
             return response()->json([
                 'success' => false
             ], 200);

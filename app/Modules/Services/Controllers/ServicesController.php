@@ -2,16 +2,21 @@
 
 namespace App\Modules\Services\Controllers;
 
+use App\Modules\Services\Services\ServiceServicing;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\View;
 
 class ServicesController extends Controller
 {
+    private $serviceServicing;
+
     function __construct()
     {
         View::share('menu_active', 'services');
         View::share('menu_parent_active', 'units');
+
+        $this->serviceServicing = new ServiceServicing();
     }
 
     /**
@@ -21,7 +26,12 @@ class ServicesController extends Controller
      */
     public function index()
     {
-        return view("Services::index");
+        return view("Services::index", dataTableServices());
+    }
+
+    public function dataTable()
+    {
+        return $this->serviceServicing->dataTable();
     }
 
     /**
@@ -31,7 +41,7 @@ class ServicesController extends Controller
      */
     public function create()
     {
-        //
+        return view("Services::create");
     }
 
     /**
@@ -42,18 +52,16 @@ class ServicesController extends Controller
      */
     public function store(Request $request)
     {
-        //
-    }
+        $request->validate([
+            'name' => 'required',
+            'amount' => 'required',
+            'duration' => 'required',
+            'is_active' => 'required',
+        ]);
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
+        $return = $this->serviceServicing->store($request);
+
+        return response()->json($return, 200);
     }
 
     /**
@@ -64,7 +72,8 @@ class ServicesController extends Controller
      */
     public function edit($id)
     {
-        //
+        $service = $this->serviceServicing->find($id);
+        return view("Services::edit", ['service' => $service]);
     }
 
     /**
@@ -74,9 +83,18 @@ class ServicesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required',
+            'amount' => 'required',
+            'duration' => 'required',
+            'is_active' => 'required',
+        ]);
+
+        $return = $this->serviceServicing->update($request);
+
+        return response()->json($return, 200);
     }
 
     /**
@@ -87,6 +105,7 @@ class ServicesController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $return = $this->serviceServicing->destroy($id);
+        return response()->json($return, 200);
     }
 }

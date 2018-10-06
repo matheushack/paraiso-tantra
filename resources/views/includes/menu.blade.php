@@ -54,7 +54,7 @@
                         </li>
                         <li class="m-menu__item  {{isset($menu_active) && $menu_active == 'services' ? 'm-menu__item--active' : ''}}" aria-haspopup="true" >
                             <a  href="{{route('services')}}" class="m-menu__link ">
-                                <i class="m-menu__link-icon flaticon-like"></i>
+                                <i class="m-menu__link-icon flaticon-cart"></i>
                                 <span class="m-menu__link-text">Serviços</span>
                             </a>
                         </li>

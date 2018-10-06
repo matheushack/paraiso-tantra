@@ -15,4 +15,17 @@ class Units extends Model {
         'cnpj', 'name', 'social_name', 'cep', 'address', 'number', 'complement', 'neighborhood', 'city', 'state', 'email', 'phone', 'cell_phone', 'operating_hours'
     ];
 
+    public static function optionSelect()
+    {
+        $array = [
+            '' => 'Selecione'
+        ];
+        $units = self::all();
+        $units->each(function ($item) use(&$array){
+            $array[$item->id] = $item->name;
+        });
+
+        return $array;
+    }
+
 }

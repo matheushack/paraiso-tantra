@@ -2,16 +2,21 @@
 
 namespace App\Modules\Rooms\Controllers;
 
+use App\Modules\Rooms\Services\ServiceRooms;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\View;
 
 class RoomsController extends Controller
 {
+    private $serviceRooms;
+
     function __construct()
     {
         View::share('menu_active', 'rooms');
         View::share('menu_parent_active', 'units');
+
+        $this->serviceRooms = new ServiceRooms();
     }
 
     /**
@@ -21,7 +26,12 @@ class RoomsController extends Controller
      */
     public function index()
     {
-        return view("Rooms::index");
+        return view("Rooms::index", dataTableRooms());
+    }
+
+    public function dataTable()
+    {
+        return $this->serviceRooms->dataTable();
     }
 
     /**
@@ -31,7 +41,7 @@ class RoomsController extends Controller
      */
     public function create()
     {
-        //
+        return view("Rooms::create");
     }
 
     /**
@@ -42,18 +52,15 @@ class RoomsController extends Controller
      */
     public function store(Request $request)
     {
-        //
-    }
+        $request->validate([
+            'name' => 'required',
+            'unity_id' => 'required',
+            'is_active' => 'required',
+        ]);
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
+        $return = $this->serviceRooms->store($request);
+
+        return response()->json($return, 200);
     }
 
     /**
@@ -64,7 +71,8 @@ class RoomsController extends Controller
      */
     public function edit($id)
     {
-        //
+        $room = $this->serviceRooms->find($id);
+        return view("Rooms::edit", ['room' => $room]);
     }
 
     /**
@@ -74,9 +82,17 @@ class RoomsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required',
+            'unity_id' => 'required',
+            'is_active' => 'required',
+        ]);
+
+        $return = $this->serviceRooms->update($request);
+
+        return response()->json($return, 200);
     }
 
     /**
@@ -87,6 +103,7 @@ class RoomsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $return = $this->serviceRooms->destroy($id);
+        return response()->json($return, 200);
     }
 }

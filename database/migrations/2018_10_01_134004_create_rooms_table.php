@@ -15,10 +15,15 @@ class CreateRoomsTable extends Migration
     {
         Schema::create('rooms', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('unity_id');
+            $table->integer('unity_id')->unsigned();
             $table->string('name');
+            $table->tinyInteger('is_active')->default(1);
             $table->timestamps();
             $table->softDeletes();
+
+            $table->foreign('unity_id')
+                ->references('id')
+                ->on('units');
         });
     }
 
