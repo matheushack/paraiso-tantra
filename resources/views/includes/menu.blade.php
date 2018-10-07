@@ -71,16 +71,16 @@
                     </span>
                 </a>
             </li>
-            <li class="m-menu__item {{isset($menu_active) && $menu_active == 'financial' ? 'm-menu__item--active' : ''}}" aria-haspopup="true" >
-                <a href="{{url('/dashboard')}}" class="m-menu__link ">
-                    <i class="m-menu__link-icon flaticon-piggy-bank"></i>
-                    <span class="m-menu__link-title">
-                        <span class="m-menu__link-wrap">
-                            <span class="m-menu__link-text">Financeiro</span>
-                        </span>
-                    </span>
-                </a>
-            </li>
+            {{--<li class="m-menu__item {{isset($menu_active) && $menu_active == 'financial' ? 'm-menu__item--active' : ''}}" aria-haspopup="true" >--}}
+                {{--<a href="{{url('/dashboard')}}" class="m-menu__link ">--}}
+                    {{--<i class="m-menu__link-icon flaticon-piggy-bank"></i>--}}
+                    {{--<span class="m-menu__link-title">--}}
+                        {{--<span class="m-menu__link-wrap">--}}
+                            {{--<span class="m-menu__link-text">Financeiro</span>--}}
+                        {{--</span>--}}
+                    {{--</span>--}}
+                {{--</a>--}}
+            {{--</li>--}}
             <li class="m-menu__item  m-menu__item--submenu {{isset($menu_parent_active) && $menu_parent_active == 'system' ? 'm-menu__item--open m-menu__item--expanded' : ''}}" aria-haspopup="true"  m-menu-submenu-toggle="hover">
                 <a  href="javascript:;" class="m-menu__link m-menu__toggle">
                     <i class="m-menu__link-icon flaticon-map-location"></i>
@@ -96,24 +96,24 @@
                                 <span class="m-menu__link-text">Usuários</span>
                             </a>
                         </li>
-                        <li class="m-menu__item  {{isset($menu_active) && $menu_active == 'profiles' ? 'm-menu__item--active' : ''}}" aria-haspopup="true" >
-                            <a  href="components/base/state.html" class="m-menu__link ">
-                                <i class="m-menu__link-icon flaticon-profile-1"></i>
-                                <span class="m-menu__link-text">Perfis</span>
-                            </a>
-                        </li>
-                        <li class="m-menu__item  {{isset($menu_active) && $menu_active == 'permissions' ? 'm-menu__item--active' : ''}}" aria-haspopup="true" >
-                            <a  href="components/base/state.html" class="m-menu__link ">
-                                <i class="m-menu__link-icon flaticon-squares-4"></i>
-                                <span class="m-menu__link-text">Permissões</span>
-                            </a>
-                        </li>
-                        <li class="m-menu__item  {{isset($menu_active) && $menu_active == 'parameters' ? 'm-menu__item--active' : ''}}" aria-haspopup="true" >
-                            <a  href="components/base/state.html" class="m-menu__link ">
-                                <i class="m-menu__link-icon flaticon-like"></i>
-                                <span class="m-menu__link-text">Parâmetros</span>
-                            </a>
-                        </li>
+                        {{--<li class="m-menu__item  {{isset($menu_active) && $menu_active == 'profiles' ? 'm-menu__item--active' : ''}}" aria-haspopup="true" >--}}
+                            {{--<a  href="components/base/state.html" class="m-menu__link ">--}}
+                                {{--<i class="m-menu__link-icon flaticon-profile-1"></i>--}}
+                                {{--<span class="m-menu__link-text">Perfis</span>--}}
+                            {{--</a>--}}
+                        {{--</li>--}}
+                        {{--<li class="m-menu__item  {{isset($menu_active) && $menu_active == 'permissions' ? 'm-menu__item--active' : ''}}" aria-haspopup="true" >--}}
+                            {{--<a  href="components/base/state.html" class="m-menu__link ">--}}
+                                {{--<i class="m-menu__link-icon flaticon-squares-4"></i>--}}
+                                {{--<span class="m-menu__link-text">Permissões</span>--}}
+                            {{--</a>--}}
+                        {{--</li>--}}
+                        {{--<li class="m-menu__item  {{isset($menu_active) && $menu_active == 'parameters' ? 'm-menu__item--active' : ''}}" aria-haspopup="true" >--}}
+                            {{--<a  href="components/base/state.html" class="m-menu__link ">--}}
+                                {{--<i class="m-menu__link-icon flaticon-like"></i>--}}
+                                {{--<span class="m-menu__link-text">Parâmetros</span>--}}
+                            {{--</a>--}}
+                        {{--</li>--}}
                     </ul>
                 </div>
             </li>

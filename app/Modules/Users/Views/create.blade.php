@@ -71,7 +71,7 @@
                             </label>
                             <select name="profile_id" class="form-control m-bootstrap-select" id="profile_id">
                                 <option value="">Selecione</option>
-                                <option value="1">Administrador</option>
+                                <option value="1" selected>Administrador</option>
                             </select>
                         </div>
                     </div>

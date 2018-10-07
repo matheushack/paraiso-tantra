@@ -22,7 +22,7 @@
                         <div class="m-login__wrapper">
                             <div class="m-login__logo">
                                 <a href="#">
-                                    <img src="{{url('assets/app/media/img/logos/logo-2.png')}}">
+                                    <img alt="" src="{{url('img/logo.png')}}"/>
                                 </a>
                             </div>
                             <div class="m-login__signin">
@@ -64,7 +64,7 @@
                                         </div>
                                     </div>
                                     <div class="m-login__form-action">
-                                        <button class="btn btn-focus m-btn m-btn--pill m-btn--custom m-btn--air">
+                                        <button class="btn m-btn m-btn--pill m-btn--custom m-btn--air">
                                             Entrar
                                         </button>
                                     </div>
@@ -103,17 +103,7 @@
                     </div>
                 </div>
             </div>
-            <div class="m-grid__item m-grid__item--fluid m-grid m-grid--center m-grid--hor m-grid__item--order-tablet-and-mobile-1	m-login__content" style="background-image: url({{url('assets/app/media/img/bg/bg-1.jpg')}})">
-                <div class="m-grid__item m-grid__item--middle">
-                    <h3 class="m-login__welcome">
-                        Título de impacto
-                    </h3>
-                    <p class="m-login__msg">
-                        Lorem ipsum dolor sit amet, coectetuer adipiscing
-                        <br>
-                        elit sed diam nonummy et nibh euismod
-                    </p>
-                </div>
+            <div class="m-grid__item m-grid__item--fluid m-grid m-grid--center m-grid--hor m-grid__item--order-tablet-and-mobile-1	m-login__content" style="background-image: url({{url('assets/app/media/img/bg/bg-10.jpg')}})">
             </div>
         </div>
     </div>

@@ -22,8 +22,8 @@
                         <div class="m-stack m-stack--ver m-stack--general">
                             <div class="m-stack__item m-stack__item--middle m-brand__logo">
                                 <a href="index.html" class="m-brand__logo-wrapper">
-                                    LOGO
-                                    {{--<img alt="" src="{{url('img/logo2.png')}}"/>--}}
+                                    {{--LOGO--}}
+                                    <img alt="" src="{{url('img/logo2.png')}}"/>
                                 </a>
                             </div>
                             <div class="m-stack__item m-stack__item--middle m-brand__tools">

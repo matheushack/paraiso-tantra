@@ -20243,6 +20243,23 @@ strong {
     opacity: .3
 }
 
+.m-login__form-sub .m-link {
+    color: #FFF
+}
+
+.m-login__form-sub .m-link:hover {
+    color: #c6007d
+}
+
+.m-login__form-sub .m-link:hover:after{
+    border-bottom: 1px solid #c6007d;
+}
+
+.m-link:hover:after {
+    border-bottom: 1px solid #c6007d;
+    opacity: .3
+}
+
 .m-link.m-link--skin-dark {
     color: #9994e4
 }
@@ -44751,7 +44768,8 @@ select.m-select2 {
 
 .m-login.m-login--1 .m-login__aside {
     width: 700px;
-    padding: 2rem 11rem
+    padding: 2rem 11rem;
+    background: #65246D;
 }
 
 .m-login.m-login--1 .m-login__content {
@@ -44789,7 +44807,8 @@ select.m-select2 {
 
 .m-login.m-login--1 .m-login__wrapper .m-login__head .m-login__title {
     text-align: center;
-    font-size: 1.5rem
+    font-size: 1.5rem;
+    color: #FFF;
 }
 
 .m-login.m-login--1 .m-login__wrapper .m-login__head .m-login__desc {
@@ -44817,7 +44836,8 @@ select.m-select2 {
     border: 0;
     border-bottom: 1px solid #ebedf2;
     padding: 1rem 0;
-    margin-top: .1rem
+    margin-top: .1rem;
+    padding-left: 10px;
 }
 
 .m-login.m-login--1 .m-login__wrapper .m-login__form .m-form__group .form-control::-moz-placeholder {
@@ -44860,7 +44880,8 @@ select.m-select2 {
 }
 
 .m-login.m-login--1 .m-login__wrapper .m-login__form .m-login__form-sub .m-checkbox {
-    font-size: 1rem
+    font-size: 1rem;
+    color: #FFF;
 }
 
 .m-login.m-login--1 .m-login__wrapper .m-login__form .m-login__form-sub .m-link {

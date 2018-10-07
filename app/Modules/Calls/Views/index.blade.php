@@ -34,7 +34,7 @@
                         <div class="m-portlet__head-tools">
                             <ul class="m-portlet__nav">
                                 <li class="m-portlet__nav-item">
-                                    <a href="#" class="btn btn-success m-btn m-btn--custom m-btn--icon m-btn--air">
+                                    <a href="javascript:void(0);" class="btn btn-success m-btn m-btn--custom m-btn--icon m-btn--air" data-toggle="modal" data-target="#new-call">
                                         <span>
                                             <i class="la la-plus"></i>
                                             <span>
@@ -49,6 +49,47 @@
                     <div class="m-portlet__body">
                         <div id="atendimento" data-url="{{route('calls.calendar')}}"></div>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="new-call" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">
+                        New message
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+											<span aria-hidden="true">
+												&times;
+											</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="recipient-name" class="form-control-label">
+                                Recipient:
+                            </label>
+                            <input type="text" class="form-control" id="recipient-name">
+                        </div>
+                        <div class="form-group">
+                            <label for="message-text" class="form-control-label">
+                                Message:
+                            </label>
+                            <textarea class="form-control" id="message-text"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                        Close
+                    </button>
+                    <button type="button" class="btn btn-primary">
+                        Send message
+                    </button>
                 </div>
             </div>
         </div>
