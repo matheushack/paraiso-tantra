@@ -5,13 +5,18 @@ namespace App\Modules\Customers\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\View;
+use App\Modules\Customers\Services\ServiceCustomers;
 
 class CustomersController extends Controller
 {
 
+    private $serviceCustomers;
+
     function __construct()
     {
         View::share('menu_active', 'customers');
+
+        $this->serviceCustomers = new ServiceCustomers();
     }
 
     /**
@@ -21,7 +26,12 @@ class CustomersController extends Controller
      */
     public function index()
     {
-        return view("Customers::index");
+        return view("Customers::index", dataTableCustomers());
+    }
+
+    public function dataTable()
+    {
+        return $this->serviceCustomers->dataTable();
     }
 
     /**
@@ -31,7 +41,7 @@ class CustomersController extends Controller
      */
     public function create()
     {
-        //
+        return view("Customers::create");
     }
 
     /**
@@ -42,18 +52,13 @@ class CustomersController extends Controller
      */
     public function store(Request $request)
     {
-        //
-    }
+        $request->validate([
+            'name' => 'required'
+        ]);
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
+        $return = $this->serviceCustomers->store($request);
+
+        return response()->json($return, 200);
     }
 
     /**
@@ -64,7 +69,8 @@ class CustomersController extends Controller
      */
     public function edit($id)
     {
-        //
+        $service = $this->serviceCustomers->find($id);
+        return view("Customers::edit", ['customer' => $service]);
     }
 
     /**
@@ -74,9 +80,15 @@ class CustomersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required'
+        ]);
+
+        $return = $this->serviceCustomers->update($request);
+
+        return response()->json($return, 200);
     }
 
     /**
@@ -87,6 +99,7 @@ class CustomersController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $return = $this->serviceCustomers->destroy($id);
+        return response()->json($return, 200);
     }
 }
