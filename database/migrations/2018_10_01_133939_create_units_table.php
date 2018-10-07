@@ -15,7 +15,7 @@ class CreateUnitsTable extends Migration
     {
         Schema::create('units', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('cnpj');
+            $table->string('cnpj')->unique();
             $table->string('name');
             $table->string('social_name');
             $table->string('cep');

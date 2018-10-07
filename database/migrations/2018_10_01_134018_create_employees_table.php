@@ -16,7 +16,7 @@ class CreateEmployeesTable extends Migration
         Schema::create('employees', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->string('cpf', 11);
+            $table->string('cpf', 14)->unique();
             $table->enum('gender', ['F', 'M'])->default('M');
             $table->date('birth_date');
             $table->string('phone', 13);

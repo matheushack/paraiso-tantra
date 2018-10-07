@@ -52,12 +52,16 @@ class EmployeesController extends Controller
      */
     public function store(Request $request)
     {
-//        $request->validate([
-//            'name' => 'required',
-//            'amount' => 'required',
-//            'duration' => 'required',
-//            'is_active' => 'required',
-//        ]);
+        $request->validate([
+            'name' => 'required',
+            'cpf' => 'required',
+            'gender' => 'required',
+            'birth_date' => 'required',
+            'email' => 'required',
+            'cell_phone' => 'required',
+            'color' => 'required',
+            'commission' => 'required'
+        ]);
 
         $return = $this->serviceEmployees->store($request);
 
@@ -73,7 +77,7 @@ class EmployeesController extends Controller
     public function edit($id)
     {
         $service = $this->serviceEmployees->find($id);
-        return view("Employees::edit", ['service' => $service]);
+        return view("Employees::edit", ['employee' => $service]);
     }
 
     /**
@@ -85,12 +89,16 @@ class EmployeesController extends Controller
      */
     public function update(Request $request)
     {
-//        $request->validate([
-//            'name' => 'required',
-//            'amount' => 'required',
-//            'duration' => 'required',
-//            'is_active' => 'required',
-//        ]);
+        $request->validate([
+            'name' => 'required',
+            'cpf' => 'required',
+            'gender' => 'required',
+            'birth_date' => 'required',
+            'email' => 'required',
+            'cell_phone' => 'required',
+            'color' => 'required',
+            'commission' => 'required'
+        ]);
 
         $return = $this->serviceEmployees->update($request);
 

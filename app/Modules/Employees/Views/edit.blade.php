@@ -25,7 +25,7 @@
                     <li class="m-nav__item">
                         <a href="" class="m-nav__link">
                             <span class="m-nav__link-text">
-                                Novo
+                                {{$employee->name}}
                             </span>
                         </a>
                     </li>
@@ -43,13 +43,14 @@
                             <i class="la la-gear"></i>
                         </span>
                         <h3 class="m-portlet__head-text">
-                            <i class="la la-plus"></i> Novo funcionário
+                            <i class="la la-pencil"></i> {{$employee->name}}
                         </h3>
                     </div>
                 </div>
             </div>
             <!--begin::Form-->
             <form class="m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed" id="form-employee">
+                <input type="hidden" name="id" value="{{$employee->id}}">
                 @csrf
                 <div class="m-portlet__body">
                     <div class="form-group m-form__group row">
@@ -57,30 +58,30 @@
                             <label>
                                 Nome
                             </label>
-                            <input name="name" type="text" class="form-control m-input" id="name" placeholder="" required>
+                            <input name="name" type="text" value="{{$employee->name}}" class="form-control m-input" id="name" placeholder="" required>
                         </div>
                         <div class="col-lg-2">
                             <label>
                                 CPF
                             </label>
-                            <input name="cpf" type="text" class="form-control m-input mask-cpf" id="cpf" placeholder="" required>
+                            <input name="cpf" type="text" value="{{$employee->cpf}}" class="form-control m-input mask-cpf" id="cpf" placeholder="" required>
                         </div>
                         <div class="col-lg-2">
                             <label for="">Sexo</label>
                             <div class="m-radio-inline">
                                 <label class="m-radio">
-                                    <input type="radio" name="gender" value="M" checked> M
+                                    <input type="radio" name="gender" value="M" {{$employee->gender == 'M' ? 'checked="checked"' : ''}}> M
                                     <span></span>
                                 </label>
                                 <label class="m-radio">
-                                    <input type="radio" name="gender" value="F"> F
+                                    <input type="radio" name="gender" value="F" {{$employee->gender == 'F' ? 'checked="checked"' : ''}}> F
                                     <span></span>
                                 </label>
                             </div>
                         </div>
                         <div class="col-lg-3">
                             <label>Data de nascimento</label>
-                            <input name="birth_date" type="text" class="form-control m-input mask-date" id="birth_date" required>
+                            <input name="birth_date" type="text" value="{{\Carbon\Carbon::parse($employee->birth_date)->format('d/m/Y')}}" class="form-control m-input mask-date" id="birth_date" required>
                         </div>
                     </div>
                     <div class="form-group m-form__group row">
@@ -88,40 +89,40 @@
                             <label>
                                 Email
                             </label>
-                            <input name="email" type="email" class="form-control m-input mask-email" id="email" placeholder="" required>
+                            <input name="email" type="email" value="{{$employee->email}}" class="form-control m-input mask-email" id="email" placeholder="" required>
                         </div>
                         <div class="col-lg-4">
                             <label>
                                 Telefone
                             </label>
-                            <input name="phone" type="text" class="form-control m-input mask-phone" id="phone" placeholder="">
+                            <input name="phone" type="text" value="{{$employee->phone}}" class="form-control m-input mask-phone" id="phone" placeholder="">
                         </div>
                         <div class="col-lg-4">
                             <label>
                                 Celular
                             </label>
-                            <input name="cell_phone" type="text" class="form-control m-input mask-cell-phone" id="cell_phone" placeholder="" required>
+                            <input name="cell_phone" type="text" value="{{$employee->cell_phone}}" class="form-control m-input mask-cell-phone" id="cell_phone" placeholder="" required>
                         </div>
                     </div>
                     <div class="form-group m-form__group row">
                         <div class="col-lg-4">
                             <label>Cor</label>
                             <div class="input-group colorpicker-component" id="color">
-                                <input name="color" type="text" value="#c6007d" class="form-control m-input" required>
+                                <input name="color" type="text" value="{{$employee->color}}" class="form-control m-input" required>
                                 <span class="input-group-addon"><i></i></span>
                             </div>
                         </div>
                         <div class="col-lg-4">
                             <label>Comissão</label>
                             <div class="m-bootstrap-touchspin-brand">
-                                <input name="commission" type="text" class="form-control m-input" id="commission" required>
+                                <input name="commission" type="text" value="{{$employee->commission}}" class="form-control m-input" id="commission" required>
                             </div>
                         </div>
                         <div class="col-lg-4">
                             <label></label>
                             <div class="m-radio-inline">
                                 <label class="m-checkbox">
-                                    <input type="checkbox" name="is_access_system" value="1">Acesso ao sistema<span></span>
+                                    <input type="checkbox" name="is_access_system" value="1" {{$employee->is_access_system == 1 ? 'checked="checked"' : ''}}>Acesso ao sistema<span></span>
                                 </label>
                             </div>
                         </div>
@@ -129,7 +130,7 @@
                     <div class="form-group m-form__group row">
                         <div class="col-lg-12">
                             <label>Observações</label>
-                            <textarea name="observation" id="observation" class="form-control" rows="5"></textarea>
+                            <textarea name="observation" id="observation" class="form-control" rows="5">{{$employee->observation}}</textarea>
                         </div>
                     </div>
                 </div>
@@ -232,7 +233,7 @@
 
                 submitHandler: function (form) {
                     $.ajax({
-                        url: '{{route('employees.store')}}',
+                        url: '{{route('employees.update')}}',
                         type: 'POST',
                         data: $(form).serialize(),
                         beforeSend: function(xhr, type) {

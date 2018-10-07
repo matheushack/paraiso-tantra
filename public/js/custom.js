@@ -21,6 +21,12 @@ var ParaisoTantra = function() {
             keepStatic: true
         });
 
+        $(".mask-cpf").inputmask({
+            mask: ['999.999.999-99'],
+            keepStatic: true
+        });
+
+        $(".mask-date").inputmask("dd/mm/yyyy");
         $(".mask-currency").inputmask("R$ 999.999,99",{numericInput:!0});
         $('.mask-time').inputmask('99:99');
         $('.mask-cep').inputmask('99999-999');

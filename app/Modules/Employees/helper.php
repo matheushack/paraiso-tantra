@@ -17,11 +17,11 @@ if(!function_exists('dataTableEmployees')) {
             'dColumns' => [
                 ['label' => '#', 'field' => 'id', 'width' => '20px'],
                 ['label' => 'Nome', 'field' => 'name', 'width' => '250px'],
-                ['label' => 'Data de nascimento', 'field' => 'birth_date'],
-                ['label' => 'Cor', 'field' => 'color'],
-                ['label' => 'Comissão', 'field' => 'commission', 'width' => '30px'],
-                ['label' => 'Acesso ao sistema', 'field' => 'is_access_system', 'width' => '100px'],
-                ['label' => 'Ações', 'field' => 'actions', 'width' => '70px']
+                ['label' => 'Data de nascimento', 'field' => 'birth_date', 'width' => '160px'],
+                ['label' => 'Cor', 'field' => 'color', 'class'=> 'text-center'],
+                ['label' => 'Comissão', 'field' => 'commission', 'width' => '30px', 'class'=> 'text-center'],
+                ['label' => 'Acesso sistema', 'field' => 'is_access_system', 'width' => '130px', 'class'=> 'text-center'],
+                ['label' => 'Ações', 'field' => 'actions', 'width' => '90px']
             ]
         ];
     }
