@@ -9,6 +9,5 @@ Route::group(['prefix' => 'salas', 'module' => 'Rooms', 'middleware' => ['web', 
     Route::get('editar/{id}', 'RoomsController@edit');
     Route::post('atualizar', 'RoomsController@update')->name('rooms.update');
     Route::post('deletar/{id}', 'RoomsController@destroy')->name('rooms.destroy');
-
 });
 

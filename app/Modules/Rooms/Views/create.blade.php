@@ -60,7 +60,7 @@
                             <input name="name" type="text" class="form-control m-input" id="name" placeholder="" required>
                         </div>
                         <div class="col-lg-3">
-                            @component('components.units')
+                            @component('Units::components.units')
                             @endcomponent
                         </div>
                         <div class="col-lg-3">

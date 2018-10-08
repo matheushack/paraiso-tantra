@@ -11,3 +11,10 @@
 <script src="{{url('assets/massagem/default/base/scripts.bundle.js')}}" type="text/javascript"></script>
 <script src="{{url('js/custom.js')}}" type="text/javascript"></script>
 @stack('scripts')
+
+
+<script>
+    $(document).ready(function(){
+        @stack('scripts-document-ready')
+    });
+</script>

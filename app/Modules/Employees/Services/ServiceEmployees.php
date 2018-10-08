@@ -8,9 +8,11 @@
 
 namespace App\Modules\Employees\Services;
 
+use App\Modules\Calls\Models\CallEmployees;
 use App\Modules\Users\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\DataTables;
 use App\Modules\Employees\Models\Employees;
 use Illuminate\Support\Facades\DB as Capsule;
@@ -170,4 +172,23 @@ class ServiceEmployees
             ];
         }
     }
+
+    public function availability(Request $request)
+    {
+        try {
+            $availability = CallEmployees::select('*')
+                ->join('calls AS C', 'Ce.call_id', '=', 'C.id')
+                ->whereIn('Ce.employee_id', $request->input('employees'))
+                ->where(function ($query) use ($request) {
+                    $query->where(DB::raw("'?' between C.start and C.end"), '=', $request->input('start'))
+                        ->orWhere(DB::raw("'?' between C.start and C.end"), '=', $request->input('end'));
+                })
+                ->count();
+
+            return $availability > 0 ? false : true;
+        }catch(\Exception $e){
+            return false;
+        }
+    }
+
 }

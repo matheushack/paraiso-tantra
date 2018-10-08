@@ -35757,6 +35757,13 @@ th>.m-checkbox.m-checkbox--single {
     border-top: 0
 }
 
+.m-table.m-table--head-bg-pink thead th {
+    background: #c6007d;
+    color: #fff;
+    border-bottom: 0;
+    border-top: 0
+}
+
 .m-table.m-table--head-separator-primary thead th {
     border-top: 0;
     border-bottom: 1px solid #5867dd
@@ -40717,7 +40724,7 @@ select.m-bootstrap-select {
     -o-border-radius: .25rem;
     border-radius: .25rem;
     height: auto;
-    line-height: 0
+    line-height: 0;
 }
 
 .select2-container--default .select2-selection--multiple .select2-selection__arrow,
@@ -43159,7 +43166,7 @@ select.m-select2 {
 .fc-unthemed .fc-toolbar .fc-button:active,
 .fc-unthemed .fc-toolbar .fc-button:focus {
     border: 0;
-    background: #9994e4;
+    background: #c6007d;
     color: #fff;
     -webkit-box-shadow: none;
     -moz-box-shadow: none;

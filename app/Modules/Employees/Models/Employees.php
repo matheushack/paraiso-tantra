@@ -14,5 +14,16 @@ class Employees extends Model {
 
     protected $dates = ['birth_date'];
 
+    public static function optionSelect()
+    {
+        $array = [];
+        $units = self::all();
+        $units->each(function ($item) use(&$array){
+            $array[$item->id] = $item->name;
+        });
+
+        return $array;
+    }
+
 
 }

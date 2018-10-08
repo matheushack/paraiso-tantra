@@ -12,4 +12,17 @@ class Services extends Model {
         'name', 'description', 'amount', 'discount', 'duration', 'is_active'
     ];
 
+    public static function optionSelect()
+    {
+        $array = [
+            '' => 'Selecione'
+        ];
+        $units = self::all();
+        $units->each(function ($item) use(&$array){
+            $array[$item->id] = $item->name;
+        });
+
+        return $array;
+    }
+
 }

@@ -4,5 +4,6 @@ Route::group(['module' => 'Calls', 'middleware' => ['web', 'auth'], 'namespace' 
 
     Route::get('atendimentos', 'CallsController@index')->name('calls');
     Route::get('atendimentos/calendario', 'CallsController@calendar')->name('calls.calendar');
+    Route::post('disponibilidade', 'CallsController@availability')->name('calls.availability');
 
 });

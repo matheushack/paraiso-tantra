@@ -61,7 +61,7 @@
                             <input name="name" type="text" value="{{$room->name}}" class="form-control m-input" id="name" placeholder="" required>
                         </div>
                         <div class="col-lg-3">
-                            @component('components.units', ['unity_id' => $room->unity_id])
+                            @component('Units::components.units', ['unity_id' => $room->unity_id])
                             @endcomponent
                         </div>
                         <div class="col-lg-3">

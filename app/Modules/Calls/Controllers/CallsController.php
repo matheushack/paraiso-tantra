@@ -112,4 +112,11 @@ class CallsController extends Controller
     {
         //
     }
+
+    public function availability(Request $request)
+    {
+        $return = $this->serviceCalls->availability($request);
+
+        return response()->json($return, 200);
+    }
 }
