@@ -2,6 +2,7 @@
 
 namespace App\Modules\Calls\Models;
 
+use App\Modules\Services\Models\Services;
 use Illuminate\Database\Eloquent\Model;
 
 class Calls extends Model {
@@ -13,5 +14,10 @@ class Calls extends Model {
     ];
 
     protected $dates = ['start', 'end'];
+
+    public function service()
+    {
+        return $this->hasMany(Services::class, 'id', 'service_id')->first();
+    }
 
 }

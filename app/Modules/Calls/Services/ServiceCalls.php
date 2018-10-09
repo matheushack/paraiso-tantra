@@ -9,13 +9,16 @@
 namespace App\Modules\Calls\Services;
 
 
-use App\Modules\Employees\Services\ServiceEmployees;
-use App\Modules\Rooms\Models\Rooms;
-use App\Modules\Services\Models\Services;
+use App\Modules\Calls\Models\CallEmployees;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use App\Modules\Rooms\Models\Rooms;
+use App\Modules\Calls\Models\Calls;
 use Illuminate\Support\Facades\View;
+use App\Modules\Services\Models\Services;
+use Illuminate\Support\Facades\DB as Capsule;
 use Illuminate\Validation\ValidationException;
+use App\Modules\Employees\Services\ServiceEmployees;
 
 /**
  * Class ServiceCalls
@@ -23,6 +26,22 @@ use Illuminate\Validation\ValidationException;
  */
 class ServiceCalls
 {
+    private function formatRequest(Request $request)
+    {
+        $service = Services::find($request->input('service_id'));
+        $start = Carbon::createFromFormat('d/m/Y H:i', $request->input('start'));
+        $end = Carbon::createFromFormat('d/m/Y H:i', $request->input('start'))->addMinutes($service->duration);
+
+        $request->merge(['start' => $start->format('Y-m-d H:i:s')]);
+        $request->merge(['end' => $end->format('Y-m-d H:i:s')]);
+        $request->merge(['duration' => $service->duration]);
+        $request->merge(['amount' => $service->amount]);
+        $request->merge(['discount' => $service->discount]);
+        $request->merge(['total' => $service->amount - $service->discount]);
+
+        return $request;
+    }
+
     private function formatRequestAvailability(Request $request)
     {
         $service = Services::find($request->input('service_id'));
@@ -41,22 +60,57 @@ class ServiceCalls
      */
     public function calendar()
     {
-        return [
-            [
-                'title' => 'Massagem 1',
-                'start' => Carbon::create('2018', '09', '08', '15', '00', '00')->timestamp,
-                'end' => Carbon::create('2018', '09', '08', '15', '30', '00')->timestamp,
+        $calendar = [];
+        $calls = Calls::all();
+
+        foreach($calls as $call){
+            $calendar[] = [
+                'id' => $call->id,
+                'title' => $call->service()->name,
+                'start' => Carbon::parse($call->start)->timestamp,
+                'end' => Carbon::parse($call->end)->timestamp,
                 'backgroundColor' => 'red',
                 'borderColor' => 'red'
-            ],
-            [
-                'title' => 'Massagem 2',
-                'start' => Carbon::create('2018', '09', '08', '15', '30', '00')->timestamp,
-                'end' => Carbon::create('2018', '09', '08', '16', '00', '00')->timestamp,
-                'backgroundColor' => 'blue',
-                'borderColor' =>'blue'
-            ],
-        ];
+            ];
+        }
+
+        return $calendar;
+    }
+
+    public function store(Request $request)
+    {
+        try {
+            Capsule::transaction(function() use ($request) {
+                $request = $this->formatRequest($request);
+
+                $count = Calls::where('customer_id', '=', $request->input('customer_id'))
+                    ->where('start', '=', $request->input('start'))
+                    ->count();
+
+                if($count > 0)
+                    throw new \Exception('Já existe um atendimento cadastrado com para este cliente neste horário!');
+
+                $call = Calls::create($request->all());
+
+                if (!$call)
+                    throw new \Exception('Não foi possível cadastrar um novo atendimento. Por favor, tente mais tarde!');
+
+                foreach($request->input('employees') as $employee){
+                    if(!CallEmployees::create(['call_id' => $call->id, 'employee_id' => $employee]))
+                        throw new \Exception('Não foi possível cadastrar um novo atendimento. Por favor, tente mais tarde!');
+                }
+            });
+
+            return [
+                'message' => 'Atendimento cadastrado com sucesso!',
+                'save' => true
+            ];
+        }catch(\Exception $e){
+            return [
+                'message' => $e->getMessage(),
+                'save' => false
+            ];
+        }
     }
 
     public function availability(Request $request)
@@ -81,7 +135,8 @@ class ServiceCalls
                 'html' => (string) View::make('Calls::availability', [
                     'status' => 'success',
                     'rooms' => $rooms,
-                    'duration' => $request->input('duration')
+                    'duration' => $request->input('duration'),
+                    'end' => Carbon::parse($request->input('end'))->format('d/m/Y H:i')
                 ])
             ];
         }catch (ValidationException $e){
@@ -90,7 +145,6 @@ class ServiceCalls
                 'html' => (string) View::make('Calls::availability', ['status' => 'validation'])
             ];
         }catch (\Exception $e){
-            dd($e->getMessage());
             return [
                 'success' => false,
                 'html' => (string) View::make('Calls::availability', ['status' => $e->getMessage()])

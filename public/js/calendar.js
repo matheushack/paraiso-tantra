@@ -7,7 +7,7 @@ var Calendar = function() {
                 center: "title",
                 right: "month,agendaDay,listDay"
             },
-            defaultView: 'agendaDay',
+            defaultView: 'listDay',
             locale: 'pt-br',
             buttonText: {
                 today:    'Hoje',

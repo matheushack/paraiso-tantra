@@ -44,10 +44,18 @@ class ServiceCustomers
                     throw new \Exception('Não foi possível cadastrar um novo cliente. Por favor, tente mais tarde!');
             });
 
+            $select2 = [];
+
+            if(!empty($request->input('select2')))
+                $select2 = [
+                    'text' => $request->input('name'),
+                    'id' => Customers::orderBy('created_at', 'desc')->first()->id
+                ];
+
             return [
                 'message' => 'Cliente cadastrado com sucesso!',
                 'save' => true
-            ];
+            ] + $select2;
         }catch(\Exception $e){
             return [
                 'message' => $e->getMessage(),

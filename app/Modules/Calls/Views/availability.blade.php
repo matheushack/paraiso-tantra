@@ -20,7 +20,7 @@
                             {{$duration}} minutos
                         </td>
                         <td>
-                            08/12/2018 10:00
+                            {{$end}}
                         </td>
                     </tr>
                 @endforeach

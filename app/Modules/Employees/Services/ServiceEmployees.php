@@ -176,7 +176,7 @@ class ServiceEmployees
     public function availability(Request $request)
     {
         try {
-            $availability = CallEmployees::select('*')
+            $availability = CallEmployees::from('call_employees as Ce')
                 ->join('calls AS C', 'Ce.call_id', '=', 'C.id')
                 ->whereIn('Ce.employee_id', $request->input('employees'))
                 ->where(function ($query) use ($request) {

@@ -13,7 +13,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class CallEmployees extends Model
 {
-    protected $table = 'call_employees AS Ce';
+    protected $table = 'call_employees';
+
+    public $timestamps = false;
 
     protected $fillable = [
         'call_id', 'employee_id'

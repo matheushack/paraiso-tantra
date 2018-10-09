@@ -9,8 +9,8 @@
                     <span aria-hidden="true"></span>
                 </button>
             </div>
-            <div class="modal-body">
-                <form class="m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed" id="form-call">
+            <form class="m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed" id="form-call">
+                <div class="modal-body">
                     <div class="m-portlet__body">
                         <div class="form-group m-form__group row">
                             <div class="col-lg-6">
@@ -40,18 +40,27 @@
                                 </button>
                             </div>
                         </div>
+
                         <div class="form-group m-form__group row" id="availability-box"></div>
+
+                        <div class="form-group m-form__group row" id="customer-box" style="display: none;">
+                            <div class="col-lg-12">
+                                @component('Customers::components.customers')
+                                @endcomponent
+                            </div>
+                        </div>
                     </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">
-                    Cancelar
-                </button>
-                <button type="button" class="btn btn-success" disabled>
-                    <i class="fa fa-save"></i> Salvar
-                </button>
-            </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                        Cancelar
+                    </button>
+                    <button type="submit" class="btn btn-success" disabled>
+                        <i class="fa fa-save"></i> Salvar
+                    </button>
+                </div>
+
+            </form>
         </div>
     </div>
 </div>
@@ -84,12 +93,66 @@
                     success: function (data) {
                         mApp.unblockPage();
 
-                        if(!data.success)
+                        if(!data.success) {
+                            $('#customer-box').hide();
                             $('.btn-success').attr('disabled', 'disabled');
+                        }else {
+                            $('#customer-box').show();
+                            $('.btn-success').removeAttr('disabled');
+                        }
 
                         $('#availability-box').html(data.html);
                     }
                 });
+            });
+
+            $("#form-call").validate({
+                invalidHandler: function(event, validator) {
+                    mApp.scrollTo("#form-call");
+
+                    swal({
+                        title: "",
+                        text: "Existem alguns erros do seu formulário. Por favor, corrija-os!",
+                        type: "error",
+                        confirmButtonClass: "btn btn-secondary m-btn m-btn--wide"
+                    });
+                },
+
+                submitHandler: function (form) {
+                    $.ajax({
+                        url: '{{route('calls.store')}}',
+                        type: 'POST',
+                        data: $(form).serialize(),
+                        beforeSend: function(xhr, type) {
+                            if (!type.crossDomain) {
+                                xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'));
+                            }
+                        },
+                        success: function (data) {
+                            if(data.save){
+                                swal({
+                                    title: 'Atendimento',
+                                    text: data.message,
+                                    type: 'success'
+                                }).then(results => {
+                                    window.location = "{{route('calls')}}";
+                                });
+                            }else{
+                                swal({
+                                    title: 'Atendimento',
+                                    text: data.message,
+                                    type: 'error'
+                                });
+                            }
+                        }
+                    });
+
+                    return false;
+                }
+            });
+
+            $('input[required]').each(function(key, item){
+                $(item).rules('add', {required: true});
             });
         });
     </script>

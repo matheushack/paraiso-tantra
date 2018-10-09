@@ -65,7 +65,18 @@ class CallsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'unity_id' => 'required',
+            'service_id' => 'required',
+            'employees' => 'required',
+            'start' => 'required',
+            'room_id' => 'required',
+            'customer_id' => 'required',
+        ]);
+
+        $return = $this->serviceCalls->store($request);
+
+        return response()->json($return, 200);
     }
 
     /**
