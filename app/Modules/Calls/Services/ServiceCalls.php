@@ -10,6 +10,7 @@ namespace App\Modules\Calls\Services;
 
 
 use App\Modules\Calls\Models\CallEmployees;
+use App\Modules\Rooms\Services\ServiceRooms;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Modules\Rooms\Models\Rooms;
@@ -127,6 +128,9 @@ class ServiceCalls
 
             if(!app(ServiceEmployees::class)->availability($request))
                 throw new \Exception('employees');
+
+            if(!app(ServiceRooms::class)->availability($request))
+                throw new \Exception('rooms');
 
             $rooms = app(Rooms::class)->where('unity_id', '=', $request->input('unity_id'))->get();
 

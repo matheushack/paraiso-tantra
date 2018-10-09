@@ -8,10 +8,7 @@
 
 namespace App\Modules\Rooms\Services;
 
-use App\Modules\Employees\Services\ServiceEmployees;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\View;
-use Illuminate\Validation\ValidationException;
 use Yajra\DataTables\DataTables;
 use App\Modules\Rooms\Models\Rooms;
 use Illuminate\Support\Facades\DB as Capsule;
@@ -109,6 +106,17 @@ class ServiceRooms
                 'message' => $e->getMessage(),
                 'deleted' => false
             ];
+        }
+    }
+
+    public function availability(Request $request)
+    {
+        try {
+            $availability = 0;
+
+            return $availability > 0 ? false : true;
+        }catch(\Exception $e){
+            return false;
         }
     }
 
