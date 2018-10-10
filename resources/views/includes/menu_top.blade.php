@@ -15,7 +15,7 @@
                         <div class="m-dropdown__header m--align-center" style="background: #65246D;">
                             <div class="m-card-user m-card-user--skin-dark">
                                 <div class="m-card-user__pic">
-                                    <img src="{{url('assets/app/media/img/users/eu.jpg')}}" class="m--img-rounded m--marginless" alt=""/>
+                                    <img src="{{Auth::user()->img_profile}}" class="m--img-rounded m--marginless" alt=""/>
                                 </div>
                                 <div class="m-card-user__details">
                                     <span class="m-card-user__name m--font-weight-500">{{ Auth::user()->name }}</span>
