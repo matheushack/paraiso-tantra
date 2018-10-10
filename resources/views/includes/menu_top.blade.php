@@ -5,7 +5,7 @@
             <li class="m-nav__item m-topbar__user-profile m-topbar__user-profile--img  m-dropdown m-dropdown--medium m-dropdown--arrow m-dropdown--header-bg-fill m-dropdown--align-right m-dropdown--mobile-full-width m-dropdown--skin-light" m-dropdown-toggle="click">
                 <a href="#" class="m-nav__link m-dropdown__toggle">
                     <span class="m-topbar__userpic">
-                        <img src="{{url('assets/app/media/img/users/eu.jpg')}}" class="m--img-rounded m--marginless m--img-centered" alt=""/>
+                        <img src="{{Auth::user()->img_profile}}" class="m--img-rounded m--marginless m--img-centered" alt=""/>
                     </span>
                     <span class="m-topbar__username m--hide">{{ Auth::user()->name }}</span>
                 </a>
