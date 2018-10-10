@@ -80,7 +80,7 @@ class ServiceCalls
 
             $calendar[] = [
                 'id' => $call->id,
-                'title' => 'Cliente: '.$call->customer()->name.PHP_EOL.'Serviço: '.$call->service()->name,
+                'title' => $call->service()->name.' - '.$call->room()->name.PHP_EOL.'Cliente: '.$call->customer()->name.PHP_EOL,
                 'description' => 'Terapeutas: '.implode('/', $employees),
                 'start' => $call->start->format('Y-m-d H:i:s'),
                 'end' => $call->end->format('Y-m-d H:i:s'),
