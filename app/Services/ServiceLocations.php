@@ -41,11 +41,11 @@ class ServiceLocations
                 $location->save();
             }
 
-            $cep = Cache::forever($location->cep, $location);
+            Cache::forever($location->cep, $location);
 
             return response()->json([
                 'success' => true,
-                'cep' => $cep
+                'cep' => $location
             ], 200);
         }catch (\Exception $e){
             return response()->json([

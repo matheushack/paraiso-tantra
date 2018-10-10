@@ -114,8 +114,9 @@ class ServiceEmployees
         try {
             Capsule::transaction(function () use ($request) {
                 $request = $this->formatRequest($request);
-
                 $employee = Employees::find($request->input('id'));
+                $acessSystemBefore = $employee->is_access_system;
+
                 $employee->name = $request->input('name');
                 $employee->cpf = $request->input('cpf');
                 $employee->gender = $request->input('gender');
@@ -128,13 +129,15 @@ class ServiceEmployees
                 $employee->is_access_system = $request->input('is_access_system');
                 $employee->observation = $request->input('observation');
 
+
+
                 if (!$employee->save())
                     throw new \Exception('Não foi possível editar o funcionário. Por favor, tente mais tarde!');
 
                 $user = User::where('email', '=', $request->input('email'))->withTrashed()->first();
 
                 if($user) {
-                    if(!$request->input('is_access_system'))
+                    if(!$request->input('is_access_system') && $acessSystemBefore == 1)
                         $user->deleted_at = Carbon::now();
                     else
                         $user->deleted_at = null;
@@ -180,8 +183,8 @@ class ServiceEmployees
                 ->join('calls AS C', 'Ce.call_id', '=', 'C.id')
                 ->whereIn('Ce.employee_id', $request->input('employees'))
                 ->where(function ($query) use ($request) {
-                    $query->where(DB::raw("'?' between C.start and C.end"), '=', $request->input('start'))
-                        ->orWhere(DB::raw("'?' between C.start and C.end"), '=', $request->input('end'));
+                    $query->whereRaw(DB::raw("'".$request->input('start')."' between C.start and C.end"))
+                        ->orWhereRaw(DB::raw("'".$request->input('end')."' between C.start and C.end"));
                 })
                 ->count();
 

@@ -2,6 +2,7 @@
 
 namespace App\Modules\Calls\Models;
 
+use App\Modules\Customers\Models\Customers;
 use App\Modules\Services\Models\Services;
 use Illuminate\Database\Eloquent\Model;
 
@@ -18,6 +19,16 @@ class Calls extends Model {
     public function service()
     {
         return $this->hasMany(Services::class, 'id', 'service_id')->first();
+    }
+
+    public function customer()
+    {
+        return $this->hasMany(Customers::class, 'id', 'customer_id')->first();
+    }
+
+    public function employees()
+    {
+        return $this->hasMany(CallEmployees::class, 'call_id', 'id');
     }
 
 }

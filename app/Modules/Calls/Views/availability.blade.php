@@ -48,7 +48,7 @@
             <div class="m-alert__text">
                 <strong>Indisponibilidade!</strong>
                 <br>
-                A sala selecionada não está disponível no horário informado.
+                Nenhuma sala está disponível no horário informado.
             </div>
         </div>
         @break

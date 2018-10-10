@@ -8,7 +8,9 @@
 
 namespace App\Modules\Rooms\Services;
 
+use App\Modules\Calls\Models\Calls;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\DataTables;
 use App\Modules\Rooms\Models\Rooms;
 use Illuminate\Support\Facades\DB as Capsule;
@@ -112,12 +114,36 @@ class ServiceRooms
     public function availability(Request $request)
     {
         try {
-            $availability = 0;
+            $availabilitySub = $this->availabilitySub($request);
 
-            return $availability > 0 ? false : true;
+            $query = Rooms::select('*')
+                ->where('unity_id', '=', $request->input('unity_id'))
+                ->where('is_active', '=', 1);
+
+            if($availabilitySub->count() > 0) {
+                $roomsCalls = [];
+                $availabilitySub->each(function($item) use(&$roomsCalls){
+                    $roomsCalls[] = $item->unity_id;
+                });
+
+                $query->whereNotIn('id', $roomsCalls);
+            }
+
+           return $query->get();
         }catch(\Exception $e){
             return false;
         }
     }
+
+    private function availabilitySub(Request $request)
+    {
+        return Calls::select('unity_id')
+            ->where('unity_id', '=', $request->input('unity_id'))
+            ->where(function ($query) use ($request) {
+                $query->whereRaw(DB::raw("'".$request->input('start')."' between start and end"))
+                    ->orWhereRaw(DB::raw("'".$request->input('end')."' between start and end"));
+            })->get();
+    }
+
 
 }

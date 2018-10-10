@@ -35,7 +35,7 @@ class CallsController extends Controller
      */
     public function index()
     {
-        return view("Calls::index");
+        return view("Calls::index", ['unity_id' => 1]);
     }
 
     /**

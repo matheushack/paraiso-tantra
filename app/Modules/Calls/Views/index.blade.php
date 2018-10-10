@@ -31,12 +31,12 @@
             <div class="m-alert__icon m-alert__icon--top">
             </div>
             <div class="m-alert__text">
-                <form class="m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed" id="form-account" name="form-account" enctype="multipart/form-data">
+                <form class="m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed" id="form-account" name="form-account">
                     @csrf
                     <div class="m-portlet__body">
                         <div class="form-group m-form__group row">
                             <div class="col-lg-4">
-                                @component('Units::components.units')
+                                @component('Units::components.units', ['unity_id' => $unity_id])
                                 @endcomponent
                             </div>
                         </div>
@@ -65,7 +65,7 @@
                         </div>
                     </div>
                     <div class="m-portlet__body">
-                        <div id="atendimento" data-url="{{route('calls.calendar')}}"></div>
+                        <div id="atendimento" data-url="{{route('calls.calendar')}}" data-unity="{{isset($unity_id) ? $unity_id : ''}}"></div>
                     </div>
                 </div>
             </div>

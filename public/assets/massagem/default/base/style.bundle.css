@@ -42333,7 +42333,11 @@ select.m-select2 {
     border: 1px solid #ebedf2;
     -webkit-box-shadow: 0 1px 15px 1px rgba(69, 65, 78, .08);
     -moz-box-shadow: 0 1px 15px 1px rgba(69, 65, 78, .08);
-    box-shadow: 0 1px 15px 1px rgba(69, 65, 78, .08)
+    box-shadow: 0 1px 15px 1px rgba(69, 65, 78, .08);
+}
+
+.fc-agendaDay-view .fc-body .fc-event-container .fc-time-grid-event{
+    /*padding-bottom: 35px;*/
 }
 
 .fc-unthemed .fc-event-dot.fc-not-start.fc-not-end,
@@ -42357,7 +42361,7 @@ select.m-select2 {
 }
 
 .fc-unthemed .fc-description {
-    color: #7b7e8a
+    /*color: #7b7e8a*/
 }
 
 .fc-unthemed .fc-list-item-title>a[href]:hover {

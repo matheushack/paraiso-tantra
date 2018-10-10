@@ -27,6 +27,7 @@ var ParaisoTantra = function() {
         });
 
         $(".mask-date").inputmask("dd/mm/yyyy");
+        $(".mask-dateTime").inputmask("99/99/9999 99:99");
         $(".mask-currency").inputmask("R$ 999.999,99",{numericInput:!0});
         $('.mask-time').inputmask('99:99');
         $('.mask-cep').inputmask('99999-999');

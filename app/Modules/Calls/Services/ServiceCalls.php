@@ -64,14 +64,29 @@ class ServiceCalls
         $calendar = [];
         $calls = Calls::all();
 
+
         foreach($calls as $call){
+            $colors = [];
+            $employees = [];
+
+            $call->employees->each(function($item) use(&$colors, &$employees){
+                $colors[] = hexdec($item->employee()->color);
+                $employees[] = $item->employee()->name;
+            });
+
+            $color = dechex(array_sum($colors));
+            $color = strlen($color) == 6 ? $color : str_pad($color, 6, 0, STR_PAD_LEFT);
+            $color = substr($color,0, 6);
+
             $calendar[] = [
                 'id' => $call->id,
-                'title' => $call->service()->name,
-                'start' => Carbon::parse($call->start)->timestamp,
-                'end' => Carbon::parse($call->end)->timestamp,
-                'backgroundColor' => 'red',
-                'borderColor' => 'red'
+                'title' => 'Cliente: '.$call->customer()->name.PHP_EOL.'Serviço: '.$call->service()->name,
+                'description' => 'Terapeutas: '.implode('/', $employees),
+                'start' => $call->start->format('Y-m-d H:i:s'),
+                'end' => $call->end->format('Y-m-d H:i:s'),
+                'backgroundColor' => '#'.$color,
+                'borderColor' => '#'.$color,
+                'textColor' => isBright($color) ? '#000000' : '#FFFFFF'
             ];
         }
 
@@ -129,10 +144,10 @@ class ServiceCalls
             if(!app(ServiceEmployees::class)->availability($request))
                 throw new \Exception('employees');
 
-            if(!app(ServiceRooms::class)->availability($request))
-                throw new \Exception('rooms');
+            $rooms = app(ServiceRooms::class)->availability($request);
 
-            $rooms = app(Rooms::class)->where('unity_id', '=', $request->input('unity_id'))->get();
+            if($rooms->count() == 0)
+                throw new \Exception('rooms');
 
             return [
                 'success' => true,

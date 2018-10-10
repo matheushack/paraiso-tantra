@@ -14,7 +14,7 @@
                     <div class="m-portlet__body">
                         <div class="form-group m-form__group row">
                             <div class="col-lg-6">
-                                @component('Units::components.units')
+                                @component('Units::components.units', ['unity_id' => $unity_id])
                                 @endcomponent
                             </div>
                             <div class="col-lg-6">
@@ -31,7 +31,7 @@
                         <div class="form-group m-form__group row">
                             <div class="col-lg-3">
                                 <label>Início</label>
-                                <input type="text" name="start" id="start" class="form-control m-input" readonly value="{{\Carbon\Carbon::now()->format('d/m/Y H:i')}}">
+                                <input type="text" name="start" id="start" class="form-control m-input mask-dateTime" value="{{\Carbon\Carbon::now()->format('d/m/Y H:i')}}">
                             </div>
                             <div class="col-lg-3">
                                 <label class="w-100">&nbsp;</label>
@@ -69,6 +69,7 @@
 @push('scripts')
     <script>
         $(document).ready(function(){
+            ParaisoTantra.masks();
             $("body").on("click", "#btn-availability", function(e){
                 e.preventDefault();
                 var form = $('#form-call');
