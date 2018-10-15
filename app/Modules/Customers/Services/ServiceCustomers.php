@@ -74,6 +74,7 @@ class ServiceCustomers
                 $customer->email = $request->input('email');
                 $customer->phone = $request->input('phone');
                 $customer->cell_phone = $request->input('cell_phone');
+                $customer->gender = $request->input('gender');
 
                 if (!$customer->save())
                     throw new \Exception('Não foi possível editar o cliente. Por favor, tente mais tarde!');

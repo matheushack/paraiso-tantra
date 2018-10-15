@@ -65,7 +65,7 @@
                         </div>
                     </div>
                     <div class="m-portlet__body">
-                        <div id="atendimento" data-url="{{route('calls.calendar')}}" data-unity="{{isset($unity_id) ? $unity_id : ''}}"></div>
+                        <div id="atendimento" data-url="{{route('calls.calendar')}}" data-unity="{{isset($unity_id) ? $unity_id : ''}}" data-url-edit="{{url('atendimentos/editar/')}}"></div>
                     </div>
                 </div>
             </div>

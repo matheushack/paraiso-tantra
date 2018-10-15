@@ -32,6 +32,7 @@ class ServiceCalls
         $service = Services::find($request->input('service_id'));
         $start = Carbon::createFromFormat('d/m/Y H:i', $request->input('start'));
         $end = Carbon::createFromFormat('d/m/Y H:i', $request->input('start'))->addMinutes($service->duration);
+        $firstCall = !empty($request->input('first_call')) ? true : false;
 
         $request->merge(['start' => $start->format('Y-m-d H:i:s')]);
         $request->merge(['end' => $end->format('Y-m-d H:i:s')]);
@@ -39,6 +40,7 @@ class ServiceCalls
         $request->merge(['amount' => $service->amount]);
         $request->merge(['discount' => $service->discount]);
         $request->merge(['total' => $service->amount - $service->discount]);
+        $request->merge(['first_call' => $firstCall]);
 
         return $request;
     }

@@ -72,6 +72,7 @@ class CallsController extends Controller
             'start' => 'required',
             'room_id' => 'required',
             'customer_id' => 'required',
+            'first_call' => 'required',
         ]);
 
         $return = $this->serviceCalls->store($request);
@@ -98,7 +99,7 @@ class CallsController extends Controller
      */
     public function edit($id)
     {
-        //
+        return view("Calls::modal-edit");
     }
 
     /**

@@ -35,10 +35,9 @@ var Calendar = function() {
                 t.hasClass("fc-day-grid-event")?(t.data("content", e.description), t.data("placement", "top"), mApp.initPopover(t)): t.hasClass("fc-time-grid-event")?t.find(".fc-title").append('<div class="fc-description">'+e.description+"</div>"): 0!==t.find(".fc-list-item-title").lenght&&t.find(".fc-list-item-title").append('<div class="fc-description">'+e.description+"</div>")
             },
             eventClick: function(calEvent, jsEvent, view) {
-
-                alert('Event: ' + calEvent.title);
-                alert('Coordinates: ' + jsEvent.pageX + ',' + jsEvent.pageY);
-                alert('View: ' + view.name);
+                $('#m-wrapper .modal-body').load(calendar.data('url-edit')+'/'+calEvent.id,function(){
+                    $('#new-call').modal({show:true});
+                });
             }
         });
     };

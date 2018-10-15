@@ -17,6 +17,7 @@ if(!function_exists('dataTableCustomers')) {
             'dColumns' => [
                 ['label' => '#', 'field' => 'id', 'width' => '20px'],
                 ['label' => 'Cliente', 'field' => 'name', 'width' => '250px'],
+                ['label' => 'Sexo', 'field' => 'gender', 'width' => '50px'],
                 ['label' => 'Telefone', 'field' => 'phone'],
                 ['label' => 'Celular', 'field' => 'cell_phone'],
                 ['label' => 'Ações', 'field' => 'actions', 'width' => '70px']

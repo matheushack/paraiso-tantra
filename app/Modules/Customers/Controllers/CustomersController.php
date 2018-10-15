@@ -53,7 +53,8 @@ class CustomersController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required'
+            'name' => 'required',
+            'gender' => 'required'
         ]);
 
         $return = $this->serviceCustomers->store($request);
@@ -83,7 +84,8 @@ class CustomersController extends Controller
     public function update(Request $request)
     {
         $request->validate([
-            'name' => 'required'
+            'name' => 'required',
+            'gender' => 'required'
         ]);
 
         $return = $this->serviceCustomers->update($request);

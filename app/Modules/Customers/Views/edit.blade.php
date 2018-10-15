@@ -80,6 +80,19 @@
                             </label>
                             <input name="cell_phone" type="text" value="{{$customer->cell_phone}}" class="form-control m-input mask-cell-phone" id="cell_phone" placeholder="">
                         </div>
+                        <div class="col-lg-2">
+                            <label for="">Sexo</label>
+                            <div class="m-radio-inline">
+                                <label class="m-radio">
+                                    <input type="radio" name="gender" value="M" {{$customer->gender == 'M' ? 'checked="checked"' : ''}}> M
+                                    <span></span>
+                                </label>
+                                <label class="m-radio">
+                                    <input type="radio" name="gender" value="F" {{$customer->gender == 'F' ? 'checked="checked"' : ''}}> F
+                                    <span></span>
+                                </label>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="m-portlet__foot m-portlet__no-border m-portlet__foot--fit">

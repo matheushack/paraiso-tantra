@@ -9,7 +9,7 @@ class Customers extends Model {
     protected $table = 'customers';
 
     protected $fillable = [
-        'name', 'email', 'phone', 'cell_phone'
+        'name', 'email', 'phone', 'cell_phone', 'gender'
     ];
 
     public static function optionSelect()

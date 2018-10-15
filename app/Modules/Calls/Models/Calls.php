@@ -12,7 +12,7 @@ class Calls extends Model {
     protected $table = 'calls';
 
     protected $fillable = [
-        'unity_id', 'service_id', 'room_id', 'customer_id', 'start', 'end', 'amount', 'discount', 'total'
+        'unity_id', 'service_id', 'room_id', 'customer_id', 'start', 'end', 'amount', 'discount', 'total', 'first_call', 'description'
     ];
 
     protected $dates = ['start', 'end'];
