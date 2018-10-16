@@ -9,5 +9,6 @@ Route::group(['prefix' => 'clientes', 'module' => 'Customers', 'middleware' => [
     Route::get('editar/{id}', 'CustomersController@edit');
     Route::post('atualizar', 'CustomersController@update')->name('customers.update');
     Route::post('deletar/{id}', 'CustomersController@destroy')->name('customers.destroy');
+    Route::post('buscar', 'CustomersController@search')->name('customers.search');
 
 });

@@ -9,6 +9,7 @@
 namespace App\Modules\Customers\Services;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\View;
 use Yajra\DataTables\DataTables;
 use App\Modules\Customers\Models\Customers;
 use Illuminate\Support\Facades\DB as Capsule;
@@ -106,6 +107,46 @@ class ServiceCustomers
             return [
                 'message' => $e->getMessage(),
                 'deleted' => false
+            ];
+        }
+    }
+
+    public function search(Request $request)
+    {
+        try {
+            $query = Customers::select('*');
+
+            if($request->input('name'))
+                $query->where('name', 'like', '%'.$request->input('name').'%');
+
+            if($request->input('email'))
+                $query->where('email', '=', $request->input('email'));
+
+            if($request->input('phone'))
+                $query->where('phone', '=', $request->input('phone'));
+
+            if($request->input('cell_phone'))
+                $query->where('cell_phone', '=', $request->input('cell_phone'));
+
+            if($request->input('gender'))
+                $query->where('gender', '=', $request->input('gender'));
+
+            $customers = $query->get();
+
+            if($customers->count() == 0)
+                throw new \Exception('404');
+
+            return [
+                'success' => true,
+                'html' => (string) View::make('Customers::components.search', [
+                    'status' => 'success',
+                    'customers' => $customers
+                ])
+            ];
+        }catch (\Exception $e){
+            return [
+                'success' => false,
+                'html' => (string) View::make('Customers::components.search', ['status' => $e->getMessage()])
             ];
         }
     }

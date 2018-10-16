@@ -1,12 +1,17 @@
 <label>Cliente</label>
-<div>
+<div class="input-group">
     {!! Form::select('customer_id', \App\Modules\Customers\Models\Customers::optionSelect(), (isset($id) ? $id : null), [
             'class' => 'form-control m-input m-select2',
             'id' => 'customer_id',
             'required' => 'required',
             'multiple' => 'multiple',
-            'style' => 'width: 100%'
+            'style' => 'width: 93%'
     ]) !!}
+    <div class="input-group-append">
+        <button class="btn btn-info" id="btn-search" type="button" data-toggle="modal" data-target="#search-customers">
+            <i class="fa fa-search"></i>
+        </button>
+    </div>
 </div>
 
 @push('scripts')

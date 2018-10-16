@@ -83,6 +83,8 @@
     </div>
 </div>
 
+@include('Customers::search')
+
 
 @push('scripts')
     <script>

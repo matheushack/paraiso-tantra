@@ -104,4 +104,11 @@ class CustomersController extends Controller
         $return = $this->serviceCustomers->destroy($id);
         return response()->json($return, 200);
     }
+
+    public function search(Request $request)
+    {
+        $return = $this->serviceCustomers->search($request);
+
+        return response()->json($return, 200);
+    }
 }
