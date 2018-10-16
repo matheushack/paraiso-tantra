@@ -36,7 +36,7 @@
                     <div class="m-portlet__body">
                         <div class="form-group m-form__group row">
                             <div class="col-lg-4">
-                                @component('Units::components.units', ['unity_id' => $unity_id])
+                                @component('Units::components.units', ['unity_id' => $unity_id, 'id' => 'filter_unity_id'])
                                 @endcomponent
                             </div>
                         </div>

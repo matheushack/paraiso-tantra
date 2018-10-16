@@ -41,9 +41,9 @@ class CallsController extends Controller
     /**
      *
      */
-    public function calendar()
+    public function calendar(Request $request)
     {
-        $calendar = $this->serviceCalls->calendar();
+        $calendar = $this->serviceCalls->calendar($request);
         return response()->json($calendar, 200);
     }
 

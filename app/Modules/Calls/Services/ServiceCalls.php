@@ -61,11 +61,13 @@ class ServiceCalls
     /**
      * @return string
      */
-    public function calendar()
+    public function calendar(Request $request)
     {
         $calendar = [];
-        $calls = Calls::all();
+        $calls = Calls::where('unity_id', '=', $request->input('unity_id'))->get();
 
+        if($calls->count() == 0)
+            return [];
 
         foreach($calls as $call){
             $colors = [];
