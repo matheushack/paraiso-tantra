@@ -55283,3 +55283,5 @@ body.m-content--skin-light2 {
         padding: 0 0 0 5px
     }
 }
+
+.modal { overflow: auto !important; }
