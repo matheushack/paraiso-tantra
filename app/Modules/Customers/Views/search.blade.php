@@ -81,9 +81,7 @@
             $("body").on("click", ".customer-select", function(e){
                 var value = $(this).val();
                 var name = $(this).data('name');
-
-                var newOption = new Option(name, value, true, true);
-                $('#customer_id').append(newOption).val(value).trigger('change');
+                $('#customer_id').val(value).trigger('change');
                 $('#search-customers').find('.close').trigger('click');
             });
 
