@@ -11,57 +11,7 @@
             </div>
             <form class="m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed" id="form-call">
                 <div class="modal-body">
-                    <div class="m-portlet__body">
-                        <div class="form-group m-form__group row">
-                            <div class="col-lg-12">
-                                @component('Customers::components.customers')
-                                @endcomponent
-                            </div>
-                        </div>
-                        <div class="form-group m-form__group row">
-                            <div class="col-lg-12">
-                                <label>Observações</label>
-                                <textarea name="description" id="description" class="form-control m-input" rows="3"></textarea>
-                            </div>
-                        </div>
-                        <div class="form-group m-form__group row">
-                            <div class="col-lg-6">
-                                @component('Units::components.units', ['unity_id' => $unity_id])
-                                @endcomponent
-                            </div>
-                            <div class="col-lg-6">
-                                @component('Services::components.services')
-                                @endcomponent
-                            </div>
-                        </div>
-                        <div class="form-group m-form__group row">
-                            <div class="col-lg-4">
-                                <label for="">Primeiro atendimento?</label>
-                                <div class="m-radio-inline">
-                                    <label class="m-radio">
-                                        <input type="radio" name="first_call" value="1"> Sim
-                                        <span></span>
-                                    </label>
-                                    <label class="m-radio">
-                                        <input type="radio" name="first_call" value="0" checked> Não
-                                        <span></span>
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="col-lg-3">
-                                <label>Início</label>
-                                <input type="text" name="start" id="start" class="form-control m-input mask-dateTime" value="{{\Carbon\Carbon::now()->format('d/m/Y H:i')}}">
-                            </div>
-                            <div class="col-lg-3">
-                                <label class="w-100">&nbsp;</label>
-                                <button class="btn btn-info" id="btn-availability">
-                                    <i class="fa fa-search"></i> Disponibilidade
-                                </button>
-                            </div>
-                        </div>
 
-                        <div class="form-group m-form__group row" id="availability-box"></div>
-                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">
@@ -84,6 +34,7 @@
     <script>
         $(document).ready(function(){
             ParaisoTantra.masks();
+
             $("body").on("click", "#btn-availability", function(e){
                 e.preventDefault();
                 var form = $('#form-call');

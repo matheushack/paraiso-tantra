@@ -52,9 +52,9 @@ class CallsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        return view("Calls::create", ['unity_id' => $request->input('unity_id')]);
     }
 
     /**
@@ -81,17 +81,6 @@ class CallsController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
@@ -99,7 +88,8 @@ class CallsController extends Controller
      */
     public function edit($id)
     {
-        return view("Calls::modal-edit");
+        $call = $this->serviceCalls->find($id);
+        return view("Calls::edit", ['call' => $call]);
     }
 
     /**
@@ -122,7 +112,8 @@ class CallsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $return = $this->serviceCalls->destroy($id);
+        return response()->json($return, 200);
     }
 
     public function availability(Request $request)

@@ -12,6 +12,7 @@ namespace App\Modules\Calls\Services;
 use App\Modules\Calls\Models\CallEmployees;
 use App\Modules\Rooms\Services\ServiceRooms;
 use Carbon\Carbon;
+use Grpc\Call;
 use Illuminate\Http\Request;
 use App\Modules\Rooms\Models\Rooms;
 use App\Modules\Calls\Models\Calls;
@@ -56,6 +57,11 @@ class ServiceCalls
         $request->merge(['duration' => $service->duration]);
 
         return $request;
+    }
+
+    public function find($id)
+    {
+        return Calls::find($id);
     }
 
     /**
@@ -176,4 +182,23 @@ class ServiceCalls
             ];
         }
     }
+
+    public function destroy($id)
+    {
+        try {
+            $call = Calls::find($id);
+            $call->delete();
+
+            return [
+                'message' => 'Atendimento deletado com sucesso!',
+                'deleted' => true
+            ];
+        }catch(\Exception $e){
+            return [
+                'message' => $e->getMessage(),
+                'deleted' => false
+            ];
+        }
+    }
+
 }

@@ -52,7 +52,7 @@
                         <div class="m-portlet__head-tools">
                             <ul class="m-portlet__nav">
                                 <li class="m-portlet__nav-item">
-                                    <a href="javascript:void(0);" class="btn btn-success m-btn m-btn--custom m-btn--icon m-btn--air" data-toggle="modal" data-target="#new-call">
+                                    <a href="javascript:void(0);" class="btn btn-success m-btn m-btn--custom m-btn--icon m-btn--air" id="btn-new-call" data-url="{{route('calls.create')}}">
                                         <span>
                                             <i class="la la-plus"></i>
                                             <span>
@@ -72,7 +72,8 @@
         </div>
     </div>
 
-    @include('Calls::modal')
+    @include('Calls::includes.create')
+    @include('Calls::includes.edit')
 @endsection
 
 @push('css')

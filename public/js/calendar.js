@@ -32,13 +32,42 @@ var Calendar = function() {
                 t.css({'cursor': 'pointer'});
                 t.find('.fc-time').css({'color': e.textColor});
                 t.find('.fc-title').css({'color': e.textColor});
-                t.hasClass("fc-day-grid-event")?(t.data("content", e.description), t.data("placement", "top"), mApp.initPopover(t)): t.hasClass("fc-time-grid-event")?t.find(".fc-title").append('<div class="fc-description">'+e.description+"</div>"): 0!==t.find(".fc-list-item-title").lenght&&t.find(".fc-list-item-title").append('<div class="fc-description">'+e.description+"</div>")
+                t.hasClass("fc-day-grid-event")?(t.data("content", e.description), t.data("placement", "top"), mApp.initPopover(t)): t.hasClass("fc-time-grid-event")?t.find(".fc-title").append('<div class="fc-description">'+e.description+"</div>"): 0!==t.find(".fc-list-item-title").lenght&&t.find(".fc-list-item-title").append('<div class="fc-description">'+e.description+"</div>");
             },
             eventClick: function(calEvent, jsEvent, view) {
-                $('#m-wrapper .modal-body').load(calendar.data('url-edit')+'/'+calEvent.id,function(){
-                    $('#new-call').modal({show:true});
+                $.ajax({
+                    url: calendar.data('url-edit')+'/'+calEvent.id,
+                    type: 'GET',
+                    beforeSend: function(xhr, type) {
+                        if (!type.crossDomain) {
+                            xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'));
+                        }
+                    },
+                    success: function (data) {
+                        $('#form-edit-call > .modal-body').html(data);
+                        $('#edit-call').modal('show');
+                    }
                 });
             }
+        });
+
+        $('body').on('click', '#btn-new-call', function(){
+            $.ajax({
+                url: $(this).data('url'),
+                data:{
+                    unity_id: $('#filter_unity_id').val()
+                },
+                type: 'GET',
+                beforeSend: function(xhr, type) {
+                    if (!type.crossDomain) {
+                        xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'));
+                    }
+                },
+                success: function (data) {
+                    $('#form-call > .modal-body').html(data);
+                    $('#new-call').modal('show');
+                }
+            });
         });
     };
 
@@ -83,8 +112,18 @@ var Calendar = function() {
                     t.hasClass("fc-day-grid-event")?(t.data("content", e.description), t.data("placement", "top"), mApp.initPopover(t)): t.hasClass("fc-time-grid-event")?t.find(".fc-title").append('<div class="fc-description">'+e.description+"</div>"): 0!==t.find(".fc-list-item-title").lenght&&t.find(".fc-list-item-title").append('<div class="fc-description">'+e.description+"</div>")
                 },
                 eventClick: function(calEvent, jsEvent, view) {
-                    $('#m-wrapper .modal-body').load(calendar.data('url-edit')+'/'+calEvent.id,function(){
-                        $('#new-call').modal({show:true});
+                    $.ajax({
+                        url: calendar.data('url-edit')+'/'+calEvent.id,
+                        type: 'GET',
+                        beforeSend: function(xhr, type) {
+                            if (!type.crossDomain) {
+                                xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'));
+                            }
+                        },
+                        success: function (data) {
+                            $('#form-edit-call > .modal-body').html(data);
+                            $('#edit-call').modal('show');
+                        }
                     });
                 }
             });

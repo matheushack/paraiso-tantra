@@ -6,8 +6,11 @@ use App\Modules\Customers\Models\Customers;
 use App\Modules\Rooms\Models\Rooms;
 use App\Modules\Services\Models\Services;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Calls extends Model {
+class Calls extends Model
+{
+    use SoftDeletes;
 
     protected $table = 'calls';
 
@@ -15,7 +18,7 @@ class Calls extends Model {
         'unity_id', 'service_id', 'room_id', 'customer_id', 'start', 'end', 'amount', 'discount', 'total', 'first_call', 'description'
     ];
 
-    protected $dates = ['start', 'end'];
+    protected $dates = ['start', 'end', 'deleted_at'];
 
     public function service()
     {

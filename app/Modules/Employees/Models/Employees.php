@@ -3,8 +3,11 @@
 namespace App\Modules\Employees\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Employees extends Model {
+class Employees extends Model
+{
+    use SoftDeletes;
 
     protected $table = 'employees';
 
@@ -12,7 +15,7 @@ class Employees extends Model {
         'name', 'cpf', 'gender', 'birth_date', 'email', 'phone', 'cell_phone', 'color', 'commission', 'is_access_system', 'observation'
     ];
 
-    protected $dates = ['birth_date'];
+    protected $dates = ['birth_date','deleted_at'];
 
     public static function optionSelect($employees = [])
     {
