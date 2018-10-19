@@ -179,16 +179,25 @@ class ServiceEmployees
     public function availability(Request $request)
     {
         try {
-            $availability = CallEmployees::from('call_employees as Ce')
+            $employeesBusy = CallEmployees::from('call_employees as Ce')
                 ->join('calls AS C', 'Ce.call_id', '=', 'C.id')
-                ->whereIn('Ce.employee_id', $request->input('employees'))
                 ->where(function ($query) use ($request) {
                     $query->whereRaw(DB::raw("'".$request->input('start')."' between C.start and C.end"))
                         ->orWhereRaw(DB::raw("'".$request->input('end')."' between C.start and C.end"));
                 })
-                ->count();
+                ->get();
 
-            return $availability > 0 ? false : true;
+            if($employeesBusy->count() == 0){
+                return Employees::all();
+            }
+
+            $employees = [];
+
+            $employeesBusy->each(function($item) use(&$employees){
+                $employees[] = $item->employee_id;
+            });
+
+            return Employees::whereNotIn('id', $employees)->get();
         }catch(\Exception $e){
             return false;
         }

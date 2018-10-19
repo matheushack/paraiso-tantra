@@ -35,12 +35,6 @@
                             </div>
                         </div>
                         <div class="form-group m-form__group row">
-                            <div class="col-lg-12">
-                                @component('Employees::components.employees')
-                                @endcomponent
-                            </div>
-                        </div>
-                        <div class="form-group m-form__group row">
                             <div class="col-lg-4">
                                 <label for="">Primeiro atendimento?</label>
                                 <div class="m-radio-inline">
@@ -121,6 +115,12 @@
                         }
 
                         $('#availability-box').html(data.html);
+
+                        if (!$('#employees').hasClass('select2-hidden-accessible')){
+                            $('#employees').select2({
+                                placeholder: "Selecionar os terapeutas para o atendimento"
+                            });
+                        }
                     }
                 });
             });

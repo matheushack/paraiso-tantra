@@ -139,13 +139,14 @@ class ServiceCalls
             $request->validate([
                 'unity_id' => 'required',
                 'service_id' => 'required',
-                'employees' => 'required',
                 'start' => 'required'
             ]);
 
             $request = $this->formatRequestAvailability($request);
 
-            if(!app(ServiceEmployees::class)->availability($request))
+            $employees = app(ServiceEmployees::class)->availability($request);
+
+            if($employees->count() == 0)
                 throw new \Exception('employees');
 
             $rooms = app(ServiceRooms::class)->availability($request);
@@ -158,6 +159,7 @@ class ServiceCalls
                 'html' => (string) View::make('Calls::availability', [
                     'status' => 'success',
                     'rooms' => $rooms,
+                    'employees' => $employees,
                     'duration' => $request->input('duration'),
                     'end' => Carbon::parse($request->input('end'))->format('d/m/Y H:i')
                 ])
