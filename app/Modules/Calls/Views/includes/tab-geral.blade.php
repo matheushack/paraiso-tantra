@@ -38,11 +38,11 @@
     </div>
     <div class="col-lg-3">
         <label>Início</label>
-        <input type="text" name="start" id="start" class="form-control m-input mask-dateTime" value="{{\Carbon\Carbon::parse($call->start)->format('d/m/Y H:i')}}">
+        <input type="text" name="start" id="start" class="form-control m-input mask-dateTime" value="{{\Carbon\Carbon::parse($call->start)->format('d/m/Y H:i')}}" disabled>
     </div>
     <div class="col-lg-3">
         <label>Fim</label>
-        <input type="text" name="end" id="end" class="form-control m-input mask-dateTime" value="{{\Carbon\Carbon::parse($call->end)->format('d/m/Y H:i')}}">
+        <input type="text" name="end" id="end" class="form-control m-input mask-dateTime" value="{{\Carbon\Carbon::parse($call->end)->format('d/m/Y H:i')}}" disabled>
     </div>
 </div>
 
