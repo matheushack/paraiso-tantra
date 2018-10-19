@@ -17,6 +17,7 @@
             @include('Calls::includes.tab-geral')
         </div>
         <div class="tab-pane" id="tab-financeiro" role="tabpanel">
+            MÓDULO 3 - FINANCEIRO
         </div>
     </div>
 
