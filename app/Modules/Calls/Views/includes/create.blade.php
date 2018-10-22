@@ -37,7 +37,7 @@
 
             $("body").on("click", "#btn-availability", function(e){
                 e.preventDefault();
-                var form = $('#form-call');
+                var form = $("#"+$(this).data('form'));
 
                 $.ajax({
                     url: '{{route('calls.availability')}}',
@@ -71,6 +71,15 @@
                             $('#employees').select2({
                                 placeholder: "Selecionar os terapeutas para o atendimento"
                             });
+                        }
+
+                        if(typeof data.room_id != 'undefined' && data.room_id != '')
+                            $('input[name="room_id"]').prop('checked', true);
+
+                        if(typeof data.employees_id_edit != 'undefined' && data.employees_id_edit != ''){
+                            var $employees = data.employees_id_edit.split(",");
+
+                            $("#employees").val($employees).trigger('change');
                         }
                     }
                 });

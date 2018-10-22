@@ -41,7 +41,7 @@
         </div>
         <div class="col-lg-3">
             <label class="w-100">&nbsp;</label>
-            <button class="btn btn-info" id="btn-availability">
+            <button class="btn btn-info" id="btn-availability" data-form="form-call">
                 <i class="fa fa-search"></i> Disponibilidade
             </button>
         </div>

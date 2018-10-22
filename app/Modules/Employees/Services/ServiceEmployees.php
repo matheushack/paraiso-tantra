@@ -197,6 +197,16 @@ class ServiceEmployees
                 $employees[] = $item->employee_id;
             });
 
+            if($request->input('employees_id_edit')) {
+                $employeesEdit = explode(',', $request->input('employees_id_edit'));
+                $employeesEdit = is_array($employeesEdit) ? $employeesEdit : [$employeesEdit];
+
+                foreach($employeesEdit as $employee){
+                    $key = array_search($employee, $employees);
+                    unset($employees[$key]);
+                }
+            }
+
             return Employees::whereNotIn('id', $employees)->get();
         }catch(\Exception $e){
             return false;

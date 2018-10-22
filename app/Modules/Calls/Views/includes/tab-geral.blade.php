@@ -1,3 +1,8 @@
+<input type="hidden" name="call_id" value="{{$call->id}}">
+<input type="hidden" name="room_id_edit" value="{{$call->room_id}}">
+<input type="hidden" name="employees_id_edit" value="{{$employees}}">
+<input type="hidden" name="service_id" value="{{$call->service_id}}">
+
 <div class="form-group m-form__group row">
     <div class="col-lg-12">
         @component('Customers::components.customers', ['id' => 1])
@@ -7,9 +12,7 @@
 <div class="form-group m-form__group row">
     <div class="col-lg-12">
         <label>Observações</label>
-        <textarea name="description" id="description" class="form-control m-input" rows="3">
-                {{$call->description}}
-            </textarea>
+        <textarea name="description" id="description" class="form-control m-input" rows="3">{{$call->description}}</textarea>
     </div>
 </div>
 <div class="form-group m-form__group row">
@@ -18,7 +21,7 @@
         @endcomponent
     </div>
     <div class="col-lg-6">
-        @component('Services::components.services', ['id' => $call->service_id])
+        @component('Services::components.services', ['id' => $call->service_id, 'disabled' => true])
         @endcomponent
     </div>
 </div>
@@ -38,11 +41,13 @@
     </div>
     <div class="col-lg-3">
         <label>Início</label>
-        <input type="text" name="start" id="start" class="form-control m-input mask-dateTime" value="{{\Carbon\Carbon::parse($call->start)->format('d/m/Y H:i')}}" disabled>
+        <input type="text" name="start" id="start" class="form-control m-input mask-dateTime" value="{{\Carbon\Carbon::parse($call->start)->format('d/m/Y H:i')}}" readonly>
     </div>
     <div class="col-lg-3">
-        <label>Fim</label>
-        <input type="text" name="end" id="end" class="form-control m-input mask-dateTime" value="{{\Carbon\Carbon::parse($call->end)->format('d/m/Y H:i')}}" disabled>
+        <label class="w-100">&nbsp;</label>
+        <button class="btn btn-info" id="btn-availability" data-form="form-edit-call">
+            <i class="fa fa-search"></i> Disponibilidade
+        </button>
     </div>
 </div>
 

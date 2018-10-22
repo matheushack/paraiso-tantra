@@ -4,7 +4,7 @@
         'id' => 'service_id',
         'required' => 'required',
         'data-live-search' => 'true'
-]) !!}
+] + ((isset($disabled) ? ['disabled' => ''] : []))) !!}
 
 @push('scripts')
     <script>

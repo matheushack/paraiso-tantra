@@ -123,8 +123,13 @@ class ServiceRooms
             if($availabilitySub->count() > 0) {
                 $roomsCalls = [];
                 $availabilitySub->each(function($item) use(&$roomsCalls){
-                    $roomsCalls[] = $item->unity_id;
+                    $roomsCalls[] = $item->room_id;
                 });
+
+                if($request->input('room_id_edit')) {
+                    $key = array_search($request->input('room_id_edit'), $roomsCalls);
+                    unset($roomsCalls[$key]);
+                }
 
                 $query->whereNotIn('id', $roomsCalls);
             }
@@ -137,7 +142,7 @@ class ServiceRooms
 
     private function availabilitySub(Request $request)
     {
-        return Calls::select('unity_id')
+        return Calls::select('room_id')
             ->where('unity_id', '=', $request->input('unity_id'))
             ->where(function ($query) use ($request) {
                 $query->whereRaw(DB::raw("'".$request->input('start')."' between start and end"))

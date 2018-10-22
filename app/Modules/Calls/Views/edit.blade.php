@@ -161,5 +161,7 @@
                 }
             );
         });
+
+        $('#btn-availability').trigger('click');
     });
 </script>

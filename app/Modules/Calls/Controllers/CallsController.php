@@ -89,7 +89,12 @@ class CallsController extends Controller
     public function edit($id)
     {
         $call = $this->serviceCalls->find($id);
-        return view("Calls::edit", ['call' => $call]);
+
+        $call->employees()->get()->each(function($item) use(&$employees){
+            $employees[] = $item->employee_id;
+        });
+
+        return view("Calls::edit", ['call' => $call, 'employees' => implode(',',$employees)]);
     }
 
     /**
@@ -99,9 +104,21 @@ class CallsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        $request->validate([
+            'unity_id' => 'required',
+            'service_id' => 'required',
+            'employees' => 'required',
+            'start' => 'required',
+            'room_id' => 'required',
+            'customer_id' => 'required',
+            'first_call' => 'required',
+        ]);
+
+        $return = $this->serviceCalls->update($request);
+
+        return response()->json($return, 200);
     }
 
     /**
@@ -119,7 +136,6 @@ class CallsController extends Controller
     public function availability(Request $request)
     {
         $return = $this->serviceCalls->availability($request);
-
         return response()->json($return, 200);
     }
 }

@@ -139,6 +139,51 @@ class ServiceCalls
         }
     }
 
+    public function update(Request $request)
+    {
+        try {
+            Capsule::transaction(function() use ($request) {
+                $request = $this->formatRequest($request);
+
+                $call = Calls::find($request->input('call_id'));
+
+                if($call->count() == 0)
+                    throw new \Exception('Atendimento não encontrado!');
+
+                $call->unity_id = $request->input('unity_id');
+                $call->service_id = $request->input('service_id');
+                $call->room_id = $request->input('room_id');
+                $call->customer_id = $request->input('customer_id');
+                $call->first_call = $request->input('first_call');
+                $call->description = $request->input('description');
+                $call->unity_id = $request->input('unity_id');
+
+                if(!$call->save())
+                    throw new \Exception('Houve um problema ao tentar atualziar o atendimento. Por favor, tente mais tarde!');
+
+                if(!$this->destroyCallEmployees($call))
+                    throw new \Exception('Houve um problema ao tentar atualziar os terapeutas do atendimento. Por favor, tente mais tarde!');
+
+                foreach($request->input('employees') as $employee){
+                    if(!CallEmployees::create(['call_id' => $call->id, 'employee_id' => $employee]))
+                        throw new \Exception('Houve um problema ao tentar atualziar os terapeutas do atendimento. Por favor, tente mais tarde!');
+                }
+
+
+            });
+
+            return [
+                'message' => 'Atendimento atualizado com sucesso!',
+                'save' => true
+            ];
+        }catch(\Exception $e){
+            return [
+                'message' => $e->getMessage(),
+                'save' => false
+            ];
+        }
+    }
+
     public function availability(Request $request)
     {
         try {
@@ -162,6 +207,8 @@ class ServiceCalls
 
             return [
                 'success' => true,
+                'room_id' => ($request->input('room_id_edit') ? $request->input('room_id_edit') : ''),
+                'employees_id_edit' => ($request->input('employees_id_edit') ? $request->input('employees_id_edit') : ''),
                 'html' => (string) View::make('Calls::availability', [
                     'status' => 'success',
                     'rooms' => $rooms,
@@ -199,6 +246,12 @@ class ServiceCalls
                 'deleted' => false
             ];
         }
+    }
+
+    public function destroyCallEmployees(Calls $call)
+    {
+        return CallEmployees::where('call_id', '=', $call->id)
+            ->delete();
     }
 
 }

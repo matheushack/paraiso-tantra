@@ -31,3 +31,59 @@
 </div>
 
 @include('Customers::search')
+
+@push('scripts')
+    <script>
+        $(document).ready(function(){
+
+            $("#form-edit-call").validate({
+                invalidHandler: function(event, validator) {
+                    mApp.scrollTo("#form-call");
+
+                    swal({
+                        title: "",
+                        text: "Existem alguns erros do seu formulário. Por favor, corrija-os!",
+                        type: "error",
+                        confirmButtonClass: "btn btn-secondary m-btn m-btn--wide"
+                    });
+                },
+
+                submitHandler: function (form) {
+                    $.ajax({
+                        url: '{{route('calls.update')}}',
+                        type: 'POST',
+                        data: $(form).serialize(),
+                        beforeSend: function(xhr, type) {
+                            if (!type.crossDomain) {
+                                xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'));
+                            }
+                        },
+                        success: function (data) {
+                            if(data.save){
+                                swal({
+                                    title: 'Atendimento',
+                                    text: data.message,
+                                    type: 'success'
+                                }).then(results => {
+                                    window.location = "{{route('calls')}}";
+                                });
+                            }else{
+                                swal({
+                                    title: 'Atendimento',
+                                    text: data.message,
+                                    type: 'error'
+                                });
+                            }
+                        }
+                    });
+
+                    return false;
+                }
+            });
+
+            $('input[required]').each(function(key, item){
+                $(item).rules('add', {required: true});
+            });
+        });
+    </script>
+@endpush
