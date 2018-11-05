@@ -2,12 +2,13 @@
 
 namespace App\Modules\Employees\Models;
 
+use App\Traits\OptionSelect;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Employees extends Model
 {
-    use SoftDeletes;
+    use SoftDeletes, OptionSelect;
 
     protected $table = 'employees';
 
@@ -16,20 +17,6 @@ class Employees extends Model
     ];
 
     protected $dates = ['birth_date','deleted_at'];
-
-    public static function optionSelect($employees = [])
-    {
-        $array = [];
-
-        if(empty($employees))
-            $employees = self::all();
-
-        $employees->each(function ($item) use(&$array){
-            $array[$item->id] = $item->name;
-        });
-
-        return $array;
-    }
 
 
 }

@@ -2,12 +2,13 @@
 
 namespace App\Modules\Units\Models;
 
+use App\Traits\OptionSelect;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Units extends Model
 {
-    use SoftDeletes;
+    use SoftDeletes, OptionSelect;
 
     /**
      * @var string
@@ -19,18 +20,5 @@ class Units extends Model
     ];
 
     protected $dates = ['deleted_at'];
-
-    public static function optionSelect()
-    {
-        $array = [
-            '' => 'Selecione'
-        ];
-        $units = self::all();
-        $units->each(function ($item) use(&$array){
-            $array[$item->id] = $item->name;
-        });
-
-        return $array;
-    }
 
 }

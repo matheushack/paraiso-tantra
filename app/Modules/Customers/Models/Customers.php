@@ -2,12 +2,13 @@
 
 namespace App\Modules\Customers\Models;
 
+use App\Traits\OptionSelect;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Customers extends Model
 {
-    use SoftDeletes;
+    use SoftDeletes, OptionSelect;
 
     protected $table = 'customers';
 
@@ -16,16 +17,5 @@ class Customers extends Model
     ];
 
     protected $dates = ['deleted_at'];
-
-    public static function optionSelect()
-    {
-        $array = [];
-        $units = self::all();
-        $units->each(function ($item) use(&$array){
-            $array[$item->id] = $item->name;
-        });
-
-        return $array;
-    }
 
 }
