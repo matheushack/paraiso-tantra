@@ -42347,7 +42347,22 @@ select.m-select2 {
 
 .fc-unthemed .fc-event-dot.fc-start .fc-content:before,
 .fc-unthemed .fc-event.fc-start .fc-content:before {
-    background: #adb5ca
+    content: "\f165";
+    font: normal normal normal 14px/1 FontAwesome;
+    font-weight: bold;
+    font-size: 18px;
+    margin-left: -5px;
+    background: transparent;
+}
+
+.fc-unthemed .fc-event-dot.fc-start .fc-content.call-paid:before,
+.fc-unthemed .fc-event.fc-start .fc-content.call-paid:before {
+    content: "\f164";
+    font: normal normal normal 14px/1 FontAwesome;
+    font-weight: bold;
+    font-size: 18px;
+    margin-left: -5px;
+    background: transparent;
 }
 
 .fc-unthemed .fc-event .fc-time,

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddColumnSoftDeleteUsers extends Migration
+class AddForeignKeyCalls extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,10 @@ class AddColumnSoftDeleteUsers extends Migration
      */
     public function up()
     {
-        Schema::table('users', function ($table) {
-            $table->softDeletes();
+        Schema::table('calls', function ($table) {
+            $table->foreign('payment_id')
+                ->references('id')
+                ->on('payment_methods');
         });
     }
 
@@ -25,8 +27,8 @@ class AddColumnSoftDeleteUsers extends Migration
      */
     public function down()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('deleted_at');
+        Schema::table('calls', function (Blueprint $table) {
+            $table->dropForeign('payment_id');
         });
     }
 }

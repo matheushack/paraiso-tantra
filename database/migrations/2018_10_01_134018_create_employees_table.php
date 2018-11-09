@@ -23,8 +23,8 @@ class CreateEmployeesTable extends Migration
             $table->string('cell_phone', 14);
             $table->string('email');
             $table->string('color');
-            $table->text('observation');
-            $table->decimal('commission');
+            $table->text('observation')->nullable();
+            $table->decimal('commission')->default(0);
             $table->tinyInteger('is_access_system')->default(0);
 
             $table->timestamps();

@@ -29,6 +29,10 @@ var Calendar = function() {
                 url: calendar.data('url')+'?unity_id='+calendar.data('unity')
             },
             eventRender:function(e, t) {
+                if(e.paid) {
+                    t.find('.fc-content').addClass('call-paid');
+                }
+
                 t.css({'cursor': 'pointer'});
                 t.find('.fc-time').css({'color': e.textColor});
                 t.find('.fc-title').css({'color': e.textColor});
@@ -44,7 +48,7 @@ var Calendar = function() {
                         }
                     },
                     success: function (data) {
-                        $('#form-edit-call > .modal-body').html(data);
+                        $('#edit-call .modal-body').html(data);
                         $('#edit-call').modal('show');
                     }
                 });
@@ -68,6 +72,11 @@ var Calendar = function() {
                     $('#new-call').modal('show');
                 }
             });
+        });
+
+        $('body').on('click','#save-edit-call', function(){
+            var form = $('#tabs-call > .tab-pane.active').find('form');
+            $(form).submit();
         });
     };
 

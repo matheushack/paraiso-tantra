@@ -28,7 +28,7 @@ class CreateUnitsTable extends Migration
             $table->string('email');
             $table->string('phone', 13);
             $table->string('cell_phone', 14);
-            $table->json('operating_hours');
+            $table->json('operating_hours')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

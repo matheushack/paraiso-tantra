@@ -9,6 +9,7 @@
 namespace App\Modules\Calls\Services;
 
 
+use App\Modules\Calls\Constants\StatusPayment;
 use App\Modules\Calls\Models\CallEmployees;
 use App\Modules\Rooms\Services\ServiceRooms;
 use Carbon\Carbon;
@@ -59,6 +60,25 @@ class ServiceCalls
         return $request;
     }
 
+    private function formatRequestFinancial(Request $request)
+    {
+        $amount = !empty($request->input('amount')) ? $request->input('amount') : 0;
+        $request->merge(['amount' => filter_var($amount, FILTER_SANITIZE_NUMBER_FLOAT) / 100]);
+
+        $discount = !empty($request->input('discount')) ? $request->input('discount') : 0;
+        $request->merge(['discount' => filter_var($discount, FILTER_SANITIZE_NUMBER_FLOAT) / 100]);
+
+        $aliquot = !empty($request->input('aliquot')) ? $request->input('aliquot') : 0;
+        $request->merge(['aliquot' => filter_var($aliquot, FILTER_SANITIZE_NUMBER_FLOAT) / 100]);
+
+        $typeDiscount = !empty($request->input('type_discount')) ? $request->input('type_discount') : null;
+        $request->merge(['type_discount' => $typeDiscount]);
+
+        $request->merge(['total' => $request->input('amount') - $request->input('discount')]);
+
+        return $request;
+    }
+
     public function find($id)
     {
         return Calls::find($id);
@@ -96,6 +116,7 @@ class ServiceCalls
                 'end' => $call->end->format('Y-m-d H:i:s'),
                 'backgroundColor' => '#'.$color,
                 'borderColor' => '#'.$color,
+                'paid' => $call->status == StatusPayment::PAID ? true : false,
                 'textColor' => isBright($color) ? '#000000' : '#FFFFFF'
             ];
         }
@@ -170,6 +191,41 @@ class ServiceCalls
                 }
 
 
+            });
+
+            return [
+                'message' => 'Atendimento atualizado com sucesso!',
+                'save' => true
+            ];
+        }catch(\Exception $e){
+            return [
+                'message' => $e->getMessage(),
+                'save' => false
+            ];
+        }
+    }
+
+    public function updateFinancial(Request $request)
+    {
+        try {
+            Capsule::transaction(function() use ($request) {
+                $request = $this->formatRequestFinancial($request);
+
+                $call = Calls::find($request->input('call_id'));
+
+                if($call->count() == 0)
+                    throw new \Exception('Atendimento não encontrado!');
+
+                $call->status = $request->input('status');
+                $call->payment_id = $request->input('payment_id');
+                $call->type_discount = $request->input('type_discount');
+                $call->amount = $request->input('amount');
+                $call->discount = $request->input('discount');
+                $call->aliquot = $request->input('aliquot');
+                $call->total = $request->input('amount') - $request->input('discount') - $request->input('aliquot');
+
+                if(!$call->save())
+                    throw new \Exception('Houve um problema ao tentar atualziar o atendimento. Por favor, tente mais tarde!');
             });
 
             return [

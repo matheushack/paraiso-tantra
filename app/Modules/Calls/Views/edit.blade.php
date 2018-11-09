@@ -12,12 +12,12 @@
         </li>
     </ul>
 
-    <div class="tab-content">
+    <div class="tab-content" id="tabs-call">
         <div class="tab-pane active" id="tab-geral" role="tabpanel">
             @include('Calls::includes.tab-geral')
         </div>
         <div class="tab-pane" id="tab-financeiro" role="tabpanel">
-            MÓDULO 3 - FINANCEIRO
+            @include('Calls::includes.tab-financial')
         </div>
     </div>
 
@@ -163,5 +163,116 @@
         });
 
         $('#btn-availability').trigger('click');
+
+        $('#amount, #discount, #aliquot').on('blur', function(){
+            var total = 0;
+            var amount = $("#amount").val().replace(/\D/g,'')/100;
+            var discount = $("#discount").val().replace(/\D/g,'')/100;
+            var aliquot = $("#aliquot").val().replace(/\D/g,'')/100;
+
+            total = amount - discount - aliquot;
+
+            $('#total').val(numberToReal(total));
+        });
+
+        $("#form-edit-geral").validate({
+            invalidHandler: function(event, validator) {
+                mApp.scrollTo("#form-edit-geral");
+
+                swal({
+                    title: "",
+                    text: "Existem alguns erros do seu formulário. Por favor, corrija-os!",
+                    type: "error",
+                    confirmButtonClass: "btn btn-secondary m-btn m-btn--wide"
+                });
+            },
+
+            submitHandler: function (form) {
+                $.ajax({
+                    url: '{{route('calls.update')}}',
+                    type: 'POST',
+                    data: $(form).serialize(),
+                    beforeSend: function(xhr, type) {
+                        if (!type.crossDomain) {
+                            xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'));
+                        }
+                    },
+                    success: function (data) {
+                        if(data.save){
+                            swal({
+                                title: 'Atendimento',
+                                text: data.message,
+                                type: 'success'
+                            }).then(results => {
+                                window.location = "{{route('calls')}}";
+                            });
+                        }else{
+                            swal({
+                                title: 'Atendimento',
+                                text: data.message,
+                                type: 'error'
+                            });
+                        }
+                    }
+                });
+
+                return false;
+            }
+        });
+
+        $("#form-edit-financial").validate({
+            invalidHandler: function(event, validator) {
+                mApp.scrollTo("#form-edit-financial");
+
+                swal({
+                    title: "",
+                    text: "Existem alguns erros do seu formulário. Por favor, corrija-os!",
+                    type: "error",
+                    confirmButtonClass: "btn btn-secondary m-btn m-btn--wide"
+                });
+            },
+
+            submitHandler: function (form) {
+                $.ajax({
+                    url: '{{route('calls.update.financial')}}',
+                    type: 'POST',
+                    data: $(form).serialize(),
+                    beforeSend: function(xhr, type) {
+                        if (!type.crossDomain) {
+                            xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'));
+                        }
+                    },
+                    success: function (data) {
+                        if(data.save){
+                            swal({
+                                title: 'Atendimento',
+                                text: data.message,
+                                type: 'success'
+                            }).then(results => {
+                                window.location = "{{route('calls')}}";
+                            });
+                        }else{
+                            swal({
+                                title: 'Atendimento',
+                                text: data.message,
+                                type: 'error'
+                            });
+                        }
+                    }
+                });
+
+                return false;
+            }
+        });
+
+        $('input[required]').each(function(key, item){
+            $(item).rules('add', {required: true});
+        });
     });
+
+    function numberToReal(numero) {
+        var numero = numero.toFixed(2).split('.');
+        numero[0] = "R$ " + numero[0].split(/(?=(?:...)*$)/).join('.');
+        return numero.join(',');
+    }
 </script>

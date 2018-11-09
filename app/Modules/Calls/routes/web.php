@@ -9,6 +9,7 @@ Route::group(['prefix' => 'atendimentos', 'module' => 'Calls', 'middleware' => [
     Route::post('disponibilidade', 'CallsController@availability')->name('calls.availability');
     Route::post('salvar', 'CallsController@store')->name('calls.store');
     Route::post('atualizar', 'CallsController@update')->name('calls.update');
+    Route::post('atualizar/financeiro', 'CallsController@updateFinancial')->name('calls.update.financial');
     Route::post('deletar/{id}', 'CallsController@destroy')->name('calls.destroy');
 
 });

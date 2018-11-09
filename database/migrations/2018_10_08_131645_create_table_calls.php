@@ -19,11 +19,17 @@ class CreateTableCalls extends Migration
             $table->integer('service_id')->unsigned();
             $table->integer('room_id')->unsigned();
             $table->integer('customer_id')->unsigned();
+            $table->integer('payment_id')->unsigned()->nullable();
             $table->dateTime('start');
             $table->dateTime('end');
+            $table->enum('status', ['A', 'P'])->default('A');
             $table->decimal('amount');
             $table->decimal('discount');
+            $table->decimal('aliquot')->default(0);
             $table->decimal('total');
+            $table->enum('type_discount', ['C', 'B', 'T'])->nullable();
+            $table->tinyInteger('first_call')->default(0);
+            $table->text('description')->nullable();
             $table->timestamps();
             $table->softDeletes();
 

@@ -121,6 +121,21 @@ class CallsController extends Controller
         return response()->json($return, 200);
     }
 
+    public function updateFinancial(Request $request)
+    {
+        $request->validate([
+            'call_id' => 'required',
+            'status' => 'required',
+            'payment_id' => 'required',
+            'type_discount' => 'required_with:discount',
+            'amount' => 'required'
+        ]);
+
+        $return = $this->serviceCalls->updateFinancial($request);
+
+        return response()->json($return, 200);
+    }
+
     /**
      * Remove the specified resource from storage.
      *
