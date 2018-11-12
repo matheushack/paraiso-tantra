@@ -13,11 +13,11 @@ class ServicesSeeder extends Seeder
     public function run()
     {
         $services[] = [
-            'name' => 'Massagem 1',
-            'description' => 'teste de massagem',
+            'name' => "Tantrica 90''",
+            'description' => 'Massagem tantrica masculina',
             'amount' => 300,
-            'discount' => 10,
-            'duration' => 30,
+            'discount' => 0,
+            'duration' => 90,
             'is_active' => 1
 
         ];

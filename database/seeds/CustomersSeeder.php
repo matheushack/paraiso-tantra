@@ -13,7 +13,7 @@ class CustomersSeeder extends Seeder
     public function run()
     {
         $customers[] = [
-            'name' => 'Kainan Sales',
+            'name' => 'Matheus Teste',
             'email' => 'customer@customer.com',
             'phone' => '(11)9999-9999',
             'cell_phone' => '(11)99999-9999',

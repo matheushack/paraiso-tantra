@@ -13,16 +13,16 @@ class EmployeesSeeder extends Seeder
     public function run()
     {
         $employees[] = [
-            'name' => 'Matheus Hack',
-            'cpf' => '391.015.228-76',
-            'gender' => 'M',
-            'birth_date' => '1992-12-14',
+            'name' => 'Brena',
+            'cpf' => '965.907.160-48',
+            'gender' => 'F',
+            'birth_date' => '1989-10-25',
             'email' => 'customer@customer.com',
-            'phone' => '(11)9999-9999',
-            'cell_phone' => '(11)99999-9999',
+            'phone' => '(11)2305-1814',
+            'cell_phone' => '(11)99878-2809',
             'color' => '#c6007d',
-            'commission' => 10,
-            'observation' => '',
+            'commission' => 50,
+            'observation' => 'Sem observação',
             'is_access_system' => 0
 
         ];

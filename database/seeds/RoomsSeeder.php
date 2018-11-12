@@ -20,6 +20,13 @@ class RoomsSeeder extends Seeder
 
         ];
 
+        $rooms[] = [
+            'name' => 'Sala 2',
+            'unity_id' => Units::orderBy('created_at', 'desc')->first()->id,
+            'is_active' => 1
+
+        ];
+
         foreach($rooms as $room){
             $roomCount = Rooms::where('name', '=', $room['name'])
                 ->where('unity_id', '=', $room['unity_id'])

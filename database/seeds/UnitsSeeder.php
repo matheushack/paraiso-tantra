@@ -13,20 +13,20 @@ class UnitsSeeder extends Seeder
     public function run()
     {
         $units[] = [
-            'name' => 'Unidade 1',
-            'cnpj' => '11.111.111/1111-11',
-            'social_name' => 'Unidade Teste LTDA',
-            'cep' => '07080-120',
-            'address' => 'Rua Antonieta',
-            'number' => '280',
-            'complement' => 'Complemento',
-            'neighborhood' => 'Picanço',
-            'city' => 'Guarulhos',
+            'name' => 'Jardins',
+            'cnpj' => '24.183.590/0001-11',
+            'social_name' => 'Unidade Jardins',
+            'cep' => '01403-002',
+            'address' => 'Alameda Joaquim Eugênio de Lima',
+            'number' => '1144',
+            'complement' => 'Casa',
+            'neighborhood' => 'Jardim Paulista',
+            'city' => 'São Paulo',
             'state' => 'SP',
-            'email' => 'unidade@unidade.com.br',
-            'phone' => '(11)9999-9999',
+            'email' => 'brumattiago@gmail.com',
+            'phone' => '(11)2305-1814',
             'cell_phone' => '(11)99999-9999',
-            'operating_hours' => '[{"open": "11:1_", "week": ["seg", "ter", "qua"], "close": "12:12"}]',
+            'operating_hours' => '[{"open": "08:00", "week": ["seg", "ter", "qua", "qui", "sex", "sab"], "close": "22:00"}]',
         ];
 
         foreach($units as $unity){

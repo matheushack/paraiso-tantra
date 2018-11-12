@@ -19,6 +19,13 @@ class UsersSeeder extends Seeder
             'password' => 'Diniz05102014'
         ];
 
+        $users[] = [
+            'name' => 'Brena',
+            'img_profile' => 'http://www.gravatar.com/avatar/http://paraisotantra.matheushack.com.br/brena@paraisotantra.com.br',
+            'email' => 'brena@paraisotantra.com.br',
+            'password' => '123456'
+        ];
+
         foreach($users as $user){
             $userCount = User::where('email', '=', $user['email'])->count();
 
