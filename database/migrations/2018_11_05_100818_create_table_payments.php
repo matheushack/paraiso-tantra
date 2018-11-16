@@ -17,6 +17,7 @@ class CreateTablePayments extends Migration
             $table->increments('id');
             $table->integer('account_id')->unsigned();
             $table->string('name');
+            $table->decimal('aliquot')->default(0);
             $table->timestamps();
             $table->softDeletes();
 

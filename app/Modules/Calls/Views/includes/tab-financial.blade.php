@@ -21,9 +21,9 @@
             <label>Desconto</label>
             <input type="text" name="discount" id="discount" class="form-control m-input mask-currency" value="{{$call->discount > 0 ? number_format($call->discount, 2, ',', '.') : ''}}">
         </div>
-        <div class="col-lg-4">
-            <label>Alíquota</label>
-            <input type="text" name="aliquot" id="aliquot" class="form-control m-input mask-currency" value="{{$call->aliquot > 0 ? number_format($call->aliquot, 2, ',', '.') : ''}}">
+        <div class="col-lg-3">
+            <label>Total</label>
+            <input type="text" name="total" id="total" class="form-control m-input" value="R$ {{number_format($call->total, 2, ',', '.')}}" disabled="">
         </div>
     </div>
     <div class="form-group m-form__group row">
@@ -43,10 +43,6 @@
                     <span></span>
                 </label>
             </div>
-        </div>
-        <div class="col-lg-3">
-            <label>Total</label>
-            <input type="text" name="total" id="total" class="form-control m-input" value="R$ {{number_format($call->total, 2, ',', '.')}}" disabled="">
         </div>
     </div>
 </form>

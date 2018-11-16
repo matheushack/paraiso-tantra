@@ -24,6 +24,9 @@ class ServicePaymentMethods
             ->editColumn('account_id', function($payment){
                 return $payment->account()->name;
             })
+            ->editColumn('aliquot', function($payment){
+                return $payment->aliquot > 0 ? number_format($payment->aliquot, 2, ',', '.').'%' : '0,00%';
+            })
             ->rawColumns(['actions'])
             ->make(true);
     }
@@ -47,6 +50,9 @@ class ServicePaymentMethods
             Capsule::transaction(function () use ($request) {
                 if(PaymentMethods::where('name', '=', $request->input('name'))->count() > 0)
                     throw new \Exception('Já existe uma forma de pagamento cadastrada com esse nome!');
+
+                $aliquot = !empty($request->input('aliquot')) ? $request->input('aliquot') : 0;
+                $request->merge(['aliquot' => filter_var($aliquot, FILTER_SANITIZE_NUMBER_FLOAT) / 100]);
 
                 if (!PaymentMethods::create($request->all()))
                     throw new \Exception('Não foi possível cadastrar uma nova forma de pagamento. Por favor, tente mais tarde!');
@@ -72,9 +78,13 @@ class ServicePaymentMethods
     {
         try {
             Capsule::transaction(function () use ($request) {
+                $aliquot = !empty($request->input('aliquot')) ? $request->input('aliquot') : 0;
+                $request->merge(['aliquot' => filter_var($aliquot, FILTER_SANITIZE_NUMBER_FLOAT) / 100]);
+
                 $payment = PaymentMethods::find($request->input('id'));
                 $payment->name = $request->input('name');
                 $payment->account_id = $request->input('account_id');
+                $payment->aliquot = $request->input('aliquot');
 
                 if (!$payment->save())
                     throw new \Exception('Não foi possível editar a forma de pagamento. Por favor, tente mais tarde!');

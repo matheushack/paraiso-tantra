@@ -164,13 +164,12 @@
 
         $('#btn-availability').trigger('click');
 
-        $('#amount, #discount, #aliquot').on('blur', function(){
+        $('#amount, #discount').on('blur', function(){
             var total = 0;
             var amount = $("#amount").val().replace(/\D/g,'')/100;
             var discount = $("#discount").val().replace(/\D/g,'')/100;
-            var aliquot = $("#aliquot").val().replace(/\D/g,'')/100;
 
-            total = amount - discount - aliquot;
+            total = amount - discount;
 
             $('#total').val(numberToReal(total));
         });

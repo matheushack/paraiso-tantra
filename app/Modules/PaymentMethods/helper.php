@@ -18,6 +18,7 @@ if(!function_exists('dataTablePayments')) {
                 ['label' => '#', 'field' => 'id', 'width' => '30px', 'class' => 'text-center'],
                 ['label' => 'Forma de pagamento', 'field' => 'name', 'width' => '300px'],
                 ['label' => 'Conta', 'field' => 'account_id'],
+                ['label' => 'Alíquota', 'field' => 'aliquot'],
                 ['label' => 'Ações', 'field' => 'actions', 'width' => '80px']
             ]
         ];

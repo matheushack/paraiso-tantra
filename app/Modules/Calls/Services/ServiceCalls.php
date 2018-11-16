@@ -11,6 +11,7 @@ namespace App\Modules\Calls\Services;
 
 use App\Modules\Calls\Constants\StatusPayment;
 use App\Modules\Calls\Models\CallEmployees;
+use App\Modules\PaymentMethods\Models\PaymentMethods;
 use App\Modules\Rooms\Services\ServiceRooms;
 use Carbon\Carbon;
 use Grpc\Call;
@@ -68,7 +69,7 @@ class ServiceCalls
         $discount = !empty($request->input('discount')) ? $request->input('discount') : 0;
         $request->merge(['discount' => filter_var($discount, FILTER_SANITIZE_NUMBER_FLOAT) / 100]);
 
-        $aliquot = !empty($request->input('aliquot')) ? $request->input('aliquot') : 0;
+        $aliquot = PaymentMethods::find($request->input('payment_id'))->aliquot;
         $request->merge(['aliquot' => filter_var($aliquot, FILTER_SANITIZE_NUMBER_FLOAT) / 100]);
 
         $typeDiscount = !empty($request->input('type_discount')) ? $request->input('type_discount') : null;

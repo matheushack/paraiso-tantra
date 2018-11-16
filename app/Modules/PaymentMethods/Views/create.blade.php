@@ -53,7 +53,7 @@
                 @csrf
                 <div class="m-portlet__body">
                     <div class="form-group m-form__group row">
-                        <div class="col-lg-8">
+                        <div class="col-lg-4">
                             <label>
                                 Forma de pagamento
                             </label>
@@ -62,6 +62,10 @@
                         <div class="col-lg-4">
                             @component('Accounts::components.accounts')
                             @endcomponent
+                        </div>
+                        <div class="col-lg-4">
+                            <label>Alíquota</label>
+                            <input type="text" name="aliquot" id="aliquot" class="form-control m-input mask-percentage">
                         </div>
                     </div>
                 </div>
@@ -89,6 +93,8 @@
 @push('scripts')
     <script>
         $(document).ready(function(){
+            ParaisoTantra.masks();
+
             $("#form-payment").validate({
                 rules: {
                     name: {

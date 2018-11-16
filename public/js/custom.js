@@ -33,6 +33,7 @@ var ParaisoTantra = function() {
         $('.mask-cep').inputmask('99999-999');
         $('.mask-phone').inputmask('(99)9999-9999');
         $('.mask-cell-phone').inputmask('(99)9999[9]-9999');
+        $(".mask-percentage").inputmask("999,99%",{numericInput:!0});
     };
 
     return {
