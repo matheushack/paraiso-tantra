@@ -108,6 +108,12 @@
                 <div class="m-menu__submenu ">
                     <span class="m-menu__arrow"></span>
                     <ul class="m-menu__subnav">
+                        <li class="m-menu__item  {{isset($menu_active) && $menu_active == 'providers' ? 'm-menu__item--active' : ''}}" aria-haspopup="true" >
+                            <a  href="{{route('providers')}}" class="m-menu__link ">
+                                <i class="m-menu__link-icon flaticon-users"></i>
+                                <span class="m-menu__link-text">Fornecedores</span>
+                            </a>
+                        </li>
                         <li class="m-menu__item  {{isset($menu_active) && $menu_active == 'manage-bills' ? 'm-menu__item--active' : ''}}" aria-haspopup="true" >
                             <a  href="{{route('bills')}}" class="m-menu__link ">
                                 <i class="m-menu__link-icon flaticon-cogwheel"></i>

@@ -11,3 +11,17 @@ Route::group(['prefix' => 'contas-a-pagar', 'module' => 'Bills', 'middleware' =>
     Route::post('deletar/{id}', 'BillsController@destroy')->name('bills.destroy');
 
 });
+
+Route::group(['prefix' => 'fornecedores', 'module' => 'Bills', 'middleware' => ['web', 'auth'], 'namespace' => 'App\Modules\Bills\Controllers'], function() {
+
+    Route::get('/', 'ProvidersController@index')->name('providers');
+    Route::get('datatable', 'ProvidersController@dataTable')->name('providers.dataTable');
+    Route::get('novo', 'ProvidersController@create')->name('providers.create');
+    Route::post('salvar', 'ProvidersController@store')->name('providers.store');
+    Route::get('editar/{id}', 'ProvidersController@edit');
+    Route::post('atualizar', 'ProvidersController@update')->name('providers.update');
+    Route::post('deletar/{id}', 'ProvidersController@destroy')->name('providers.destroy');
+    Route::post('buscar', 'ProvidersController@search')->name('providers.search');
+
+});
+

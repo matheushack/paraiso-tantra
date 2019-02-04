@@ -5,7 +5,7 @@
         <div class="d-flex align-items-center">
             <div class="mr-auto">
                 <h3 class="m-subheader__title m-subheader__title--separator">
-                    <i class="fa fa-money"></i> Contas a pagar
+                    <i class="fa fa-users"></i> Fornecedores
                 </h3>
                 <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
                     <li class="m-nav__item m-nav__item--home">
@@ -15,9 +15,9 @@
                     </li>
                     <li class="m-nav__separator">-</li>
                     <li class="m-nav__item">
-                        <a href="{{route('bills')}}" class="m-nav__link">
+                        <a href="{{route('providers')}}" class="m-nav__link">
                             <span class="m-nav__link-text">
-                                Contas a pagar
+                                Fornecedores
                             </span>
                         </a>
                     </li>
@@ -25,7 +25,7 @@
                     <li class="m-nav__item">
                         <a href="" class="m-nav__link">
                             <span class="m-nav__link-text">
-                                Novo
+                                {{$provider->name}}
                             </span>
                         </a>
                     </li>
@@ -43,67 +43,34 @@
                             <i class="la la-gear"></i>
                         </span>
                         <h3 class="m-portlet__head-text">
-                            <i class="la la-plus"></i> Nova entrada/saída
+                            <i class="la la-pencil"></i> {{$provider->name}}
                         </h3>
                     </div>
                 </div>
             </div>
             <!--begin::Form-->
-            <form class="m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed" id="form-bill">
+            <form class="m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed" id="form-provider">
+                <input type="hidden" value="{{$provider->id}}" name="id">
                 @csrf
                 <div class="m-portlet__body">
                     <div class="form-group m-form__group row">
-                        <div class="col-lg-6">
+                        <div class="col-lg-4">
                             <label>
-                                Cliente/Fornecedor
+                                Nome
                             </label>
-                            <input type="text" name="name" id="name" class="form-control m-input">
+                            <input type="text" name="name" id="name" class="form-control m-input" value="{{$provider->name}}" required>
                         </div>
-                        <div class="col-lg-3">
-                            @component('PaymentMethods::components.payments')
-                            @endcomponent
-                        </div>
-                        <div class="col-lg-3">
+                        <div class="col-lg-4">
                             <label>
-                                Tipo
+                                Telefone
                             </label>
-                            <div class="m-radio-inline">
-                                <label class="m-radio">
-                                    <input type="radio" name="type" value="R" checked> Receita
-                                    <span></span>
-                                </label>
-                                <label class="m-radio">
-                                    <input type="radio" name="type" value="D"> Despesa
-                                    <span></span>
-                                </label>
-                            </div>
+                            <input name="phone" type="text" class="form-control m-input mask-phone" id="phone" placeholder="" value="{{$provider->phone}}" required>
                         </div>
-                    </div>
-                    <div class="form-group m-form__group row">
-
-                        <div class="col-lg-3">
+                        <div class="col-lg-4">
                             <label>
-                                Data de vencimento
+                                Celular
                             </label>
-                            <input name="expiration_date" type="text" class="form-control m-input mask-date" id="expiration_date" placeholder="" required>
-                        </div>
-                        <div class="col-lg-3">
-                            <label>
-                                Valor
-                            </label>
-                            <input name="amount" type="text" class="form-control m-input mask-currency" id="amount" placeholder="" required>
-                        </div>
-                        <div class="col-lg-3">
-                            @component('Bills::components.status')
-                            @endcomponent
-                        </div>
-                    </div>
-                    <div class="form-group m-form__group row">
-                        <div class="col-lg-12">
-                            <label>
-                                Descrição
-                            </label>
-                            <textarea name="description" id="description" class="form-control" rows="5" style="resize: none;" required></textarea>
+                            <input name="cell_phone" type="text" class="form-control m-input mask-cell-phone" id="cell_phone" placeholder="" value="{{$provider->cell_phone}}" required>
                         </div>
                     </div>
                 </div>
@@ -116,7 +83,7 @@
                                 <button type="submit" class="btn btn-success" id="btn-submit-account">
                                     <i class="fa fa-save"></i> Salvar
                                 </button>
-                                <button type="button" class="btn btn-secondary" onclick="window.location='{{route('bills')}}'">
+                                <button type="button" class="btn btn-secondary" onclick="window.location='{{route('providers')}}'">
                                     Cancelar
                                 </button>
                             </div>
@@ -134,9 +101,9 @@
         $(document).ready(function() {
             ParaisoTantra.masks();
 
-            $("#form-bill").validate({
+            $("#form-provider").validate({
                 invalidHandler: function(event, validator) {
-                    mApp.scrollTo("#form-bill");
+                    mApp.scrollTo("#form-provider");
 
                     swal({
                         title: "",
@@ -148,7 +115,7 @@
 
                 submitHandler: function (form) {
                     $.ajax({
-                        url: '{{route('bills.store')}}',
+                        url: '{{route('providers.update')}}',
                         type: 'POST',
                         data: $(form).serialize(),
                         beforeSend: function(xhr, type) {
@@ -159,15 +126,15 @@
                         success: function (data) {
                             if(data.save){
                                 swal({
-                                    title: 'Conta',
+                                    title: 'Fornecedor',
                                     text: data.message,
                                     type: 'success'
                                 }).then(results => {
-                                    window.location = "{{route('bills')}}";
+                                    window.location = "{{route('providers')}}";
                                 });
                             }else{
                                 swal({
-                                    title: 'Conta',
+                                    title: 'Fornecedor',
                                     text: data.message,
                                     type: 'error'
                                 });
