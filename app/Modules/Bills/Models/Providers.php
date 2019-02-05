@@ -9,12 +9,13 @@
 namespace App\Modules\Bills\Models;
 
 
+use App\Traits\OptionSelect;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Providers extends Model
 {
-    use SoftDeletes;
+    use SoftDeletes, OptionSelect;
 
     protected $table = 'providers';
 

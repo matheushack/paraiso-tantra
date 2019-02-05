@@ -53,14 +53,12 @@
                 @csrf
                 <div class="m-portlet__body">
                     <div class="form-group m-form__group row">
-                        <div class="col-lg-6">
-                            <label>
-                                Cliente/Fornecedor
-                            </label>
-                            <input type="text" name="name" id="name" class="form-control m-input">
+                        <div class="col-lg-5">
+                            @component('Bills::components.providers')
+                            @endcomponent
                         </div>
-                        <div class="col-lg-3">
-                            @component('PaymentMethods::components.payments')
+                        <div class="col-lg-4">
+                            @component('Units::components.units', ['multiple' => true])
                             @endcomponent
                         </div>
                         <div class="col-lg-3">
@@ -95,6 +93,10 @@
                         </div>
                         <div class="col-lg-3">
                             @component('Bills::components.status')
+                            @endcomponent
+                        </div>
+                        <div class="col-lg-3">
+                            @component('PaymentMethods::components.payments')
                             @endcomponent
                         </div>
                     </div>

@@ -35,8 +35,14 @@ class ServiceBills
                         return 'Recebido';
                 }
             })
+            ->editColumn('provider_id', function($bill){
+                return $bill->provider->name;
+            })
             ->editColumn('payment_id', function($bill){
                 return $bill->payment->name;
+            })
+            ->editColumn('unity_id', function($bill){
+                return $bill->unity->name;
             })
             ->editColumn('expiration_date', function($bill){
                 return Carbon::parse($bill->expiration_date)->format('d/m/Y');
@@ -72,8 +78,20 @@ class ServiceBills
             Capsule::transaction(function() use ($request) {
                 $request = $this->formatRequest($request);
 
-                if (!Bills::create($request->all()))
-                    throw new \Exception('Não foi possível cadastrar uma nova conta. Por favor, tente mais tarde!');
+                foreach($request->input('unity_id') as $unity_id) {
+                    $bill = new Bills();
+                    $bill->provider_id = $request->input('provider_id');
+                    $bill->unity_id = $unity_id;
+                    $bill->type = $request->input('type');
+                    $bill->expiration_date = $request->input('expiration_date');
+                    $bill->amount = $request->input('amount');
+                    $bill->status = $request->input('status');
+                    $bill->payment_id = $request->input('payment_id');
+                    $bill->description = $request->input('description');
+
+                    if (!$bill->save())
+                        throw new \Exception('Não foi possível cadastrar uma nova conta. Por favor, tente mais tarde!');
+                }
             });
 
             return [

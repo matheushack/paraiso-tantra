@@ -17,9 +17,10 @@ class CreateBillsTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('call_id')->nullable();
             $table->unsignedInteger('payment_id');
+            $table->unsignedInteger('provider_id');
+            $table->unsignedInteger('unity_id');
             $table->enum('type', ['R', 'D']);
             $table->enum('status', ['AP','AR','P','R']);
-            $table->string('name');
             $table->text('description');
             $table->date('expiration_date');
             $table->decimal('amount', 8, 2);
@@ -33,6 +34,10 @@ class CreateBillsTable extends Migration
             $table->foreign('payment_id')
                 ->references('id')
                 ->on('payment_methods');
+
+            $table->foreign('unity_id')
+                ->references('id')
+                ->on('units');
         });
 
 

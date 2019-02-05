@@ -16,7 +16,8 @@ if(!function_exists('dataTableBills')) {
             'dUrl' => route('bills.dataTable'),
             'dColumns' => [
                 ['label' => '#', 'field' => 'id', 'width' => '20px'],
-                ['label' => 'Nome', 'field' => 'name'],
+                ['label' => 'Fornecedor', 'field' => 'provider_id'],
+                ['label' => 'Unidade', 'field' => 'unity_id'],
                 ['label' => 'Tipo', 'field' => 'type'],
                 ['label' => 'Status', 'field' => 'status'],
                 ['label' => 'Forma de pagamento', 'field' => 'payment_id'],
