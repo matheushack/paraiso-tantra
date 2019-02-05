@@ -1,5 +1,5 @@
 <label>Unidade</label>
-@if($multiple)
+@if(!empty($multiple))
     {!! Form::select('unity_id[]', \App\Modules\Units\Models\Units::optionSelect(), (isset($unity_id) ? $unity_id : null), [
             'class' => 'form-control m-input m-bootstrap-select m_selectpicker',
             'id' => (isset($id) ? $id : 'unity_id'),

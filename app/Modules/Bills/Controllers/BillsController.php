@@ -89,7 +89,8 @@ class BillsController extends Controller
     public function update(Request $request)
     {
         $request->validate([
-            'name' => 'required',
+            'provider_id' => 'required',
+            'unity_id' => 'required',
             'payment_id' => 'required',
             'type' => 'required',
             'expiration_date' => 'required',

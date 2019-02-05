@@ -112,7 +112,8 @@ class ServiceBills
             Capsule::transaction(function () use ($request) {
                 $request = $this->formatRequest($request);
                 $bill = Bills::find($request->input('id'));
-                $bill->name = $request->input('name');
+                $bill->provider_id = $request->input('provider_id');
+                $bill->unity_id = $request->input('unity_id');
                 $bill->type = $request->input('type');
                 $bill->payment_id = $request->input('payment_id');
                 $bill->status = $request->input('status');
