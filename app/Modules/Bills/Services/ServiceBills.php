@@ -78,19 +78,40 @@ class ServiceBills
             Capsule::transaction(function() use ($request) {
                 $request = $this->formatRequest($request);
 
-                foreach($request->input('unity_id') as $unity_id) {
-                    $bill = new Bills();
-                    $bill->provider_id = $request->input('provider_id');
-                    $bill->unity_id = $unity_id;
-                    $bill->type = $request->input('type');
-                    $bill->expiration_date = $request->input('expiration_date');
-                    $bill->amount = $request->input('amount');
-                    $bill->status = $request->input('status');
-                    $bill->payment_id = $request->input('payment_id');
-                    $bill->description = $request->input('description');
+                if($request->input('recurrent') == 'S'){
+                    for($i = 0; $i < (int) $request->input('months'); $i++){
+                        $expiration_date = Carbon::createFromFormat('Y-m-d', $request->input('expiration_date'))->addMonth($i)->format('Y-m-d');
 
-                    if (!$bill->save())
-                        throw new \Exception('Não foi possível cadastrar uma nova conta. Por favor, tente mais tarde!');
+                        foreach($request->input('unity_id') as $unity_id) {
+                            $bill = new Bills();
+                            $bill->provider_id = $request->input('provider_id');
+                            $bill->unity_id = $unity_id;
+                            $bill->type = $request->input('type');
+                            $bill->expiration_date = $expiration_date;
+                            $bill->amount = $request->input('amount');
+                            $bill->status = $request->input('status');
+                            $bill->payment_id = $request->input('payment_id');
+                            $bill->description = $request->input('description');
+
+                            if (!$bill->save())
+                                throw new \Exception('Não foi possível cadastrar uma nova conta. Por favor, tente mais tarde!');
+                        }
+                    }
+                } else {
+                    foreach ($request->input('unity_id') as $unity_id) {
+                        $bill = new Bills();
+                        $bill->provider_id = $request->input('provider_id');
+                        $bill->unity_id = $unity_id;
+                        $bill->type = $request->input('type');
+                        $bill->expiration_date = $request->input('expiration_date');
+                        $bill->amount = $request->input('amount');
+                        $bill->status = $request->input('status');
+                        $bill->payment_id = $request->input('payment_id');
+                        $bill->description = $request->input('description');
+
+                        if (!$bill->save())
+                            throw new \Exception('Não foi possível cadastrar uma nova conta. Por favor, tente mais tarde!');
+                    }
                 }
             });
 

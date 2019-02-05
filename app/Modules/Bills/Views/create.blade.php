@@ -101,6 +101,29 @@
                         </div>
                     </div>
                     <div class="form-group m-form__group row">
+                        <div class="col-lg-3">
+                            <label>
+                                Conta recorrente?
+                            </label>
+                            <div class="m-radio-inline">
+                                <label class="m-radio">
+                                    <input type="radio" name="recurrent" value="S"> Sim
+                                    <span></span>
+                                </label>
+                                <label class="m-radio">
+                                    <input type="radio" name="recurrent" value="N" checked> Não
+                                    <span></span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-lg-3" id="input-months" style="display: none;">
+                            <label>
+                                Quantidade de meses
+                            </label>
+                            <input name="months" type="number" class="form-control m-input" id="months" placeholder="" required>
+                        </div>
+                    </div>
+                    <div class="form-group m-form__group row">
                         <div class="col-lg-12">
                             <label>
                                 Descrição
@@ -135,6 +158,15 @@
     <script>
         $(document).ready(function() {
             ParaisoTantra.masks();
+
+            $('body').on('click', 'input[name="recurrent"]', function(){
+                if($(this).val() == 'S'){
+                    $('#input-months').show();
+                }else{
+                    $('#input-months').hide();
+                    $('input[name="months"]').val('');
+                }
+            });
 
             $("#form-bill").validate({
                 invalidHandler: function(event, validator) {

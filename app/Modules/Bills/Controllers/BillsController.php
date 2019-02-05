@@ -60,6 +60,8 @@ class BillsController extends Controller
             'expiration_date' => 'required',
             'amount' => 'required',
             'status' => 'required',
+            'recurrent' => 'required',
+            'months' => 'required_if:recurrent,S'
         ]);
 
         $return = $this->serviceBills->store($request);
