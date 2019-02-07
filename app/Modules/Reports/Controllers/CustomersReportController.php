@@ -2,20 +2,23 @@
 
 namespace App\Modules\Reports\Controllers;
 
+use App\Modules\Reports\Exports\CustomersExport;
 use App\Modules\Reports\Services\ServiceCustomersReport;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\View;
+use Maatwebsite\Excel\Excel;
 
 class CustomersReportController extends Controller
 {
     private $serviceCustomers;
 
-    function __construct()
+    function __construct(Excel $excel)
     {
         View::share('menu_active', 'customers');
         View::share('menu_parent_active', 'reports');
 
+        $this->excel = $excel;
         $this->serviceCustomers = new ServiceCustomersReport();
     }
 
@@ -37,5 +40,15 @@ class CustomersReportController extends Controller
         return response()->json([
             'table' => utf8_encode(view("Reports::filters.customers", ['data' => $report]))
         ], 200);
+    }
+
+    public function excel()
+    {
+        return $this->excel->download(new CustomersExport(), 'clientes.xlsx');
+    }
+
+    public function pdf()
+    {
+        return $this->excel->download(new CustomersExport(), 'clientes.pdf');
     }
 }
