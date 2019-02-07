@@ -138,6 +138,12 @@
                                 <span class="m-menu__link-text">Clientes</span>
                             </a>
                         </li>
+                        <li class="m-menu__item  {{isset($menu_active) && $menu_active == 'calls' ? 'm-menu__item--active' : ''}}" aria-haspopup="true" >
+                            <a  href="{{route('reports.calls')}}" class="m-menu__link ">
+                                <i class="m-menu__link-icon flaticon-event-calendar-symbol"></i>
+                                <span class="m-menu__link-text">Atendimentos</span>
+                            </a>
+                        </li>
                     </ul>
                 </div>
             </li>

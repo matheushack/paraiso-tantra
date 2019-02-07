@@ -13,4 +13,11 @@ Route::group(['prefix'=> 'relatorios', 'module' => 'Reports', 'middleware' => ['
         Route::get('pdf', 'CustomersReportController@pdf')->name('reports.customers.pdf');
     });
 
+    Route::group(['prefix'=> 'atendimentos'], function(){
+        Route::get('/', 'CallsReportController@index')->name('reports.calls');
+        Route::post('filtro', 'CallsReportController@filter')->name('reports.calls.filter');
+        Route::get('excel', 'CallsReportController@excel')->name('reports.calls.excel');
+        Route::get('pdf', 'CallsReportController@pdf')->name('reports.calls.pdf');
+    });
+
 });

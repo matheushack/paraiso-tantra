@@ -17,7 +17,7 @@
                     <li class="m-nav__item">
                         <a href="" class="m-nav__link">
                         <span class="m-nav__link-text">
-                            Clientes
+                            Atendimentos
                         </span>
                         </a>
                     </li>
@@ -44,29 +44,25 @@
                             @endcomponent
                         </div>
                         <div class="col-lg-3">
-                            <label>
-                                Telefone
-                            </label>
-                            <input name="phone" type="text" class="form-control m-input mask-phone" id="phone" placeholder="">
-                        </div>
-                        <div class="col-lg-3">
-                            <label>
-                                Celular
-                            </label>
-                            <input name="cell_phone" type="text" class="form-control m-input mask-cell-phone" id="cell_phone" placeholder="">
-                        </div>
-                        <div class="col-lg-3">
                             @component('Units::components.units', ['multiple' => true])
                             @endcomponent
                         </div>
-                    </div>
-                    <div class="form-group m-form__group row">
                         <div class="col-lg-3">
                             @component('Employees::components.employees', ['placeholder' => 'Selecionar os terapeutas'])
                             @endcomponent
                         </div>
                         <div class="col-lg-3">
                             @component('Services::components.services', ['multiple' => 'multiple'])
+                            @endcomponent
+                        </div>
+                    </div>
+                    <div class="form-group m-form__group row">
+                        <div class="col-lg-3">
+                            @component('Calls::components.status_payment')
+                            @endcomponent
+                        </div>
+                        <div class="col-lg-3">
+                            @component('PaymentMethods::components.payments')
                             @endcomponent
                         </div>
                         <div class="col-lg-3">
@@ -101,7 +97,7 @@
                 <div class="m-portlet__head-tools">
                     <ul class="m-portlet__nav">
                         <li class="m-portlet__nav-item">
-                            <a href="{{route('reports.customers.excel')}}" class="btn btn-dark m-btn m-btn--custom m-btn--icon m-btn--air" id="btn-excel">
+                            <a href="{{route('reports.calls.excel')}}" class="btn btn-dark m-btn m-btn--custom m-btn--icon m-btn--air" id="btn-excel">
                                 <span>
                                     <i class="la la-file-excel-o"></i>
                                     <span>
@@ -111,7 +107,7 @@
                             </a>
                         </li>
                         <li class="m-portlet__nav-item">
-                            <a href="{{route('reports.customers.pdf')}}" class="btn btn-dark m-btn m-btn--custom m-btn--icon m-btn--air">
+                            <a href="{{route('reports.calls.pdf')}}" class="btn btn-dark m-btn m-btn--custom m-btn--icon m-btn--air">
                                 <span>
                                     <i class="la la-file-pdf-o"></i>
                                     <span>
@@ -124,65 +120,65 @@
                 </div>
             </div>
             <div class="m-portlet__body">
-                <table class="table table-striped- table-bordered table-hover table-checkable" id="table-report">
+                <table class="table table-striped- table-bordered table-hover table-responsive" id="table-report">
                     <thead>
                     <tr>
                         <th>Cliente</th>
-                        <th>Telefone</th>
-                        <th>Celular</th>
                         <th>Unidade</th>
+                        <th>Sala</th>
                         <th>Terapeutas</th>
+                        <th>Forma de pagamento</th>
                         <th>Serviço</th>
                         <th>Data inicial</th>
                         <th>Data final</th>
+                        <th>Status</th>
+                        <th>Valor</th>
+                        <th>Alíquota</th>
+                        <th>Desconto</th>
+                        <th>Total</th>
                     </tr>
                     </thead>
                     <tbody>
                     @if(!empty($data))
                         @foreach($data as $report)
                             <tr>
-                                <td>{{$report->name}}</td>
-                                <td>{{$report->phone}}</td>
-                                <td>{{$report->cell_phone}}</td>
+                                <td>{{$report->customer}}</td>
                                 <td>{{$report->unity}}</td>
+                                <td>{{$report->room}}</td>
                                 <td>{{$report->employees}}</td>
+                                <td>{{$report->payment_method}}</td>
                                 <td>{{$report->service}}</td>
                                 <td>{{\Carbon\Carbon::parse($report->start)->format('d/m/Y H:i:s')}}</td>
                                 <td>{{\Carbon\Carbon::parse($report->end)->format('d/m/Y H:i:s')}}</td>
+                                <td>
+                                    @switch($report->status)
+                                        @case('A')
+                                            Aguardando pagamento
+                                        @break
+                                        @case('P')
+                                            Pago
+                                        @break
+                                    @endswitch
+                                </td>
+                                <td>{{$report->amount}}</td>
+                                <td>{{$report->aliquot}}</td>
+                                <td>{{$report->discount}}</td>
+                                <td>{{$report->total}}</td>
                             </tr>
                         @endforeach
                     @else
                         <tr>
-                            <td colspan="8">Nenhum registro encontrado</td>
+                            <td colspan="13">Nenhum registro encontrado</td>
                         </tr>
                     @endif
                     </tbody>
                 </table>
             </div>
         </div>
-
-        <div class="row">
-            <div class="col-xl-12">
-                <div id="report-customer" style="height: 500px;"></div>
-            </div>
-        </div>
     </div>
 @endsection
 
-@push('css')
-    <link href="//www.amcharts.com/lib/3/plugins/export/export.css" rel="stylesheet" type="text/css" />
-@endpush
-
 @push('scripts')
-    <script src="//www.amcharts.com/lib/3/amcharts.js" type="text/javascript"></script>
-    <script src="//www.amcharts.com/lib/3/serial.js" type="text/javascript"></script>
-    <script src="//www.amcharts.com/lib/3/radar.js" type="text/javascript"></script>
-    <script src="//www.amcharts.com/lib/3/pie.js" type="text/javascript"></script>
-    <script src="//www.amcharts.com/lib/3/plugins/tools/polarScatter/polarScatter.min.js" type="text/javascript"></script>
-    <script src="//www.amcharts.com/lib/3/plugins/animate/animate.min.js" type="text/javascript"></script>
-    <script src="//www.amcharts.com/lib/3/plugins/export/export.min.js" type="text/javascript"></script>
-    <script src="//www.amcharts.com/lib/3/themes/light.js" type="text/javascript"></script>
-    <script src="http://www.amcharts.com/lib/3/plugins/dataloader/dataloader.min.js" type="text/javascript"></script>
     <script>
         $(document).ready(function(){
             ParaisoTantra.masks();
@@ -221,82 +217,6 @@
             $('input[required],select[required]').each(function(key, item){
                 $(this).removeAttr('required');
             });
-
-
-            {{--var chart = AmCharts.makeChart("report-monthly", {--}}
-                {{--theme: "light",--}}
-                {{--type: "serial",--}}
-                {{--dataLoader: {--}}
-                    {{--url: "{{route('reports.dataMonthy')}}",--}}
-                    {{--format: "json"--}}
-                {{--},--}}
-                {{--valueAxes:[{--}}
-                    {{--stackType: "3d",--}}
-                    {{--unit: "",--}}
-                    {{--position: "left",--}}
-                    {{--title: "Valor"--}}
-                {{--}],--}}
-                {{--startDuration: true,--}}
-                {{--graphs:[--}}
-                    {{--{--}}
-                        {{--balloonText: "Receita [[day]]: <b>[[value]]</b>",--}}
-                        {{--fillAlphas: .9,--}}
-                        {{--lineAlpha: .2,--}}
-                        {{--title: "Receita",--}}
-                        {{--type: "column",--}}
-                        {{--valueField: "recipe",--}}
-                        {{--colorField: '#00BF60',--}}
-                    {{--},--}}
-                    {{--{--}}
-                        {{--balloonText: "Despesa [[day]]: <b>[[value]]</b>",--}}
-                        {{--fillAlphas: .9,--}}
-                        {{--lineAlpha: .2,--}}
-                        {{--title: "Despesa",--}}
-                        {{--type: "column",--}}
-                        {{--valueField: "charge",--}}
-                        {{--colorField: '#00BF60',--}}
-                    {{--}--}}
-                {{--],--}}
-                {{--plotAreaFillAlphas:.1,--}}
-                {{--depth3D: 100,--}}
-                {{--angle: 30,--}}
-                {{--categoryField: "day",--}}
-                {{--categoryAxis: {--}}
-                    {{--gridPosition: "start"--}}
-                {{--},--}}
-                {{--export: {--}}
-                    {{--enabled: true--}}
-                {{--}--}}
-            {{--});--}}
-
-            {{--$('#company_id, #category_id, #payment_id, #status, input[name="type[]"], #month, #year').on('change', function(){--}}
-                {{--$.ajax({--}}
-                    {{--url: '{{route('reports.filter')}}',--}}
-                    {{--type: 'POST',--}}
-                    {{--data: {--}}
-                        {{--month: $('#month').val(),--}}
-                        {{--year: $('#year').val(),--}}
-                        {{--company_id: $('#company_id').val(),--}}
-                        {{--category_id: $('#category_id').val(),--}}
-                        {{--payment_id: $('#payment_id').val(),--}}
-                        {{--status: $('#status').val(),--}}
-                        {{--type: $("input[name='type[]']").map(function(){--}}
-                            {{--return ($(this).is(':checked') ? $(this).val() : '');--}}
-                        {{--}).get(),--}}
-                    {{--},--}}
-                    {{--dataType: 'json',--}}
-                    {{--beforeSend: function(xhr, type) {--}}
-                        {{--if (!type.crossDomain) {--}}
-                            {{--xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'));--}}
-                        {{--}--}}
-                    {{--},--}}
-                    {{--success: function (json) {--}}
-                        {{--chart.dataProvider = json;--}}
-                        {{--chart.validateData();--}}
-                        {{--$('#dataTable').DataTable().ajax.reload();--}}
-                    {{--}--}}
-                {{--});--}}
-            {{--});--}}
         });
     </script>
 @endpush
