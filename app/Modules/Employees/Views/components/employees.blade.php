@@ -14,7 +14,7 @@
         $(document).ready(function(){
 
             $('#employees').select2({
-                placeholder: "Selecionar os terapeutas para o atendimento",
+                placeholder: "{{!empty($placeholder) ? $placeholder : 'Selecionar os terapeutas para o atendimento'}}",
             });
         });
     </script>

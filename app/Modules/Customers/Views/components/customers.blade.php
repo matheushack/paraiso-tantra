@@ -7,11 +7,14 @@
             'multiple' => 'multiple',
             'style' => 'width: 93%'
     ]) !!}
-    <div class="input-group-append">
-        <button class="btn btn-info" id="btn-search" type="button" data-toggle="modal" data-target="#search-customers">
-            <i class="fa fa-search"></i>
-        </button>
-    </div>
+
+    @if(empty($notSearch))
+        <div class="input-group-append">
+            <button class="btn btn-info" id="btn-search" type="button" data-toggle="modal" data-target="#search-customers">
+                <i class="fa fa-search"></i>
+            </button>
+        </div>
+    @endif
 </div>
 
 @push('scripts')
@@ -22,7 +25,7 @@
                 tags: true,
                 maximumSelectionLength: 1,
                 language: "pt-BR",
-                placeholder: "Selecionar os terapeutas para o atendimento"
+                placeholder: "Selecionar um cliente"
             }).on('select2:select', function (e) {
                 e.preventDefault();
                 var data = e.params.data;

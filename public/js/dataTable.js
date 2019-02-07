@@ -4,6 +4,15 @@ var DataTable = function() {
         var table = $('#dataTable');
         var $columns = [];
         var $columnDefs = [];
+        var $length = $('#dataTable').data('length');
+        var $dom = `<'row'<'col-sm-6 text-left'f><'col-sm-6 text-right'B>>
+			<'row'<'col-sm-12'tr>>
+			<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7 dataTables_pager'lp>>`;
+
+        if(typeof $('#dataTable').data('dom') !== 'undefined') {
+            $dom = $('#dataTable').data('dom');
+        }
+
         table.find('#columns-dataTable > th').each(function(key, item){
             $columns.push({
                 data: $(item).data('field')
@@ -12,11 +21,13 @@ var DataTable = function() {
             var defs = {};
             defs.targets = key;
 
-            if(typeof $(item).data('width') != 'undefined')
+            if(typeof $(item).data('width') !== 'undefined') {
                 defs.width = $(item).data('width');
+            }
 
-            if(typeof $(item).data('class') != 'undefined')
+            if(typeof $(item).data('class') !== 'undefined') {
                 defs.className = $(item).data('class');
+            }
 
             $columnDefs.push(defs);
         });
@@ -54,9 +65,7 @@ var DataTable = function() {
                     copyTitle: 'Copiado',
                 }
             },
-            dom: `<'row'<'col-sm-6 text-left'f><'col-sm-6 text-right'B>>
-			<'row'<'col-sm-12'tr>>
-			<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7 dataTables_pager'lp>>`,
+            dom: $dom,
             buttons: [
                 'print',
                 'copyHtml5',
@@ -65,7 +74,8 @@ var DataTable = function() {
             ],
             ajax: table.data('url'),
             columns: $columns,
-            columnDefs: $columnDefs
+            columnDefs: $columnDefs,
+            pageLength: $length
         });
     };
 

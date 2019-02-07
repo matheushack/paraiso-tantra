@@ -26,7 +26,7 @@
     </div>
     <div class="m-portlet__body">
         <!--begin: Datatable -->
-        <table class="table table-striped- table-bordered table-hover table-checkable" id="dataTable" data-url="{{isset($dUrl) ? $dUrl : '#'}}">
+        <table class="table table-striped- table-bordered table-hover table-checkable" id="dataTable" data-url="{{isset($dUrl) ? $dUrl : '#'}}" data-length="{{isset($dLength) ? $dLength : '10'}}"  {{isset($dDom) ? 'data-dom="'.$dDom.'"': ''}}>
             <thead>
             <tr id="columns-dataTable">
                 @if(isset($dColumns))

@@ -1,8 +1,8 @@
 <div class="m-portlet__body">
     <div class="form-group m-form__group row">
         <div class="col-lg-12">
-            @component('Customers::components.customers')
-            @endcomponent
+                @component('Customers::components.customers')
+                @endcomponent
         </div>
     </div>
     <div class="form-group m-form__group row">
