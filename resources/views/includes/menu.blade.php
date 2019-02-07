@@ -125,7 +125,7 @@
             </li>
             <li class="m-menu__item  m-menu__item--submenu {{isset($menu_parent_active) && $menu_parent_active == 'reports' ? 'm-menu__item--open m-menu__item--expanded' : ''}}" aria-haspopup="true"  m-menu-submenu-toggle="hover">
                 <a  href="javascript:;" class="m-menu__link m-menu__toggle">
-                    <i class="m-menu__link-icon flaticon-map-location"></i>
+                    <i class="m-menu__link-icon flaticon-graphic-2"></i>
                     <span class="m-menu__link-text">Relatórios</span>
                     <i class="m-menu__ver-arrow la la-angle-right"></i>
                 </a>
