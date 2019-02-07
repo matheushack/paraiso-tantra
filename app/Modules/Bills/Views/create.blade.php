@@ -120,7 +120,7 @@
                             <label>
                                 Quantidade de meses
                             </label>
-                            <input name="months" type="number" class="form-control m-input" id="months" placeholder="" required>
+                            <input name="months" type="number" class="form-control m-input" id="months" placeholder="">
                         </div>
                     </div>
                     <div class="form-group m-form__group row">
