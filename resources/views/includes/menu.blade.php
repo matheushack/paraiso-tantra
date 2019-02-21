@@ -132,16 +132,22 @@
                 <div class="m-menu__submenu ">
                     <span class="m-menu__arrow"></span>
                     <ul class="m-menu__subnav">
+                        <li class="m-menu__item  {{isset($menu_active) && $menu_active == 'calls' ? 'm-menu__item--active' : ''}}" aria-haspopup="true" >
+                            <a  href="{{route('reports.calls')}}" class="m-menu__link ">
+                                <i class="m-menu__link-icon flaticon-event-calendar-symbol"></i>
+                                <span class="m-menu__link-text">Atendimentos</span>
+                            </a>
+                        </li>
                         <li class="m-menu__item  {{isset($menu_active) && $menu_active == 'customers' ? 'm-menu__item--active' : ''}}" aria-haspopup="true" >
                             <a  href="{{route('reports.customers')}}" class="m-menu__link ">
                                 <i class="m-menu__link-icon flaticon-users"></i>
                                 <span class="m-menu__link-text">Clientes</span>
                             </a>
                         </li>
-                        <li class="m-menu__item  {{isset($menu_active) && $menu_active == 'calls' ? 'm-menu__item--active' : ''}}" aria-haspopup="true" >
-                            <a  href="{{route('reports.calls')}}" class="m-menu__link ">
-                                <i class="m-menu__link-icon flaticon-event-calendar-symbol"></i>
-                                <span class="m-menu__link-text">Atendimentos</span>
+                        <li class="m-menu__item  {{isset($menu_active) && $menu_active == 'extract' ? 'm-menu__item--active' : ''}}" aria-haspopup="true" >
+                            <a  href="{{route('reports.extract')}}" class="m-menu__link ">
+                                <i class="m-menu__link-icon flaticon-list-1"></i>
+                                <span class="m-menu__link-text">Extrato</span>
                             </a>
                         </li>
                     </ul>

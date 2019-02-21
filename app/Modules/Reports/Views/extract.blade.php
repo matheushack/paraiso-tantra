@@ -40,29 +40,7 @@
                     @csrf
                     <div class="form-group m-form__group row">
                         <div class="col-lg-3">
-                            @component('Customers::components.customers', ['notSearch' => true])
-                            @endcomponent
-                        </div>
-                        <div class="col-lg-3">
                             @component('Units::components.units', ['multiple' => true])
-                            @endcomponent
-                        </div>
-                        <div class="col-lg-3">
-                            @component('Employees::components.employees', ['placeholder' => 'Selecionar os terapeutas'])
-                            @endcomponent
-                        </div>
-                        <div class="col-lg-3">
-                            @component('Services::components.services', ['multiple' => 'multiple'])
-                            @endcomponent
-                        </div>
-                    </div>
-                    <div class="form-group m-form__group row">
-                        <div class="col-lg-3">
-                            @component('Calls::components.status_payment')
-                            @endcomponent
-                        </div>
-                        <div class="col-lg-3">
-                            @component('PaymentMethods::components.payments')
                             @endcomponent
                         </div>
                         <div class="col-lg-3">
@@ -97,7 +75,7 @@
                 <div class="m-portlet__head-tools">
                     <ul class="m-portlet__nav">
                         <li class="m-portlet__nav-item">
-                            <a href="{{route('reports.calls.excel')}}" class="btn btn-dark m-btn m-btn--custom m-btn--icon m-btn--air" id="btn-excel">
+                            <a href="{{route('reports.extract.excel')}}" class="btn btn-dark m-btn m-btn--custom m-btn--icon m-btn--air" id="btn-excel">
                                 <span>
                                     <i class="la la-file-excel-o"></i>
                                     <span>
@@ -107,7 +85,7 @@
                             </a>
                         </li>
                         <li class="m-portlet__nav-item">
-                            <a href="{{route('reports.calls.pdf')}}" class="btn btn-dark m-btn m-btn--custom m-btn--icon m-btn--air">
+                            <a href="{{route('reports.extract.pdf')}}" class="btn btn-dark m-btn m-btn--custom m-btn--icon m-btn--air">
                                 <span>
                                     <i class="la la-file-pdf-o"></i>
                                     <span>
@@ -119,60 +97,86 @@
                     </ul>
                 </div>
             </div>
-            <div class="m-portlet__body">
-                <table class="table table-striped- table-bordered table-hover table-responsive" id="table-report">
-                    <thead>
-                    <tr>
-                        <th>Cliente</th>
-                        <th>Unidade</th>
-                        <th>Sala</th>
-                        <th>Terapeutas</th>
-                        <th>Forma de pagamento</th>
-                        <th>Serviço</th>
-                        <th>Data inicial</th>
-                        <th>Data final</th>
-                        <th>Status</th>
-                        <th>Valor</th>
-                        <th>Alíquota</th>
-                        <th>Desconto</th>
-                        <th>Total</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    @if(!empty($data))
-                        @foreach($data as $report)
-                            <tr>
-                                <td>{{$report->customer}}</td>
-                                <td>{{$report->unity}}</td>
-                                <td>{{$report->room}}</td>
-                                <td>{{$report->employees}}</td>
-                                <td>{{$report->payment_method}}</td>
-                                <td>{{$report->service}}</td>
-                                <td>{{\Carbon\Carbon::parse($report->start)->format('d/m/Y H:i:s')}}</td>
-                                <td>{{\Carbon\Carbon::parse($report->end)->format('d/m/Y H:i:s')}}</td>
-                                <td>
-                                    @switch($report->status)
-                                        @case('A')
-                                            Aguardando pagamento
-                                        @break
-                                        @case('P')
-                                            Pago
-                                        @break
-                                    @endswitch
-                                </td>
-                                <td>{{'R$ '.number_format($report->amount, 2, ',', '.')}}</td>
-                                <td>{{$report->aliquot > 0 ? number_format($report->aliquot, 2, ',', '.').'%' : '0,00%'}}</td>
-                                <td>{{'R$ '.number_format($report->discount, 2, ',', '.')}}</td>
-                                <td>{{'R$ '.number_format($report->total, 2, ',', '.')}}</td>
-                            </tr>
-                        @endforeach
-                    @else
-                        <tr>
-                            <td colspan="13">Nenhum registro encontrado</td>
-                        </tr>
-                    @endif
-                    </tbody>
-                </table>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12" id="extract">
+                @if($extract->count() > 1)
+                    @php
+                        $total = 0;
+                    @endphp
+                    @foreach($extract as $date => $items)
+                        @if($date == 'total')
+                            @continue
+                        @endif
+
+                        <div class="m-portlet m-portlet--creative m-portlet--bordered-semi m-0">
+                            <div class="m-portlet__head" style="height: 1px;">
+                                <div class="m-portlet__head-caption">
+                                    <h2 class="m-portlet__head-label m-portlet__head-label--info">
+                                        <span><i class="m-menu__link-icon flaticon-calendar"></i> {{\Carbon\Carbon::parse($date)->format('d/m/Y')}}</span>
+                                    </h2>
+                                </div>
+                            </div>
+                            <div class="m-portlet__body">
+                                <table class="table">
+                                    <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    @php
+                                        $subtotal = 0;
+                                    @endphp
+                                    @foreach($items as $item)
+                                        @php
+                                            if($item->isNegative)
+                                               $subtotal = $subtotal - $item->amount;
+                                            else
+                                               $subtotal = $subtotal + $item->amount;
+                                        @endphp
+
+                                        <tr>
+                                            <td class="font-weight-bold">{{$item->name}}</td>
+                                            <td align="right" class="font-weight-bold {{$item->isNegative ? 'text-danger' : 'text-success'}}">{{$item->isNegative ? '-' : ''}} R$ {{number_format($item->amount, 2, ',', '.')}}</td>
+                                        </tr>
+                                    @endforeach
+                                    </tbody>
+                                    <tfooter>
+                                        <tr style="background: #DDD;color: #333;">
+                                            <td class="font-weight-bold">Subtotal</td>
+                                            <td align="right" class="font-weight-bold {{$subtotal < 0 ? 'text-danger' : 'text-success'}}">R$ {{number_format($subtotal, 2, ',', '.')}}</td>
+                                        </tr>
+                                    </tfooter>
+                                </table>
+                            </div>
+                        </div>
+                        @php
+                            $total = $total + $subtotal;
+                        @endphp
+                    @endforeach
+
+                    <div class="m-portlet m-portlet--creative m-portlet--bordered-semi m-0">
+                        <div class="m-portlet__body">
+                            <table class="table">
+                                <tbody>
+                                <tr style="background: #343a40;color: #FFF; font-size: 18px;">
+                                    <td class="font-weight-bold">Total</td>
+                                    <td align="right" class="font-weight-bold {{$total < 0 ? 'text-danger' : 'text-success'}}">R$ {{number_format($total, 2, ',', '.')}}</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                @else
+                    <div class="m-portlet m-portlet--creative m-portlet--bordered-semi m-0">
+                        <div class="m-portlet__body">
+                            <p class="text-center">Nenhum registro encontrado</p>
+                        </div>
+                    </div>
+                @endif
             </div>
         </div>
     </div>
@@ -197,7 +201,7 @@
 
                 submitHandler: function (form) {
                     $.ajax({
-                        url: '{{route('reports.customers.filter')}}',
+                        url: '{{route('reports.extract.filter')}}',
                         type: 'POST',
                         data: $(form).serialize(),
                         beforeSend: function(xhr, type) {
@@ -206,7 +210,7 @@
                             }
                         },
                         success: function (data) {
-                            $('#table-report tbody').html(data.table);
+                            $('#extract').html(data.table);
                         }
                     });
 
