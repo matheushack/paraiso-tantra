@@ -51,6 +51,12 @@ class ServiceExtractReport
             $bills->whereIn('bills.unity_id', $request->input('unity_id'));
         }
 
+        if(!empty($request->input('start')))
+            $request->merge(['start' => Carbon::createFromFormat('d/m/Y', $request->input('start'))->startOfDay()->format('Y-m-d H:i:s')]);
+
+        if(!empty($request->input('end')))
+            $request->merge(['end' => Carbon::createFromFormat('d/m/Y', $request->input('end'))->endOfDay()->format('Y-m-d H:i:s')]);
+
         if(!empty($request->input('start')) && !empty($request->input('end'))){
             $calls->where('calls.start', '>=', $request->input('start'))
                 ->where('calls.end', '<=', $request->input('end'));

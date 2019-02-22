@@ -22,6 +22,6 @@ class ExtractExport implements FromView
         $serviceExtract = new ServiceExtractReport();
         $data = $serviceExtract->filter($request);
 
-        return view("Reports::export.extract", ['data' => $data]);
+        return view("Reports::export.extract", ['extract' => $data]);
     }
 }
