@@ -3,7 +3,7 @@ var Calendar = function() {
         var calendar = $('#atendimento');
 
         calendar.fullCalendar({
-            defaultView: 'month',
+            defaultView: 'agendaDay',
             locale: 'pt-br',
             nowIndicator: true,
             eventLimit: true,
