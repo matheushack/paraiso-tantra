@@ -217,13 +217,16 @@ class ServiceCalls
                 if($call->count() == 0)
                     throw new \Exception('Atendimento não encontrado!');
 
+                $total = $request->input('amount') - $request->input('discount');
+                $total = $total - ($request->input('aliquot') * $total)/100;
+
                 $call->status = $request->input('status');
                 $call->payment_id = $request->input('payment_id');
                 $call->type_discount = $request->input('type_discount');
                 $call->amount = $request->input('amount');
                 $call->discount = $request->input('discount');
                 $call->aliquot = $request->input('aliquot');
-                $call->total = $request->input('amount') - $request->input('discount') - $request->input('aliquot');
+                $call->total = $total;
 
                 if(!$call->save())
                     throw new \Exception('Houve um problema ao tentar atualziar o atendimento. Por favor, tente mais tarde!');

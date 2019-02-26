@@ -144,6 +144,12 @@
                                 <span class="m-menu__link-text">Clientes</span>
                             </a>
                         </li>
+                        <li class="m-menu__item  {{isset($menu_active) && $menu_active == 'commissions' ? 'm-menu__item--active' : ''}}" aria-haspopup="true" >
+                            <a  href="{{route('reports.commissions')}}" class="m-menu__link ">
+                                <i class="m-menu__link-icon flaticon-users"></i>
+                                <span class="m-menu__link-text">Comissão</span>
+                            </a>
+                        </li>
                         <li class="m-menu__item  {{isset($menu_active) && $menu_active == 'extract' ? 'm-menu__item--active' : ''}}" aria-haspopup="true" >
                             <a  href="{{route('reports.extract')}}" class="m-menu__link ">
                                 <i class="m-menu__link-icon flaticon-list-1"></i>

@@ -20,6 +20,13 @@ Route::group(['prefix'=> 'relatorios', 'module' => 'Reports', 'middleware' => ['
         Route::get('pdf', 'CustomersReportController@pdf')->name('reports.customers.pdf');
     });
 
+    Route::group(['prefix'=> 'comissao'], function(){
+        Route::get('/', 'CommissionsReportController@index')->name('reports.commissions');
+        Route::post('filtro', 'CommissionsReportController@filter')->name('reports.commissions.filter');
+        Route::get('excel', 'CommissionsReportController@excel')->name('reports.commissions.excel');
+        Route::get('pdf', 'CommissionsReportController@pdf')->name('reports.commissions.pdf');
+    });
+
     Route::group(['prefix'=> 'extrato'], function(){
         Route::get('/', 'ExtractReportController@index')->name('reports.extract');
         Route::post('filtro', 'ExtractReportController@filter')->name('reports.extract.filter');

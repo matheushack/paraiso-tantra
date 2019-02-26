@@ -41,7 +41,7 @@ class ServiceCustomersReport
             $query->where('customers.cell_phone', '=', $request->input('cell_phone'));
 
         if(!empty($request->input('unity_id')))
-            $query->whereIn('units.unity_id', $request->input('unity_id'));
+            $query->whereIn('units.id', $request->input('unity_id'));
 
         if(!empty($request->input('employees')))
             $query->whereIn('employees.id', $request->input('employees'));
