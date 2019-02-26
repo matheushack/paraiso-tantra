@@ -146,7 +146,7 @@
                         </li>
                         <li class="m-menu__item  {{isset($menu_active) && $menu_active == 'commissions' ? 'm-menu__item--active' : ''}}" aria-haspopup="true" >
                             <a  href="{{route('reports.commissions')}}" class="m-menu__link ">
-                                <i class="m-menu__link-icon flaticon-users"></i>
+                                <i class="m-menu__link-icon flaticon-coins"></i>
                                 <span class="m-menu__link-text">Comissão</span>
                             </a>
                         </li>
