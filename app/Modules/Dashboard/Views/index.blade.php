@@ -15,7 +15,7 @@
         <div class="row">
             @if(!empty($dashboard['accounts']))
                 @foreach($dashboard['accounts'] as $account => $data)
-                    <div class="col-xl-6">
+                    <div class="col-xl-6 wrapper-account" id="wrapper-{{camel_case($account)}}">
                         <div class="m-subheader" style="padding: 0;">
                             <div class="d-flex">
                                 <div class="mr-auto">
@@ -27,16 +27,6 @@
                         </div>
 
                         <div class="m-portlet m-portlet--head-overlay m-portlet--full-height">
-                            <div class="m-portlet__head m-portlet__head--fit-">
-                                <div class="m-portlet__head-tools">
-                                    <div class="btn-group float-right m--padding-10">
-                                        @component('components.months', ['months' => $dashboard['months'], 'selected' => $dashboard['monthSelected'], 'dashboard' => true])
-                                        @endcomponent
-                                        @component('components.years', ['years' => $dashboard['years'], 'selected' => $dashboard['yearSelected'], 'dashboard' => true])
-                                        @endcomponent
-                                    </div>
-                                </div>
-                            </div>
                             <div class="m-portlet__body">
                                 <div class="m-widget27 m-portlet-fit--sides">
                                     <div class="m-widget27__pic dashboard">
@@ -48,7 +38,7 @@
                                                 <span class="font-weight-bold">Total</span>
                                             </span>
                                             <span>
-                                                <span id="account-total" class="{{$data['classTotal']}}">{{$data['total_in_out']}}</span>
+                                                <span class="account-total {{$data['classTotal']}}">{{$data['total_in_out']}}</span>
                                             </span>
                                         </h3>
                                         <div class="m-widget27__btn">
@@ -62,7 +52,7 @@
                                             <div id="m_personal_income_quater_1" class="tab-pane active">
                                                 <div class="row  align-items-center">
                                                     <div class="col">
-                                                        <div class="m-widget27__chart entradas_saidas" style="height: 180px" data-percentage-in="{{$data['percentage_account_in']}}" data-percentage-out="{{$data['percentage_account_out']}}">
+                                                        <div id="{{camel_case($account)}}" class="m-widget27__chart entradas_saidas" style="height: 180px" data-percentage-in="{{$data['percentage_account_in']}}" data-percentage-out="{{$data['percentage_account_out']}}">
                                                             <div class="m-widget27__stat">
                                                                 <i class="flaticon-more" style="font-size: 2em;"></i>
                                                             </div>
@@ -72,13 +62,13 @@
                                                         <div class="m-widget27__legends">
                                                             <div class="m-widget27__legend">
                                                                 <span class="m-widget27__legend-bullet m--bg-success"></span>
-                                                                <span class="m-widget27__legend-text" id="detail-account-in">
+                                                                <span class="m-widget27__legend-text detail-account-in">
                                                                     <strong>{{$data['accounts_in']}}</strong> de receitas
                                                                 </span>
                                                             </div>
                                                             <div class="m-widget27__legend">
                                                                 <span class="m-widget27__legend-bullet m--bg-danger"></span>
-                                                                <span class="m-widget27__legend-text" id="detail-account-out">
+                                                                <span class="m-widget27__legend-text detail-account-out">
                                                                     <strong>{{$data['accounts_out']}}</strong> de despesas
                                                                 </span>
                                                             </div>

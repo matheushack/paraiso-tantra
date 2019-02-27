@@ -63,21 +63,27 @@ class ServiceDashboard
             $collection = new Collection();
 
             $calls = Calls::select('amount')
+                ->join('payment_methods', 'calls.payment_id', '=', 'payment_methods.id')
                 ->where('status', '=', 'P')
-                ->where('start', '>=', $now->startOfMonth()->format('Y-m-d H:i:s'))
-                ->where('end', '<=', $now->endOfMonth()->format('Y-m-d H:i:s'));
+//                ->where('start', '>=', $now->startOfMonth()->format('Y-m-d H:i:s'))
+//                ->where('end', '<=', $now->endOfMonth()->format('Y-m-d H:i:s'))
+                ->where('payment_methods.account_id', '=', $account->id);
 
             $bills = Bills::select('amount')
+                ->join('payment_methods', 'bills.payment_id', '=', 'payment_methods.id')
                 ->whereIn('status', ['P', 'R'])
                 ->where('type', '=', 'R')
-                ->whereBetween('expiration_date', [$now->startOfMonth()->format('Y-m-d H:i:s'), $now->endOfMonth()->format('Y-m-d H:i:s')]);
+//                ->whereBetween('expiration_date', [$now->startOfMonth()->format('Y-m-d H:i:s'), $now->endOfMonth()->format('Y-m-d H:i:s')])
+                ->where('payment_methods.account_id', '=', $account->id);
 
             $accounts_in = $calls->union($bills)->get()->sum('amount');
 
             $accounts_out = Bills::select('amount')
+                ->join('payment_methods', 'bills.payment_id', '=', 'payment_methods.id')
                 ->whereIn('status', ['P', 'R'])
                 ->where('type', '<>', 'R')
-                ->whereBetween('expiration_date', [$now->startOfMonth()->format('Y-m-d H:i:s'), $now->endOfMonth()->format('Y-m-d H:i:s')])
+//                ->whereBetween('expiration_date', [$now->startOfMonth()->format('Y-m-d H:i:s'), $now->endOfMonth()->format('Y-m-d H:i:s')])
+                ->where('payment_methods.account_id', '=', $account->id)
                 ->get()
                 ->sum('amount');
 
