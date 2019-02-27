@@ -16,17 +16,20 @@
             @if(!empty($dashboard['accounts']))
                 @foreach($dashboard['accounts'] as $account => $data)
                     <div class="col-xl-6 wrapper-account" id="wrapper-{{camel_case($account)}}">
-                        <div class="m-subheader" style="padding: 0;">
-                            <div class="d-flex">
-                                <div class="mr-auto">
-                                    <h3 class="m-subheader__title ">
-                                        <i class="flaticon-pie-chart"></i> {{$account}}
-                                    </h3>
-                                </div>
-                            </div>
-                        </div>
 
                         <div class="m-portlet m-portlet--head-overlay m-portlet--full-height">
+                            <div class="m-portlet__head">
+                                <div class="m-portlet__head-caption">
+                                    <div class="m-portlet__head-title">
+                                        <span class="m-portlet__head-icon m--hide">
+                                            <i class="la la-gear"></i>
+                                        </span>
+                                        <h3 class="m-portlet__head-text">
+                                            <i class="flaticon-pie-chart"></i> {{$account}}
+                                        </h3>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="m-portlet__body">
                                 <div class="m-widget27 m-portlet-fit--sides">
                                     <div class="m-widget27__pic dashboard">
