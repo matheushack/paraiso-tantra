@@ -30176,7 +30176,7 @@ body.m-portlet--fullscreen.m-aside-left--fixed .m-aside-left {
     right: 0;
     bottom: 0;
     left: 0;
-    background: linear-gradient(to right, #909 20%, #4f30a2 120%);
+    /*background: linear-gradient(to right, #909 20%, #4f30a2 120%);*/
     opacity: .6
 }
 
