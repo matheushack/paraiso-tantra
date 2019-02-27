@@ -17,9 +17,21 @@ use Illuminate\Support\Facades\DB as Capsule;
 
 class ServiceBills
 {
-    public function dataTable()
+    public function dataTable(Request $request)
     {
-        return DataTables::of(Bills::query())
+        $query = Bills::query();
+
+        $start = !empty($request->input('frm.start')) ? Carbon::createFromFormat('d/m/Y', $request->input('frm.start'))->startOfDay()->format('Y-m-d H:i:s') : '';
+        $end = !empty($request->input('frm.end')) ? Carbon::createFromFormat('d/m/Y', $request->input('frm.end'))->endOfDay()->format('Y-m-d H:i:s') : '';
+
+        if(!empty($start) && !empty($end))
+            $query->whereBetween('expiration_date', [$start, $end]);
+        else if(!empty($start))
+            $query->where('expiration_date', '>=', $start);
+        else if(!empty($end))
+            $query->where('expiration_date', '<=', $end);
+
+        return DataTables::of($query)
             ->editColumn('type', function($bill){
                 return $bill->type == 'D' ? 'Despesa' : 'Receita';
             })

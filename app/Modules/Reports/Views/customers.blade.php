@@ -169,20 +169,7 @@
     </div>
 @endsection
 
-@push('css')
-    <link href="//www.amcharts.com/lib/3/plugins/export/export.css" rel="stylesheet" type="text/css" />
-@endpush
-
 @push('scripts')
-    <script src="//www.amcharts.com/lib/3/amcharts.js" type="text/javascript"></script>
-    <script src="//www.amcharts.com/lib/3/serial.js" type="text/javascript"></script>
-    <script src="//www.amcharts.com/lib/3/radar.js" type="text/javascript"></script>
-    <script src="//www.amcharts.com/lib/3/pie.js" type="text/javascript"></script>
-    <script src="//www.amcharts.com/lib/3/plugins/tools/polarScatter/polarScatter.min.js" type="text/javascript"></script>
-    <script src="//www.amcharts.com/lib/3/plugins/animate/animate.min.js" type="text/javascript"></script>
-    <script src="//www.amcharts.com/lib/3/plugins/export/export.min.js" type="text/javascript"></script>
-    <script src="//www.amcharts.com/lib/3/themes/light.js" type="text/javascript"></script>
-    <script src="http://www.amcharts.com/lib/3/plugins/dataloader/dataloader.min.js" type="text/javascript"></script>
     <script>
         $(document).ready(function(){
             ParaisoTantra.masks();
@@ -221,82 +208,6 @@
             $('input[required],select[required]').each(function(key, item){
                 $(this).removeAttr('required');
             });
-
-
-            {{--var chart = AmCharts.makeChart("report-monthly", {--}}
-                {{--theme: "light",--}}
-                {{--type: "serial",--}}
-                {{--dataLoader: {--}}
-                    {{--url: "{{route('reports.dataMonthy')}}",--}}
-                    {{--format: "json"--}}
-                {{--},--}}
-                {{--valueAxes:[{--}}
-                    {{--stackType: "3d",--}}
-                    {{--unit: "",--}}
-                    {{--position: "left",--}}
-                    {{--title: "Valor"--}}
-                {{--}],--}}
-                {{--startDuration: true,--}}
-                {{--graphs:[--}}
-                    {{--{--}}
-                        {{--balloonText: "Receita [[day]]: <b>[[value]]</b>",--}}
-                        {{--fillAlphas: .9,--}}
-                        {{--lineAlpha: .2,--}}
-                        {{--title: "Receita",--}}
-                        {{--type: "column",--}}
-                        {{--valueField: "recipe",--}}
-                        {{--colorField: '#00BF60',--}}
-                    {{--},--}}
-                    {{--{--}}
-                        {{--balloonText: "Despesa [[day]]: <b>[[value]]</b>",--}}
-                        {{--fillAlphas: .9,--}}
-                        {{--lineAlpha: .2,--}}
-                        {{--title: "Despesa",--}}
-                        {{--type: "column",--}}
-                        {{--valueField: "charge",--}}
-                        {{--colorField: '#00BF60',--}}
-                    {{--}--}}
-                {{--],--}}
-                {{--plotAreaFillAlphas:.1,--}}
-                {{--depth3D: 100,--}}
-                {{--angle: 30,--}}
-                {{--categoryField: "day",--}}
-                {{--categoryAxis: {--}}
-                    {{--gridPosition: "start"--}}
-                {{--},--}}
-                {{--export: {--}}
-                    {{--enabled: true--}}
-                {{--}--}}
-            {{--});--}}
-
-            {{--$('#company_id, #category_id, #payment_id, #status, input[name="type[]"], #month, #year').on('change', function(){--}}
-                {{--$.ajax({--}}
-                    {{--url: '{{route('reports.filter')}}',--}}
-                    {{--type: 'POST',--}}
-                    {{--data: {--}}
-                        {{--month: $('#month').val(),--}}
-                        {{--year: $('#year').val(),--}}
-                        {{--company_id: $('#company_id').val(),--}}
-                        {{--category_id: $('#category_id').val(),--}}
-                        {{--payment_id: $('#payment_id').val(),--}}
-                        {{--status: $('#status').val(),--}}
-                        {{--type: $("input[name='type[]']").map(function(){--}}
-                            {{--return ($(this).is(':checked') ? $(this).val() : '');--}}
-                        {{--}).get(),--}}
-                    {{--},--}}
-                    {{--dataType: 'json',--}}
-                    {{--beforeSend: function(xhr, type) {--}}
-                        {{--if (!type.crossDomain) {--}}
-                            {{--xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'));--}}
-                        {{--}--}}
-                    {{--},--}}
-                    {{--success: function (json) {--}}
-                        {{--chart.dataProvider = json;--}}
-                        {{--chart.validateData();--}}
-                        {{--$('#dataTable').DataTable().ajax.reload();--}}
-                    {{--}--}}
-                {{--});--}}
-            {{--});--}}
         });
     </script>
 @endpush

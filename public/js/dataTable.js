@@ -72,7 +72,21 @@ var DataTable = function() {
                 'excelHtml5',
                 'pdfHtml5',
             ],
-            ajax: table.data('url'),
+            ajax: {
+                url: table.data('url'),
+                type: table.data('type'),
+                beforeSend: function(xhr, type) {
+                    if (!type.crossDomain) {
+                        xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'));
+                    }
+                },
+                data: function(d) {
+                    if(table.data('form-filter')) {
+                        var data = $("#" + table.data('form-filter')).serializeObject();
+                        d.frm = data;
+                    }
+                }
+            },
             columns: $columns,
             columnDefs: $columnDefs,
             pageLength: $length

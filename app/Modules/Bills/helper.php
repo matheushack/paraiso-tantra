@@ -14,6 +14,8 @@ if(!function_exists('dataTableBills')) {
             'dTitle' => '',
             'dBtnNew' => route('bills.create'),
             'dUrl' => route('bills.dataTable'),
+            'dType' => 'POST',
+            'dFormFilter' => 'form-filter',
             'dColumns' => [
                 ['label' => '#', 'field' => 'id', 'width' => '20px'],
                 ['label' => 'Fornecedor', 'field' => 'provider_id'],

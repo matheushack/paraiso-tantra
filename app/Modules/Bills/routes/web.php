@@ -3,7 +3,7 @@
 Route::group(['prefix' => 'contas-a-pagar', 'module' => 'Bills', 'middleware' => ['web', 'auth'], 'namespace' => 'App\Modules\Bills\Controllers'], function() {
 
     Route::get('/', 'BillsController@index')->name('bills');
-    Route::get('datatable', 'BillsController@dataTable')->name('bills.dataTable');
+    Route::post('datatable', 'BillsController@dataTable')->name('bills.dataTable');
     Route::get('novo', 'BillsController@create')->name('bills.create');
     Route::post('salvar', 'BillsController@store')->name('bills.store');
     Route::get('editar/{id}', 'BillsController@edit');

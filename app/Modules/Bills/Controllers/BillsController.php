@@ -29,9 +29,9 @@ class BillsController extends Controller
         return view("Bills::index", dataTableBills());
     }
 
-    public function dataTable()
+    public function dataTable(Request $request)
     {
-        return $this->serviceBills->dataTable();
+        return $this->serviceBills->dataTable($request);
     }
 
     /**
