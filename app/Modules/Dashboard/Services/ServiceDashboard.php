@@ -76,7 +76,7 @@ class ServiceDashboard
 //                ->whereBetween('expiration_date', [$now->startOfMonth()->format('Y-m-d H:i:s'), $now->endOfMonth()->format('Y-m-d H:i:s')])
                 ->where('payment_methods.account_id', '=', $account->id);
 
-            $accounts_in = $calls->union($bills)->get()->sum('amount');
+            $accounts_in = $calls->unionAll($bills)->get()->sum('amount');
 
             $accounts_out = Bills::select('amount')
                 ->join('payment_methods', 'bills.payment_id', '=', 'payment_methods.id')
