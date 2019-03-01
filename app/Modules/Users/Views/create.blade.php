@@ -57,21 +57,22 @@
                             <label>
                                 Nome completo
                             </label>
-                            <input name="name" type="text" class="form-control m-input" id="name" placeholder="">
+                            <input name="name" type="text" class="form-control m-input" id="name" placeholder="" required>
                         </div>
                         <div class="col-lg-4">
                             <label>
                                 Email
                             </label>
-                            <input name="email" type="email" class="form-control m-input mask-email" id="email" placeholder="">
+                            <input name="email" type="email" class="form-control m-input mask-email" id="email" placeholder="" required>
                         </div>
                         <div class="col-lg-4">
                             <label>
                                 Perfil
                             </label>
-                            <select name="profile_id" class="form-control m-bootstrap-select" id="profile_id">
+                            <select name="profile_id" class="form-control m-bootstrap-select" id="profile_id" required>
                                 <option value="">Selecione</option>
                                 <option value="1" selected>Administrador</option>
+                                <option value="2">Gerencial</option>
                             </select>
                         </div>
                     </div>
@@ -80,7 +81,7 @@
                             <label>
                                 Senha
                             </label>
-                            <input name="password" type="password" class="form-control m-input" id="password" placeholder="">
+                            <input name="password" type="password" class="form-control m-input" id="password" placeholder="" required>
                         </div>
                     </div>
                 </div>

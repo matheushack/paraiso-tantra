@@ -31,6 +31,7 @@ class ServiceUsers
                 return Carbon::parse($user->created_at)->format('d/m/Y H:i:s');
             })
             ->addColumn('img_profile',  function ($user) {
+                $user->profile_id = $user->profile_id == 1 ? 'Administrador' : 'Gerencial';
                 return imgProfileUsers($user);
             })
             ->addColumn('actions', function ($user){
@@ -86,6 +87,7 @@ class ServiceUsers
             Capsule::transaction(function () use ($request) {
                 $user = User::find($request->input('id'));
                 $user->name = $request->input('name');
+                $user->profile_id = $request->input('profile_id');
 
                 if (!$user->save())
                     throw new \Exception('Não foi possível editar o novo usuário. Por favor, tente mais tarde!');

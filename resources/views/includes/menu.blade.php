@@ -71,58 +71,60 @@
                     </span>
                 </a>
             </li>
-            <li class="m-menu__item  m-menu__item--submenu {{isset($menu_parent_active) && $menu_parent_active == 'financial' ? 'm-menu__item--open m-menu__item--expanded' : ''}}" aria-haspopup="true"  m-menu-submenu-toggle="hover">
-                <a  href="javascript:;" class="m-menu__link m-menu__toggle">
-                    <i class="m-menu__link-icon flaticon-coins"></i>
-                    <span class="m-menu__link-text">Financeiro</span>
-                    <i class="m-menu__ver-arrow la la-angle-right"></i>
-                </a>
-                <div class="m-menu__submenu ">
-                    <span class="m-menu__arrow"></span>
-                    <ul class="m-menu__subnav">
-                        <li class="m-menu__item  {{isset($menu_active) && $menu_active == 'accounts' ? 'm-menu__item--active' : ''}}" aria-haspopup="true" >
-                            <a  href="{{route('accounts')}}" class="m-menu__link ">
-                                <i class="m-menu__link-icon flaticon-piggy-bank"></i>
-                                <span class="m-menu__link-text">Contas</span>
-                            </a>
-                        </li>
-                        <li class="m-menu__item {{isset($menu_active) && $menu_active == 'payments' ? 'm-menu__item--active' : ''}}" aria-haspopup="true" >
-                            <a href="{{route('payments')}}" class="m-menu__link">
-                                <i class="m-menu__link-icon flaticon-cart"></i>
-                                <span class="m-menu__link-title">
-                                    <span class="m-menu__link-wrap">
-                                        <span class="m-menu__link-text">Formas de pagamento</span>
+            @if(Auth::user()->profile_id == 1)
+                <li class="m-menu__item  m-menu__item--submenu {{isset($menu_parent_active) && $menu_parent_active == 'financial' ? 'm-menu__item--open m-menu__item--expanded' : ''}}" aria-haspopup="true"  m-menu-submenu-toggle="hover">
+                    <a  href="javascript:;" class="m-menu__link m-menu__toggle">
+                        <i class="m-menu__link-icon flaticon-coins"></i>
+                        <span class="m-menu__link-text">Financeiro</span>
+                        <i class="m-menu__ver-arrow la la-angle-right"></i>
+                    </a>
+                    <div class="m-menu__submenu ">
+                        <span class="m-menu__arrow"></span>
+                        <ul class="m-menu__subnav">
+                            <li class="m-menu__item  {{isset($menu_active) && $menu_active == 'accounts' ? 'm-menu__item--active' : ''}}" aria-haspopup="true" >
+                                <a  href="{{route('accounts')}}" class="m-menu__link ">
+                                    <i class="m-menu__link-icon flaticon-piggy-bank"></i>
+                                    <span class="m-menu__link-text">Contas</span>
+                                </a>
+                            </li>
+                            <li class="m-menu__item {{isset($menu_active) && $menu_active == 'payments' ? 'm-menu__item--active' : ''}}" aria-haspopup="true" >
+                                <a href="{{route('payments')}}" class="m-menu__link">
+                                    <i class="m-menu__link-icon flaticon-cart"></i>
+                                    <span class="m-menu__link-title">
+                                        <span class="m-menu__link-wrap">
+                                            <span class="m-menu__link-text">Formas de pagamento</span>
+                                        </span>
                                     </span>
-                                </span>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </li>
-            <li class="m-menu__item  m-menu__item--submenu {{isset($menu_parent_active) && $menu_parent_active == 'bills' ? 'm-menu__item--open m-menu__item--expanded' : ''}}" aria-haspopup="true"  m-menu-submenu-toggle="hover">
-                <a  href="javascript:;" class="m-menu__link m-menu__toggle">
-                    <i class="m-menu__link-icon fa fa-money"></i>
-                    <span class="m-menu__link-text">Contas a pagar</span>
-                    <i class="m-menu__ver-arrow la la-angle-right"></i>
-                </a>
-                <div class="m-menu__submenu ">
-                    <span class="m-menu__arrow"></span>
-                    <ul class="m-menu__subnav">
-                        <li class="m-menu__item  {{isset($menu_active) && $menu_active == 'providers' ? 'm-menu__item--active' : ''}}" aria-haspopup="true" >
-                            <a  href="{{route('providers')}}" class="m-menu__link ">
-                                <i class="m-menu__link-icon flaticon-users"></i>
-                                <span class="m-menu__link-text">Fornecedores</span>
-                            </a>
-                        </li>
-                        <li class="m-menu__item  {{isset($menu_active) && $menu_active == 'manage-bills' ? 'm-menu__item--active' : ''}}" aria-haspopup="true" >
-                            <a  href="{{route('bills')}}" class="m-menu__link ">
-                                <i class="m-menu__link-icon flaticon-cogwheel"></i>
-                                <span class="m-menu__link-text">Gerenciar</span>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </li>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="m-menu__item  m-menu__item--submenu {{isset($menu_parent_active) && $menu_parent_active == 'bills' ? 'm-menu__item--open m-menu__item--expanded' : ''}}" aria-haspopup="true"  m-menu-submenu-toggle="hover">
+                    <a  href="javascript:;" class="m-menu__link m-menu__toggle">
+                        <i class="m-menu__link-icon fa fa-money"></i>
+                        <span class="m-menu__link-text">Contas a pagar</span>
+                        <i class="m-menu__ver-arrow la la-angle-right"></i>
+                    </a>
+                    <div class="m-menu__submenu ">
+                        <span class="m-menu__arrow"></span>
+                        <ul class="m-menu__subnav">
+                            <li class="m-menu__item  {{isset($menu_active) && $menu_active == 'providers' ? 'm-menu__item--active' : ''}}" aria-haspopup="true" >
+                                <a  href="{{route('providers')}}" class="m-menu__link ">
+                                    <i class="m-menu__link-icon flaticon-users"></i>
+                                    <span class="m-menu__link-text">Fornecedores</span>
+                                </a>
+                            </li>
+                            <li class="m-menu__item  {{isset($menu_active) && $menu_active == 'manage-bills' ? 'm-menu__item--active' : ''}}" aria-haspopup="true" >
+                                <a  href="{{route('bills')}}" class="m-menu__link ">
+                                    <i class="m-menu__link-icon flaticon-cogwheel"></i>
+                                    <span class="m-menu__link-text">Gerenciar</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+            @endif
             <li class="m-menu__item  m-menu__item--submenu {{isset($menu_parent_active) && $menu_parent_active == 'reports' ? 'm-menu__item--open m-menu__item--expanded' : ''}}" aria-haspopup="true"  m-menu-submenu-toggle="hover">
                 <a  href="javascript:;" class="m-menu__link m-menu__toggle">
                     <i class="m-menu__link-icon flaticon-graphic-2"></i>
@@ -159,24 +161,27 @@
                     </ul>
                 </div>
             </li>
-            <li class="m-menu__item  m-menu__item--submenu {{isset($menu_parent_active) && $menu_parent_active == 'system' ? 'm-menu__item--open m-menu__item--expanded' : ''}}" aria-haspopup="true"  m-menu-submenu-toggle="hover">
-                <a  href="javascript:;" class="m-menu__link m-menu__toggle">
-                    <i class="m-menu__link-icon flaticon-map-location"></i>
-                    <span class="m-menu__link-text">Sistema</span>
-                    <i class="m-menu__ver-arrow la la-angle-right"></i>
-                </a>
-                <div class="m-menu__submenu ">
-                    <span class="m-menu__arrow"></span>
-                    <ul class="m-menu__subnav">
-                        <li class="m-menu__item  {{isset($menu_active) && $menu_active == 'users' ? 'm-menu__item--active' : ''}}" aria-haspopup="true" >
-                            <a  href="{{route('users')}}" class="m-menu__link ">
-                                <i class="m-menu__link-icon flaticon-users"></i>
-                                <span class="m-menu__link-text">Usuários</span>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </li>
+
+            @if(Auth::user()->profile_id == 1)
+                <li class="m-menu__item  m-menu__item--submenu {{isset($menu_parent_active) && $menu_parent_active == 'system' ? 'm-menu__item--open m-menu__item--expanded' : ''}}" aria-haspopup="true"  m-menu-submenu-toggle="hover">
+                    <a  href="javascript:;" class="m-menu__link m-menu__toggle">
+                        <i class="m-menu__link-icon flaticon-map-location"></i>
+                        <span class="m-menu__link-text">Sistema</span>
+                        <i class="m-menu__ver-arrow la la-angle-right"></i>
+                    </a>
+                    <div class="m-menu__submenu ">
+                        <span class="m-menu__arrow"></span>
+                        <ul class="m-menu__subnav">
+                            <li class="m-menu__item  {{isset($menu_active) && $menu_active == 'users' ? 'm-menu__item--active' : ''}}" aria-haspopup="true" >
+                                <a  href="{{route('users')}}" class="m-menu__link ">
+                                    <i class="m-menu__link-icon flaticon-users"></i>
+                                    <span class="m-menu__link-text">Usuários</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+            @endif
         </ul>
     </div>
 </div>

@@ -38,7 +38,7 @@ if(!function_exists('imgProfileUsers')){
             </div>
             <div class="m-card-user__details">
                 <span class="m-card-user__name">'.$user->name.'</span>
-                <a href="javascript:void(0);" class="m-card-user__email m-link">Perfil: Administrador</a>
+                <span class="m-card-user__email m-link">Perfil: '.$user->profile_id.'</span>
             </div>
         </div>';
     }

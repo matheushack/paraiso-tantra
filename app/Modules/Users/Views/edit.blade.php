@@ -58,15 +58,16 @@
                             <label>
                                 Nome completo
                             </label>
-                            <input name="name" type="text" class="form-control m-input" id="name" placeholder="" value="{{$user->name}}">
+                            <input name="name" type="text" class="form-control m-input" id="name" placeholder="" value="{{$user->name}}" required>
                         </div>
                         <div class="col-lg-4">
                             <label>
                                 Perfil
                             </label>
-                            <select name="profile_id" class="form-control m-bootstrap-select" id="profile_id">
+                            <select name="profile_id" class="form-control m-bootstrap-select" id="profile_id" required>
                                 <option value="">Selecione</option>
-                                <option value="1" selected>Administrador</option>
+                                <option value="1" {{$user->profile_id == 1 ? 'selected' : ''}}>Administrador</option>
+                                <option value="2" {{$user->profile_id == 2 ? 'selected' : ''}}>Gerencial</option>
                             </select>
                         </div>
                     </div>
