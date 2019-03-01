@@ -6,7 +6,6 @@
         {!! Form::select('bank_id', \App\Models\Banks::optionSelect(), (isset($bank_id) ? $bank_id : null), [
                 'class' => 'form-control m-input m-bootstrap-select m_selectpicker',
                 'id' => (isset($id) ? $id : 'bank_id'),
-                'required' => 'required',
                 'data-live-search' => 'true'
         ]) !!}
     </div>

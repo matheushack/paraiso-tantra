@@ -106,17 +106,17 @@
     <script>
         $(document).ready(function(){
 
-            $('body').on('change', 'input[name="type"]', function(){
-                var value = $(this).val();
+            {{--$('body').on('change', 'input[name="type"]', function(){--}}
+                {{--var value = $(this).val();--}}
 
-                if(value == '{{\App\Modules\Accounts\Constants\Types::BANK}}') {
-                    $('#box-type-bank').fadeIn();
-                    $('#box-type-bank').find('input').attr('required', 'required');
-                }else {
-                    $('#box-type-bank').fadeOut();
-                    $('#box-type-bank').find('input').removeAttr('required');
-                }
-            });
+                {{--if(value == '{{\App\Modules\Accounts\Constants\Types::BANK}}') {--}}
+                    {{--$('#box-type-bank').fadeIn();--}}
+                    {{--$('#box-type-bank').find('input').attr('required', 'required');--}}
+                {{--}else {--}}
+                    {{--$('#box-type-bank').fadeOut();--}}
+                    {{--$('#box-type-bank').find('input').removeAttr('required');--}}
+                {{--}--}}
+            {{--});--}}
 
             $("#form-account").validate({
                 invalidHandler: function(event, validator) {
