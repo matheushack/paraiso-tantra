@@ -73,6 +73,14 @@
                             <input name="cell_phone" type="text" class="form-control m-input mask-cell-phone" id="cell_phone" placeholder="" value="{{$provider->cell_phone}}" required>
                         </div>
                     </div>
+                    <div class="form-group m-form__group row">
+                        <div class="col-lg-12">
+                            <label>
+                                Observações
+                            </label>
+                            <textarea name="description" id="description" class="form-control" rows="5">{{$provider->description}}</textarea>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="m-portlet__foot m-portlet__no-border m-portlet__foot--fit">

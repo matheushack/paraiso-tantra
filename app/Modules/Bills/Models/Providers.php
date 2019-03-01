@@ -20,6 +20,6 @@ class Providers extends Model
     protected $table = 'providers';
 
     protected $fillable = [
-        'name', 'phone', 'cell_phone'
+        'name', 'phone', 'cell_phone', 'description'
     ];
 }

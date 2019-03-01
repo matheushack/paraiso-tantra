@@ -65,6 +65,7 @@ class ServiceProviders
             $provider->name = $request->input('name');
             $provider->phone = $request->input('phone');
             $provider->cell_phone = $request->input('cell_phone');
+            $provider->description = $request->input('description');
 
             if (!$provider->save())
                 throw new \Exception('Não foi possível editar o fornecedor. Por favor, tente mais tarde!');
