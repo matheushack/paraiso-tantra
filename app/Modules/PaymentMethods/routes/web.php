@@ -1,6 +1,6 @@
 <?php
 
-Route::group(['prefix' => 'formas-pagamento', 'module' => 'PaymentMethods', 'middleware' => ['web'], 'namespace' => 'App\Modules\PaymentMethods\Controllers'], function() {
+Route::group(['prefix' => 'formas-pagamento', 'module' => 'PaymentMethods', 'middleware' => ['web', 'auth', 'admin'], 'namespace' => 'App\Modules\PaymentMethods\Controllers'], function() {
 
     Route::get('/', 'PaymentMethodsController@index')->name('payments');
     Route::get('novo', 'PaymentMethodsController@create')->name('payments.create');

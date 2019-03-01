@@ -1,6 +1,6 @@
 <?php
 
-Route::group(['prefix' => 'contas', 'module' => 'Accounts', 'middleware' => ['web', 'auth'], 'namespace' => 'App\Modules\Accounts\Controllers'], function() {
+Route::group(['prefix' => 'contas', 'module' => 'Accounts', 'middleware' => ['web', 'auth', 'admin'], 'namespace' => 'App\Modules\Accounts\Controllers'], function() {
 
     Route::get('/', 'AccountsController@index')->name('accounts');
     Route::get('datatable', 'AccountsController@dataTable')->name('accounts.dataTable');
