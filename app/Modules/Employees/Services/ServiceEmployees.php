@@ -185,6 +185,7 @@ class ServiceEmployees
                     $query->whereRaw(DB::raw("'".$request->input('start')."' between C.start and C.end"))
                         ->orWhereRaw(DB::raw("'".$request->input('end')."' between C.start and C.end"));
                 })
+                ->whereNull('deleted_at')
                 ->get();
 
             if($employeesBusy->count() == 0){
