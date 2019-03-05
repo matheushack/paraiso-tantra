@@ -6,7 +6,7 @@
 
     <div class="form-group m-form__group row">
         <div class="col-lg-12">
-            @component('Customers::components.customers', ['id' => 1])
+            @component('Customers::components.customers', ['id' => $call->customer_id])
             @endcomponent
         </div>
     </div>
