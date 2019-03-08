@@ -89,7 +89,7 @@ var Calendar = function() {
             calendar.fullCalendar('destroy');
 
             calendar.fullCalendar({
-                defaultView: 'month',
+                defaultView: 'agendaDay',
                 locale: 'pt-br',
                 nowIndicator: true,
                 eventLimit: true,
