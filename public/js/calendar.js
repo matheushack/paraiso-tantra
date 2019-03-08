@@ -29,7 +29,7 @@ var Calendar = function() {
                 url: calendar.data('url')+'?unity_id='+calendar.data('unity')
             },
             eventRender:function(e, t) {
-                if(e.paid) {
+                if(e.paid === true) {
                     t.find('.fc-content').addClass('call-paid');
                 }
 
