@@ -16,11 +16,17 @@ use Maatwebsite\Excel\Concerns\FromView;
 
 class CommissionsExport implements FromView
 {
+    private $request;
+
+    function __construct(Request $request)
+    {
+        $this->request = $request;
+    }
+
     public function view(): View
     {
-        $request = new Request();
         $serviceCommissions = new ServiceCommissionsReport();
-        $data = $serviceCommissions->filter($request);
+        $data = $serviceCommissions->filter($this->request);
 
         return view("Reports::export.commissions", ['data' => $data]);
     }

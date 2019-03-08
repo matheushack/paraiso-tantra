@@ -42,13 +42,13 @@ class CommissionsReportController extends Controller
         ], 200);
     }
 
-    public function excel()
+    public function excel(Request $request)
     {
-        return $this->excel->download(new CommissionsExport(), 'comissoes.xlsx');
+        return $this->excel->download(new CommissionsExport($request), 'comissoes.xlsx');
     }
 
-    public function pdf()
+    public function pdf(Request $request)
     {
-        return $this->excel->download(new CommissionsExport(), 'comissoes.pdf');
+        return $this->excel->download(new CommissionsExport($request), 'comissoes.pdf');
     }
 }
