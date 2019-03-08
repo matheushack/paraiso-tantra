@@ -59,6 +59,9 @@ class ServiceBills
             ->editColumn('expiration_date', function($bill){
                 return Carbon::parse($bill->expiration_date)->format('d/m/Y');
             })
+            ->editColumn('amount', function($bill){
+                return 'R$ '.number_format($bill->amount, 2, ',', '.');
+            })
             ->addColumn('account', function($bill){
                 return $bill->payment->account()->name;
             })
@@ -101,7 +104,7 @@ class ServiceBills
                             $bill->type = $request->input('type');
                             $bill->expiration_date = $expiration_date;
                             $bill->amount = $request->input('amount');
-                            $bill->status = $request->input('status');
+                            $bill->status = $i == 0 ? $request->input('status') : ($request->input('type') == 'R' ? 'AR' : 'AP');
                             $bill->payment_id = $request->input('payment_id');
                             $bill->description = $request->input('description');
 

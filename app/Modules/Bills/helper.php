@@ -24,6 +24,7 @@ if(!function_exists('dataTableBills')) {
                 ['label' => 'Status', 'field' => 'status'],
                 ['label' => 'Forma de pagamento', 'field' => 'payment_id'],
                 ['label' => 'Conta', 'field' => 'account'],
+                ['label' => 'Valor', 'field' => 'amount'],
                 ['label' => 'Vencimento', 'field' => 'expiration_date'],
                 ['label' => 'Ações', 'field' => 'actions', 'width' => '90px']
             ]
