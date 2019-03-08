@@ -130,7 +130,7 @@ var Calendar = function() {
                             }
                         },
                         success: function (data) {
-                            $('#form-edit-call > .modal-body').html(data);
+                            $('#edit-call .modal-body').html(data);
                             $('#edit-call').modal('show');
                         }
                     });

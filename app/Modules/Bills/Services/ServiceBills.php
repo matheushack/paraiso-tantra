@@ -19,17 +19,24 @@ class ServiceBills
 {
     public function dataTable(Request $request)
     {
-        $query = Bills::query();
+        $query = Bills::query()
+            ->select(
+                'bills.*'
+            )
+            ->join('providers', 'bills.provider_id', '=', 'providers.id');
 
         $start = !empty($request->input('frm.start')) ? Carbon::createFromFormat('d/m/Y', $request->input('frm.start'))->startOfDay()->format('Y-m-d H:i:s') : '';
         $end = !empty($request->input('frm.end')) ? Carbon::createFromFormat('d/m/Y', $request->input('frm.end'))->endOfDay()->format('Y-m-d H:i:s') : '';
 
         if(!empty($start) && !empty($end))
-            $query->whereBetween('expiration_date', [$start, $end]);
+            $query->whereBetween('bills.expiration_date', [$start, $end]);
         else if(!empty($start))
-            $query->where('expiration_date', '>=', $start);
+            $query->where('bills.expiration_date', '>=', $start);
         else if(!empty($end))
-            $query->where('expiration_date', '<=', $end);
+            $query->where('bills.expiration_date', '<=', $end);
+
+        if(!empty($request->input('search.value')))
+            $query->where('providers.name', 'like', '%'.$request->input('search.value').'%');
 
         return DataTables::of($query)
             ->editColumn('type', function($bill){
