@@ -114,7 +114,9 @@
                                     text: data.message,
                                     type: 'success'
                                 }).then(results => {
-                                    window.location = "{{route('calls')}}";
+                                    $('#atendimento').fullCalendar('refetchEvents');
+
+                                    $('#new-call').modal('hide');
                                 });
                             }else{
                                 swal({
