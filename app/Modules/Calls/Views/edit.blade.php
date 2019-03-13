@@ -209,6 +209,8 @@
                                 else
                                     $('#call_content_'+data.callId).removeClass('call-paid');
 
+                                $('#atendimento').fullCalendar('refetchEvents');
+
                                 $('#edit-call').modal('hide');
                             });
                         }else{

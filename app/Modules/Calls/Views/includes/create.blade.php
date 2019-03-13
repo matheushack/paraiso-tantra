@@ -74,7 +74,7 @@
                         }
 
                         if(typeof data.room_id != 'undefined' && data.room_id != '')
-                            $('input[name="room_id"]').prop('checked', true);
+                            $('input[name="room_id"][value="'+data.room_id+'"]').prop('checked', true);
 
                         if(typeof data.employees_id_edit != 'undefined' && data.employees_id_edit != ''){
                             var $employees = data.employees_id_edit.split(",");

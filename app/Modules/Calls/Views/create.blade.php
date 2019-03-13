@@ -52,6 +52,7 @@
 
 <script>
     $(document).ready(function(){
+        ParaisoTantra.masks();
 
         $('.m_selectpicker').selectpicker();
 

@@ -42,7 +42,7 @@
         </div>
         <div class="col-lg-3">
             <label>Início</label>
-            <input type="text" name="start" id="start" class="form-control m-input mask-dateTime" value="{{\Carbon\Carbon::parse($call->start)->format('d/m/Y H:i')}}" readonly>
+            <input type="text" name="start" id="start" class="form-control m-input mask-dateTime" value="{{\Carbon\Carbon::parse($call->start)->format('d/m/Y H:i')}}">
         </div>
         <div class="col-lg-3">
             <label class="w-100">&nbsp;</label>

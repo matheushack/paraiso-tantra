@@ -178,7 +178,8 @@ class ServiceCalls
                 $call->customer_id = $request->input('customer_id');
                 $call->first_call = $request->input('first_call');
                 $call->description = $request->input('description');
-                $call->unity_id = $request->input('unity_id');
+                $call->start = $request->input('start');
+                $call->end = $request->input('end');
 
                 if(!$call->save())
                     throw new \Exception('Houve um problema ao tentar atualziar o atendimento. Por favor, tente mais tarde!');
@@ -280,6 +281,7 @@ class ServiceCalls
                 'html' => (string) View::make('Calls::availability', [
                     'status' => 'success',
                     'rooms' => $rooms,
+                    'room_id' => ($request->input('room_id_edit') ? $request->input('room_id_edit') : ''),
                     'employees' => $employees,
                     'duration' => $request->input('duration'),
                     'end' => Carbon::parse($request->input('end'))->format('d/m/Y H:i')

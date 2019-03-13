@@ -15,7 +15,7 @@
                     @foreach($rooms as $room)
                         <tr>
                             <td>
-                                <input type="radio" name="room_id" value="{{$room->id}}">
+                                <input type="radio" name="room_id" value="{{$room->id}}" {{$room_id == $room->id ? 'checked' : ''}}>
                             </td>
                             <td>
                                 {{$room->name}}
