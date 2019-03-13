@@ -83,5 +83,5 @@
 @push('scripts')
     <script src="{{url('assets/vendors/custom/fullcalendar/fullcalendar.bundle.js')}}" type="text/javascript"></script>
     <script src="{{url('assets/vendors/custom/fullcalendar/locale-all.js')}}" type="text/javascript"></script>
-    <script src="{{url('js/calendar.js')}}" type="text/javascript"></script>
+    <script src="{{url('js/calendar.js').'?'.date('YmdHi')}}" type="text/javascript"></script>
 @endpush
