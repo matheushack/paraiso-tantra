@@ -87,6 +87,27 @@ var DataTable = function() {
                     }
                 }
             },
+            drawCallback: function(settings){
+                var json = settings.jqXHR.responseJSON;
+
+                if(typeof json.bills !== 'undefined') {
+                    var recipe = $('#bill-recipe');
+                    var expense = $('#bill-expense');
+                    var total = $('#bill-total');
+
+                    recipe.find('.m-widget24__stats').html(json.bills.total_in_formatted);
+                    expense.find('.m-widget24__stats').html(json.bills.total_out_formatted);
+                    total.find('.m-widget24__stats').html(json.bills.total_formatted);
+
+                    if(json.bills.total >= 0) {
+                        total.find('.m-widget24__stats').removeClass('m--font-danger').addClass('m--font-success');
+                        total.find('.progress-bar').removeClass('m--bg-danger').addClass('m--bg-success');
+                    }else{
+                        total.find('.m-widget24__stats').removeClass('m--font-success').addClass('m--font-danger');
+                        total.find('.progress-bar').removeClass('m--bg-success').addClass('m--bg-danger');
+                    }
+                }
+            },
             columns: $columns,
             columnDefs: $columnDefs,
             pageLength: $length

@@ -29976,6 +29976,14 @@ body.m-portlet--fullscreen.m-aside-left--fixed .m-aside-left {
     font-weight: 600
 }
 
+.m-widget24 .m-widget24__item .m-widget24__stats.left{
+    float: left;
+    margin-left: 1.8rem;
+    margin-top: -1.43rem;
+    font-size: 1.75rem;
+    font-weight: 600
+}
+
 .m-widget24 .m-widget24__item .progress {
     margin-top: 2.14rem;
     margin-left: 1.8rem;

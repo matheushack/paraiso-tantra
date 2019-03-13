@@ -66,6 +66,57 @@
             </div>
         </div>
 
+        <div class="m-portlet ">
+            <div class="m-portlet__body  m-portlet__body--no-padding">
+                <div class="row m-row--no-padding m-row--col-separator-xl">
+                    <div class="col-md-12 col-lg-6 col-xl-3">
+                        <div class="m-widget24">
+                            <div class="m-widget24__item" id="bill-recipe">
+                                <h4 class="m-widget24__title">
+                                    <i class="fa fa-plus-square"></i> Receitas
+                                </h4><br>
+                                <div class="m--space-10"></div>
+                                <span class="m-widget24__stats m--font-success left"></span>
+                                <div class="m--space-10"></div>
+                                <div class="progress m-progress--sm">
+                                    <div class="progress-bar m--bg-success" role="progressbar" style="width: 100%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 col-lg-6 col-xl-3">
+                        <div class="m-widget24">
+                            <div class="m-widget24__item" id="bill-expense">
+                                <h4 class="m-widget24__title">
+                                    <i class="fa fa-minus-square"></i> Despesas
+                                </h4><br>
+                                <div class="m--space-10"></div>
+                                <span class="m-widget24__stats m--font-danger left"></span>
+                                <div class="m--space-10"></div>
+                                <div class="progress m-progress--sm">
+                                    <div class="progress-bar m--bg-danger" role="progressbar" style="width: 100%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 col-lg-6 col-xl-3 offset-3">
+                        <div class="m-widget24">
+                            <div class="m-widget24__item" id="bill-total">
+                                <h4 class="m-widget24__title">
+                                    <i class="fa fa-money"></i> Total
+                                </h4><br>
+                                <div class="m--space-10"></div>
+                                <span class="m-widget24__stats m--font-success left"></span>
+                                <div class="m--space-10"></div>
+                                <div class="progress m-progress--sm">
+                                    <div class="progress-bar m--bg-success" role="progressbar" style="width: 100%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         @include('includes.dataTable')
     </div>

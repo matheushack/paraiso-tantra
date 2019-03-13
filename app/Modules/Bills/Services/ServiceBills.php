@@ -11,6 +11,7 @@ namespace App\Modules\Bills\Services;
 use App\Modules\Accounts\Models\Accounts;
 use App\Modules\Bills\Models\Bills;
 use Carbon\Carbon;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\DB as Capsule;
@@ -38,7 +39,7 @@ class ServiceBills
         if(!empty($request->input('search.value')))
             $query->where('providers.name', 'like', '%'.$request->input('search.value').'%');
 
-        return DataTables::of($query)
+        $dataTable = DataTables::of($query)
             ->editColumn('type', function($bill){
                 return $bill->type == 'D' ? 'Despesa' : 'Receita';
             })
@@ -77,11 +78,59 @@ class ServiceBills
             })
             ->rawColumns(['actions', 'account'])
             ->make(true);
+
+        $result = $dataTable->getData(true);
+        $result['bills'] = $this->getTotalBills($request);
+
+        return new JsonResponse($result);
     }
 
     public function find($id)
     {
         return Bills::find($id);
+    }
+
+    private function getTotalBills(Request $request)
+    {
+        $types = ['R', 'D'];
+        $return = [];
+
+        for($i = 0; $i < count($types); $i++) {
+            $query = Bills::query()
+                ->select(
+                    'bills.*'
+                )
+                ->join('providers', 'bills.provider_id', '=', 'providers.id');
+
+            $start = !empty($request->input('frm.start')) ? Carbon::createFromFormat('d/m/Y', $request->input('frm.start'))->startOfDay()->format('Y-m-d H:i:s') : '';
+            $end = !empty($request->input('frm.end')) ? Carbon::createFromFormat('d/m/Y', $request->input('frm.end'))->endOfDay()->format('Y-m-d H:i:s') : '';
+
+            if (!empty($start) && !empty($end))
+                $query->whereBetween('bills.expiration_date', [$start, $end]);
+            else if (!empty($start))
+                $query->where('bills.expiration_date', '>=', $start);
+            else if (!empty($end))
+                $query->where('bills.expiration_date', '<=', $end);
+
+            if (!empty($request->input('search.value')))
+                $query->where('providers.name', 'like', '%' . $request->input('search.value') . '%');
+
+            $query->where('bills.type', '=', $types[$i]);
+
+            $return[] = $query->get()
+                ->sum('amount');
+        }
+
+        list($recipe, $expense) = $return;
+
+        return [
+            'total_in' => $recipe,
+            'total_out' => $expense,
+            'total' => $recipe - $expense,
+            'total_in_formatted' => 'R$ '.number_format($recipe, 2, ',', '.'),
+            'total_out_formatted' => 'R$ '.number_format($expense, 2, ',', '.'),
+            'total_formatted' => 'R$ '.number_format(($recipe - $expense), 2, ',', '.')
+        ];
     }
 
     private function formatRequest(Request $request)
