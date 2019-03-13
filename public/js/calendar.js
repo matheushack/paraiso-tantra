@@ -115,6 +115,8 @@ var Calendar = function() {
                     url: calendar.data('url')+'?unity_id='+unityId
                 },
                 eventRender:function(e, t) {
+                    t.find('.fc-content').attr('id', 'call_content_'+e.id);
+
                     if(e.paid) {
                         t.find('.fc-content').addClass('call-paid');
                     }

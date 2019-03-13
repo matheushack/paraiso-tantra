@@ -194,7 +194,11 @@ class ServiceCalls
 
             });
 
+            $call = Calls::find($request->input('call_id'));
+
             return [
+                'callId' => $call->id,
+                'paid' => $call->status == 'P' ? true : false,
                 'message' => 'Atendimento atualizado com sucesso!',
                 'save' => true
             ];
@@ -232,7 +236,11 @@ class ServiceCalls
                     throw new \Exception('Houve um problema ao tentar atualziar o atendimento. Por favor, tente mais tarde!');
             });
 
+            $call = Calls::find($request->input('call_id'));
+
             return [
+                'callId' => $call->id,
+                'paid' => $call->status == 'P' ? true : false,
                 'message' => 'Atendimento atualizado com sucesso!',
                 'save' => true
             ];

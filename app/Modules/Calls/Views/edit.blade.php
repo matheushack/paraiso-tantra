@@ -138,7 +138,8 @@
                                         text: data.message,
                                         type: 'success'
                                     }).then(results => {
-                                        window.location = urlReturn;
+                                        $('#atendimento').fullCalendar('removeEvents',registerId);
+                                        $('#edit-call').modal('hide');
                                     });
                                 }else{
                                     swal({
@@ -203,7 +204,12 @@
                                 text: data.message,
                                 type: 'success'
                             }).then(results => {
-                                window.location = "{{route('calls')}}";
+                                if(data.paid)
+                                    $('#call_content_'+data.callId).addClass('call-paid');
+                                else
+                                    $('#call_content_'+data.callId).removeClass('call-paid');
+
+                                $('#edit-call').modal('hide');
                             });
                         }else{
                             swal({
@@ -248,7 +254,12 @@
                                 text: data.message,
                                 type: 'success'
                             }).then(results => {
-                                window.location = "{{route('calls')}}";
+                                if(data.paid)
+                                    $('#call_content_'+data.callId).addClass('call-paid');
+                                else
+                                    $('#call_content_'+data.callId).removeClass('call-paid');
+
+                                $('#edit-call').modal('hide');
                             });
                         }else{
                             swal({
