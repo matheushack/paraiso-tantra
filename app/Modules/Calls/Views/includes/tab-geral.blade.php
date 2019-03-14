@@ -22,7 +22,7 @@
             @endcomponent
         </div>
         <div class="col-lg-6">
-            @component('Services::components.services', ['id' => $call->service_id, 'disabled' => true])
+            @component('Services::components.services', ['id' => $call->service_id])
             @endcomponent
         </div>
     </div>
