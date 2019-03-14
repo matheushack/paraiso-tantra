@@ -6,6 +6,8 @@
             <td>{{\Carbon\Carbon::parse($report->start)->format('d/m/Y H:i:s')}}</td>
             <td>{{\Carbon\Carbon::parse($report->end)->format('d/m/Y H:i:s')}}</td>
             <td>{{$report->employee}}</td>
+            <td>{{$report->status}}</td>
+            <td>{{$report->payment_method}}</td>
             <td>{{'R$ '.number_format($report->amount, 2, ',', '.')}}</td>
             <td>{{'R$ '.number_format($report->discount, 2, ',', '.')}}</td>
             <td>{{$report->type_discount}}</td>

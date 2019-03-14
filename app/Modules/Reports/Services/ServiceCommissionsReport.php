@@ -46,19 +46,25 @@ class ServiceCommissionsReport
                 DB::raw('calls.discount as discount'),
                 DB::raw('
                     CASE
+                        WHEN calls.status = "A" THEN "Aguardando pagamento"
+                        ELSE "Pago"
+                    END as status'),
+                DB::raw('
+                    CASE
                         WHEN calls.type_discount = "T" THEN "Terapeuta"
                         WHEN calls.type_discount = "C" THEN "Empresa"
                         ELSE "Ambos"
                     END as type_discount'),
+                DB::raw('payment_methods.name as payment_method'),
                 DB::raw('ROUND(calls.amount - calls.discount) as total'),
                 DB::raw('employees.commission as commission'),
                 DB::raw('IF(calls.type_discount = "C", ROUND((calls.amount * employees.commission)/100, 2), ROUND(((calls.amount - calls.discount) * employees.commission)/100, 2)) as amountCommission')
             )
             ->join('calls', 'call_employees.call_id', '=', 'calls.id')
+            ->join('payment_methods', 'calls.payment_id', '=', 'payment_methods.id')
             ->join('employees', 'call_employees.employee_id', '=', 'employees.id')
             ->join('services', 'calls.service_id', '=', 'services.id')
-            ->join('units', 'calls.unity_id', '=', 'units.id')
-            ->where('calls.status', '=', 'P');
+            ->join('units', 'calls.unity_id', '=', 'units.id');
 
         if(!empty($request->input('unity_id')))
             $query->whereIn('units.id', $request->input('unity_id'));
@@ -68,6 +74,12 @@ class ServiceCommissionsReport
 
         if(!empty($request->input('service_id')))
             $query->where('services.id', '=', $request->input('service_id'));
+
+        if(!empty($request->input('payment_id')))
+            $query->where('calls.payment_id', '=', $request->input('payment_id'));
+
+        if(!empty($request->input('status')))
+            $query->where('calls.status', '=', $request->input('status'));
 
         if(!empty($request->input('start')) && !empty($request->input('end'))){
             $query->where('calls.start', '>=', $request->input('start'))

@@ -39,7 +39,7 @@
                 <form class="m-form m-form--fit m-form--label-align-right" id="form-report-filter" name="form-report-filter">
                     @csrf
                     <div class="form-group m-form__group row">
-                        <div class="col-lg-">
+                        <div class="col-lg-3">
                             @component('Units::components.units', ['multiple' => true])
                             @endcomponent
                         </div>
@@ -64,6 +64,14 @@
                                 Data final
                             </label>
                             <input name="end" type="text" class="form-control m-input mask-date" id="end" placeholder="">
+                        </div>
+                        <div class="col-lg-3">
+                            @component('PaymentMethods::components.payments')
+                            @endcomponent
+                        </div>
+                        <div class="col-lg-3">
+                            @component('Calls::components.status_payment')
+                            @endcomponent
                         </div>
                     </div>
                     <div class="m-form__actions m-form__actions--right">
@@ -116,6 +124,8 @@
                         <th>Data inicial</th>
                         <th>Data final</th>
                         <th>Terapeuta</th>
+                        <th>Status</th>
+                        <th>Forma pagamento</th>
                         <th>Valor serviço</th>
                         <th>Valor desconto</th>
                         <th>Tipo desconto</th>
@@ -133,6 +143,8 @@
                                 <td>{{\Carbon\Carbon::parse($report->start)->format('d/m/Y H:i:s')}}</td>
                                 <td>{{\Carbon\Carbon::parse($report->end)->format('d/m/Y H:i:s')}}</td>
                                 <td>{{$report->employee}}</td>
+                                <td>{{$report->status}}</td>
+                                <td>{{$report->payment_method}}</td>
                                 <td>{{'R$ '.number_format($report->amount, 2, ',', '.')}}</td>
                                 <td>{{'R$ '.number_format($report->discount, 2, ',', '.')}}</td>
                                 <td>{{$report->type_discount}}</td>

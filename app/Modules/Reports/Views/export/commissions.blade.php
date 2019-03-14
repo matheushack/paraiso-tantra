@@ -9,6 +9,8 @@
             <th style="text-align: center; background-color: #c6007d; color: #FFFFFF;">Data inicial</th>
             <th style="text-align: center; background-color: #c6007d; color: #FFFFFF;">Data final</th>
             <th style="text-align: center; background-color: #c6007d; color: #FFFFFF;">Terapeutas</th>
+            <th style="text-align: center; background-color: #c6007d; color: #FFFFFF;">Status</th>
+            <th style="text-align: center; background-color: #c6007d; color: #FFFFFF;">Forma pagamento</th>
             <th style="text-align: center; background-color: #c6007d; color: #FFFFFF;">Valor serviço</th>
             <th style="text-align: center; background-color: #c6007d; color: #FFFFFF;">Valor desconto</th>
             <th style="text-align: center; background-color: #c6007d; color: #FFFFFF;">Tipo desconto</th>
@@ -26,6 +28,8 @@
                     <td>{{\Carbon\Carbon::parse($report->start)->format('d/m/Y H:i:s')}}</td>
                     <td>{{\Carbon\Carbon::parse($report->end)->format('d/m/Y H:i:s')}}</td>
                     <td>{{$report->employee}}</td>
+                    <td>{{$report->status}}</td>
+                    <td>{{$report->payment_method}}</td>
                     <td>{{$report->amount}}</td>
                     <td>{{$report->discount}}</td>
                     <td>{{$report->type_discount}}</td>
