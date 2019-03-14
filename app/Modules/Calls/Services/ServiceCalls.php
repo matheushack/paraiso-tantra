@@ -51,7 +51,7 @@ class ServiceCalls
     private function formatRequestAvailability(Request $request)
     {
         $service = Services::find($request->input('service_id'));
-        $start = Carbon::createFromFormat('d/m/Y H:i', $request->input('start'));
+        $start = Carbon::createFromFormat('d/m/Y H:i', $request->input('start'))->addSecond(1);
         $end = Carbon::createFromFormat('d/m/Y H:i', $request->input('start'))->addMinutes($service->duration);
 
         $request->merge(['start' => $start->format('Y-m-d H:i:s')]);
