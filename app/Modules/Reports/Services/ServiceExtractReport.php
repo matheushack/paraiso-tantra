@@ -18,8 +18,25 @@ use Illuminate\Support\Facades\DB;
 
 class ServiceExtractReport
 {
+    private function formatRequest(Request $request)
+    {
+        if(!empty($request->input('start'))) {
+            $start = Carbon::createFromFormat('d/m/Y', $request->input('start'))->startOfDay();
+            $request->merge(['start' => $start->format('Y-m-d H:i:s')]);
+        }
+
+        if(!empty($request->input('end'))) {
+            $end = Carbon::createFromFormat('d/m/Y', $request->input('end'))->endOfDay();
+            $request->merge(['end' => $end->format('Y-m-d H:i:s')]);
+        }
+
+        return $request;
+    }
+
     public function filter(Request $request)
     {
+        $request = $this->formatRequest($request);
+
         $calls = Calls::query()
             ->select(
                 DB::raw('calls.id AS id'),
@@ -50,12 +67,6 @@ class ServiceExtractReport
             $calls->whereIn('calls.unity_id', $request->input('unity_id'));
             $bills->whereIn('bills.unity_id', $request->input('unity_id'));
         }
-
-        if(!empty($request->input('start')))
-            $request->merge(['start' => Carbon::createFromFormat('d/m/Y', $request->input('start'))->startOfDay()->format('Y-m-d H:i:s')]);
-
-        if(!empty($request->input('end')))
-            $request->merge(['end' => Carbon::createFromFormat('d/m/Y', $request->input('end'))->endOfDay()->format('Y-m-d H:i:s')]);
 
         if(!empty($request->input('start')) && !empty($request->input('end'))){
             $calls->where('calls.start', '>=', $request->input('start'))

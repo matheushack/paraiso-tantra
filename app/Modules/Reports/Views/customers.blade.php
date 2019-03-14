@@ -73,13 +73,13 @@
                             <label>
                                 Data inicial
                             </label>
-                            <input name="start" type="text" class="form-control m-input mask-dateTime" id="start" placeholder="">
+                            <input name="start" type="text" class="form-control m-input mask-date" id="start" placeholder="">
                         </div>
                         <div class="col-lg-3">
                             <label>
                                 Data final
                             </label>
-                            <input name="end" type="text" class="form-control m-input mask-dateTime" id="end" placeholder="">
+                            <input name="end" type="text" class="form-control m-input mask-date" id="end" placeholder="">
                         </div>
                     </div>
                     <div class="m-form__actions m-form__actions--right">

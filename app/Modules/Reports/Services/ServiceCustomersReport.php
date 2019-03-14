@@ -10,13 +10,31 @@ namespace App\Modules\Reports\Services;
 
 
 use App\Modules\Calls\Models\Calls;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class ServiceCustomersReport
 {
+    private function formatRequest(Request $request)
+    {
+        if(!empty($request->input('start'))) {
+            $start = Carbon::createFromFormat('d/m/Y', $request->input('start'))->startOfDay();
+            $request->merge(['start' => $start->format('Y-m-d H:i:s')]);
+        }
+
+        if(!empty($request->input('end'))) {
+            $end = Carbon::createFromFormat('d/m/Y', $request->input('end'))->endOfDay();
+            $request->merge(['end' => $end->format('Y-m-d H:i:s')]);
+        }
+
+        return $request;
+    }
+
     public function filter(Request $request)
     {
+        $request = $this->formatRequest($request);
+
         $query = Calls::query()
             ->select(
                 'calls.start', 'calls.end',
