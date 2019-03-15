@@ -2,7 +2,7 @@
 
 namespace App\Modules\Reports\Controllers;
 
-use App\Modules\Reports\Exports\CommissionsExport;
+use App\Modules\Reports\Exports\AccountsExport;
 use App\Modules\Reports\Services\ServiceAccountsReport;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -44,11 +44,11 @@ class AccountsReportController extends Controller
 
     public function excel(Request $request)
     {
-        return $this->excel->download(new CommissionsExport($request), 'contas.xlsx');
+        return $this->excel->download(new AccountsExport($request), 'contas.xlsx');
     }
 
     public function pdf(Request $request)
     {
-        return $this->excel->download(new CommissionsExport($request), 'contas.pdf');
+        return $this->excel->download(new AccountsExport($request), 'contas.pdf');
     }
 }
