@@ -74,6 +74,73 @@
             </div>
         </div>
 
+        <div class="m-portlet ">
+            <div class="m-portlet__body  m-portlet__body--no-padding">
+                <div class="row m-row--no-padding m-row--col-separator-xl">
+                    <div class="col-md-12 col-lg-6 col-xl-3">
+                        <div class="m-widget24">
+                            <div class="m-widget24__item" id="accounts-recipe">
+                                <h4 class="m-widget24__title">
+                                    <i class="fa fa-plus-square"></i> Receitas
+                                </h4><br>
+                                <div class="m--space-10"></div>
+                                <span class="m-widget24__stats m--font-success left">{{'R$ '.number_format($totalRecipe, 2, ',', '.')}}</span>
+                                <div class="m--space-10"></div>
+                                <div class="progress m-progress--sm">
+                                    <div class="progress-bar m--bg-success" role="progressbar" style="width: 100%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 col-lg-6 col-xl-3">
+                        <div class="m-widget24">
+                            <div class="m-widget24__item" id="accounts-expense">
+                                <h4 class="m-widget24__title">
+                                    <i class="fa fa-minus-square"></i> Despesas
+                                </h4><br>
+                                <div class="m--space-10"></div>
+                                <span class="m-widget24__stats m--font-danger left">{{'R$ '.number_format($totalExpense, 2, ',', '.')}}</span>
+                                <div class="m--space-10"></div>
+                                <div class="progress m-progress--sm">
+                                    <div class="progress-bar m--bg-danger" role="progressbar" style="width: 100%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 col-lg-6 col-xl-3">
+                        <div class="m-widget24">
+                            <div class="m-widget24__item" id="accounts-call">
+                                <h4 class="m-widget24__title">
+                                    <i class="fa fa-plus-square"></i> Atendimentos
+                                </h4><br>
+                                <div class="m--space-10"></div>
+                                <span class="m-widget24__stats m--font-success left">{{'R$ '.number_format($totalCalls, 2, ',', '.')}}</span>
+                                <div class="m--space-10"></div>
+                                <div class="progress m-progress--sm">
+                                    <div class="progress-bar m--bg-success" role="progressbar" style="width: 100%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 col-lg-6 col-xl-3">
+                        <div class="m-widget24">
+                            <div class="m-widget24__item" id="accounts-total">
+                                <h4 class="m-widget24__title">
+                                    <i class="fa fa-money"></i> Total
+                                </h4><br>
+                                <div class="m--space-10"></div>
+                                <span class="m-widget24__stats m--font-{{$total >= 0 ? 'success' : 'danger'}} left">{{'R$ '.number_format($total, 2, ',', '.')}}</span>
+                                <div class="m--space-10"></div>
+                                <div class="progress m-progress--sm">
+                                    <div class="progress-bar m--bg-{{$total >= 0 ? 'success' : 'danger'}}" role="progressbar" style="width: 100%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="m-portlet m-portlet--mobile">
             <div class="m-portlet__head">
                 <div class="m-portlet__head-tools">
@@ -201,7 +268,25 @@
                             }
                         },
                         success: function (data) {
+                            var recipe = $('#accounts-recipe');
+                            var expense = $('#accounts-expense');
+                            var call = $('#accounts-call');
+                            var total = $('#accounts-total');
+
                             $('#table-report tbody').html(data.table);
+
+                            recipe.find('.m-widget24__stats').html(data.totalRecipe);
+                            expense.find('.m-widget24__stats').html(data.totalExpense);
+                            call.find('.m-widget24__stats').html(data.totalCall);
+                            total.find('.m-widget24__stats').html(data.total);
+
+                            if(data.isPositive) {
+                                total.find('.m-widget24__stats').removeClass('m--font-danger').addClass('m--font-success');
+                                total.find('.progress-bar').removeClass('m--bg-danger').addClass('m--bg-success');
+                            }else{
+                                total.find('.m-widget24__stats').removeClass('m--font-success').addClass('m--font-danger');
+                                total.find('.progress-bar').removeClass('m--bg-success').addClass('m--bg-danger');
+                            }
                         }
                     });
 

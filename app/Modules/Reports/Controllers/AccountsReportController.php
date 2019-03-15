@@ -29,16 +29,30 @@ class AccountsReportController extends Controller
      */
     public function index(Request $request)
     {
-        $data = $this->serviceAccounts->filter($request);
-        return view("Reports::accounts", ['data' => $data, 'account_id' => $request->input('account_id')]);
+        list($total, $report, $totalCalls, $totalRecipe, $totalExpense) = $this->serviceAccounts->filter($request);
+        return view("Reports::accounts", [
+            'total' => $total,
+            'data' => $report,
+            'totalCalls' => $totalCalls,
+            'totalRecipe' => $totalRecipe,
+            'totalExpense' => $totalExpense,
+            'account_id' => $request->input('account_id')
+        ]);
     }
 
     public function filter(Request $request)
     {
-        $report = $this->serviceAccounts->filter($request);
+        list($total, $report, $totalCalls, $totalRecipe, $totalExpense) = $this->serviceAccounts->filter($request);
 
         return response()->json([
-            'table' => utf8_encode(view("Reports::filters.accounts", ['data' => $report]))
+            'table' => utf8_encode(view("Reports::filters.accounts", [
+                'data' => $report
+            ])),
+            'isPositive' => $total >= 0 ? true : false,
+            'total' => 'R$ '.number_format($total, 2, ',', '.'),
+            'totalCall' => 'R$ '.number_format($totalCalls, 2, ',', '.'),
+            'totalRecipe' => 'R$ '.number_format($totalRecipe, 2, ',', '.'),
+            'totalExpense' => 'R$ '.number_format($totalExpense, 2, ',', '.')
         ], 200);
     }
 

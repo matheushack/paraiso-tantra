@@ -56,7 +56,7 @@ class ServiceAccountsReport
                 DB::raw("units.name as unity"),
                 DB::raw("bills.type"),
                 DB::raw("bills.expiration_date as date"),
-                DB::raw("bills.amount")
+                DB::raw("IF(bills.type = 'R', (bills.amount - ROUND((bills.amount * payment_methods.aliquot)/100, 2)), bills.amount) AS amount")
             )
             ->join('payment_methods', 'bills.payment_id', '=', 'payment_methods.id')
             ->join('accounts', 'payment_methods.account_id', '=', 'accounts.id')
@@ -81,8 +81,36 @@ class ServiceAccountsReport
             $bills->where('bills.expiration_date', '<=', $request->input('end'));
         }
 
-        return $calls->unionAll($bills)
+        $report = $calls->unionAll($bills)
             ->orderBy('date')
             ->get();
+
+        $totalCalls = 0;
+        $totalRecipe = 0;
+        $totalExpense = 0;
+
+        $report->each(function($item, $key) use(&$totalRecipe, &$totalExpense, &$totalCalls){
+            switch ($item->type){
+                case 'A':
+                    $totalCalls = $totalCalls + floatval($item->amount);
+                    break;
+                case 'R':
+                    $totalRecipe = $totalRecipe + floatval($item->amount);
+                    break;
+                case 'D':
+                    $totalExpense = $totalExpense + floatval($item->amount);
+                    break;
+            }
+        });
+
+        $total = ($totalRecipe + $totalCalls) - $totalExpense;
+
+        return [
+            $total,
+            $report,
+            $totalCalls,
+            $totalRecipe,
+            $totalExpense
+        ];
     }
 }
