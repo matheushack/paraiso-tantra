@@ -106,13 +106,13 @@ class ServiceDashboard
                 $collection->put('classTotal', 'text-danger');
             }
 
+            $collection->put('id', $account->id);
 
             $dataAccounts[$account->name] = $collection;
 
         }
 
         $dashboard->put("accounts", $dataAccounts);
-
         return $dashboard;
     }
 }

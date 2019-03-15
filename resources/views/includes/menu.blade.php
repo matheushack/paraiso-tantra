@@ -146,6 +146,12 @@
                                 <span class="m-menu__link-text">Clientes</span>
                             </a>
                         </li>
+                        <li class="m-menu__item  {{isset($menu_active) && $menu_active == 'accounts' ? 'm-menu__item--active' : ''}}" aria-haspopup="true" >
+                            <a  href="{{route('reports.accounts')}}" class="m-menu__link ">
+                                <i class="m-menu__link-icon fa fa-money"></i>
+                                <span class="m-menu__link-text">Contas</span>
+                            </a>
+                        </li>
                         <li class="m-menu__item  {{isset($menu_active) && $menu_active == 'commissions' ? 'm-menu__item--active' : ''}}" aria-haspopup="true" >
                             <a  href="{{route('reports.commissions')}}" class="m-menu__link ">
                                 <i class="m-menu__link-icon flaticon-coins"></i>

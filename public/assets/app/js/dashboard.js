@@ -129,6 +129,12 @@ function updateChart(id, percentageIn, percentageOut){
 
 $(document).ready(function() {
 
+    $('.btn-detail').click(function(){
+        var id = $(this).data('id');
+        var url = $(this).data('url');
+        window.location = url+'?account_id='+id;
+    });
+
     $('#month,#year').change(function (e) {
         var wrapperAccount = $(this).closest('.wrapper-account');
         var wrapperAccountId = wrapperAccount.attr('id').split('-');

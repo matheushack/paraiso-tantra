@@ -34,4 +34,11 @@ Route::group(['prefix'=> 'relatorios', 'module' => 'Reports', 'middleware' => ['
         Route::get('pdf', 'ExtractReportController@pdf')->name('reports.extract.pdf');
     });
 
+    Route::group(['prefix'=> 'contas'], function(){
+        Route::get('/', 'AccountsReportController@index')->name('reports.accounts');
+        Route::post('filtro', 'AccountsReportController@filter')->name('reports.accounts.filter');
+        Route::get('excel', 'AccountsReportController@excel')->name('reports.accounts.excel');
+        Route::get('pdf', 'AccountsReportController@pdf')->name('reports.accounts.pdf');
+    });
+
 });

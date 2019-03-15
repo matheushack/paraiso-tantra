@@ -46,7 +46,7 @@
                                                 </span>
                                             </h3>
                                             <div class="m-widget27__btn">
-                                                <button type="button" class="btn m-btn--pill btn-secondary m-btn m-btn--custom m-btn--bolder">
+                                                <button type="button" class="btn-detail btn m-btn--pill btn-secondary m-btn m-btn--custom m-btn--bolder" data-id="{{$data['id']}}" data-url="{{route('reports.accounts')}}">
                                                     Detalhes
                                                 </button>
                                             </div>

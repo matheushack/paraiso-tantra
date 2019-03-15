@@ -13,7 +13,9 @@ trait OptionSelect
 {
     public static function optionSelect($options = [], $id = 'id', $name = 'name')
     {
-        $array = [];
+        $array = [
+            '' => 'Selecione'
+        ];
 
         if(empty($options))
             $options = self::all();
