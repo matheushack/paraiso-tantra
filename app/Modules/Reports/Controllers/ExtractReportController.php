@@ -42,13 +42,13 @@ class ExtractReportController extends Controller
         ], 200);
     }
 
-    public function excel()
+    public function excel(Request $request)
     {
-        return $this->excel->download(new ExtractExport(), 'extrato.xlsx');
+        return $this->excel->download(new ExtractExport($request), 'extrato.xlsx');
     }
 
-    public function pdf()
+    public function pdf(Request $request)
     {
-        return $this->excel->download(new ExtractExport(), 'extrato.pdf');
+        return $this->excel->download(new ExtractExport($request), 'extrato.pdf');
     }
 }

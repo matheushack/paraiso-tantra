@@ -48,13 +48,13 @@ class CallsReportController extends Controller
         ], 200);
     }
 
-    public function excel()
+    public function excel(Request $request)
     {
-        return $this->excel->download(new CallsExport(), 'atendimentos.xlsx');
+        return $this->excel->download(new CallsExport($request), 'atendimentos.xlsx');
     }
 
-    public function pdf()
+    public function pdf(Request $request)
     {
-        return $this->excel->download(new CallsExport(), 'atendimentos.pdf');
+        return $this->excel->download(new CallsExport($request), 'atendimentos.pdf');
     }
 }

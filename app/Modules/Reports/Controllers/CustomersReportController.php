@@ -42,13 +42,13 @@ class CustomersReportController extends Controller
         ], 200);
     }
 
-    public function excel()
+    public function excel(Request $request)
     {
-        return $this->excel->download(new CustomersExport(), 'clientes.xlsx');
+        return $this->excel->download(new CustomersExport($request), 'clientes.xlsx');
     }
 
-    public function pdf()
+    public function pdf(Request $request)
     {
-        return $this->excel->download(new CustomersExport(), 'clientes.pdf');
+        return $this->excel->download(new CustomersExport($request), 'clientes.pdf');
     }
 }
