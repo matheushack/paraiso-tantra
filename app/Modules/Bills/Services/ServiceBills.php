@@ -11,6 +11,7 @@ namespace App\Modules\Bills\Services;
 use App\Modules\Accounts\Models\Accounts;
 use App\Modules\Bills\Models\Bills;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
@@ -21,23 +22,8 @@ class ServiceBills
     public function dataTable(Request $request)
     {
         $query = Bills::query()
-            ->select(
-                'bills.*'
-            )
+            ->select('bills.*')
             ->join('providers', 'bills.provider_id', '=', 'providers.id');
-
-        $start = !empty($request->input('frm.start')) ? Carbon::createFromFormat('d/m/Y', $request->input('frm.start'))->startOfDay()->format('Y-m-d H:i:s') : '';
-        $end = !empty($request->input('frm.end')) ? Carbon::createFromFormat('d/m/Y', $request->input('frm.end'))->endOfDay()->format('Y-m-d H:i:s') : '';
-
-        if(!empty($start) && !empty($end))
-            $query->whereBetween('bills.expiration_date', [$start, $end]);
-        else if(!empty($start))
-            $query->where('bills.expiration_date', '>=', $start);
-        else if(!empty($end))
-            $query->where('bills.expiration_date', '<=', $end);
-
-        if(!empty($request->input('search.value')))
-            $query->where('providers.name', 'like', '%'.$request->input('search.value').'%');
 
         $dataTable = DataTables::of($query)
             ->editColumn('type', function($bill){
@@ -76,6 +62,9 @@ class ServiceBills
             ->addColumn('actions', function ($bill){
                 return actionsBills($bill);
             })
+            ->filter(function($query) use($request){
+                $this->makeFilter($query, $request);
+            })
             ->rawColumns(['actions', 'account'])
             ->make(true);
 
@@ -83,6 +72,25 @@ class ServiceBills
         $result['bills'] = $this->getTotalBills($request);
 
         return new JsonResponse($result);
+    }
+
+    private function makeFilter(Builder $query, Request $request)
+    {
+        $start = !empty($request->input('frm.start')) ? Carbon::createFromFormat('d/m/Y', $request->input('frm.start'))->startOfDay()->format('Y-m-d H:i:s') : '';
+        $end = !empty($request->input('frm.end')) ? Carbon::createFromFormat('d/m/Y', $request->input('frm.end'))->endOfDay()->format('Y-m-d H:i:s') : '';
+
+        if(!empty($start) && !empty($end))
+            $query->whereBetween('bills.expiration_date', [$start, $end]);
+        else if(!empty($start))
+            $query->where('bills.expiration_date', '>=', $start);
+        else if(!empty($end))
+            $query->where('bills.expiration_date', '<=', $end);
+
+        if(!empty($request->input('search.value'))) {
+            $query->where('providers.name', 'like', '%' . $request->input('search.value') . '%');
+        }
+
+        return $query;
     }
 
     public function find($id)
