@@ -16,11 +16,17 @@ use Maatwebsite\Excel\Concerns\FromView;
 
 class CallsExport implements FromView
 {
+    private $request;
+
+    function __construct(Request $request)
+    {
+        $this->request = $request;
+    }
+
     public function view(): View
     {
-        $request = new Request();
         $serviceCalls = new ServiceCallsReport();
-        $data = $serviceCalls->filter($request);
+        $data = $serviceCalls->filter($this->request);
 
         return view("Reports::export.calls", ['data' => $data]);
     }

@@ -16,11 +16,17 @@ use Maatwebsite\Excel\Concerns\FromView;
 
 class ExtractExport implements FromView
 {
+    private $request;
+
+    function __construct(Request $request)
+    {
+        $this->request = $request;
+    }
+
     public function view(): View
     {
-        $request = new Request();
         $serviceExtract = new ServiceExtractReport();
-        $data = $serviceExtract->filter($request);
+        $data = $serviceExtract->filter($this->request);
 
         return view("Reports::export.extract", ['extract' => $data]);
     }

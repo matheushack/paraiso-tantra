@@ -16,11 +16,17 @@ use Maatwebsite\Excel\Concerns\FromView;
 
 class CustomersExport implements FromView
 {
+    private $request;
+
+    function __construct(Request $request)
+    {
+        $this->request = $request;
+    }
+
     public function view(): View
     {
-        $request = new Request();
         $serviceCustomers = new ServiceCustomersReport();
-        $data = $serviceCustomers->filter($request);
+        $data = $serviceCustomers->filter($this->request);
 
         return view("Reports::export.customers", ['data' => $data]);
     }
