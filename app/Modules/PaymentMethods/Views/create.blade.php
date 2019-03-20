@@ -59,13 +59,17 @@
                             </label>
                             <input name="name" type="text" class="form-control m-input" id="name" placeholder="" required>
                         </div>
-                        <div class="col-lg-4">
+                        <div class="col-lg-3">
                             @component('Accounts::components.accounts')
                             @endcomponent
                         </div>
-                        <div class="col-lg-4">
+                        <div class="col-lg-2">
                             <label>Alíquota</label>
                             <input type="text" name="aliquot" id="aliquot" class="form-control m-input mask-percentage">
+                        </div>
+                        <div class="col-lg-3">
+                            <label>Dias entrada na conta</label>
+                            <input type="number" name="days_in_account" id="days_in_account" class="form-control m-input">
                         </div>
                     </div>
                 </div>

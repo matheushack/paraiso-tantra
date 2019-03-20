@@ -11,7 +11,7 @@ class PaymentMethods extends Model {
 
     use SoftDeletes, OptionSelect;
 
-    protected $fillable = ['name', 'account_id', 'aliquot'];
+    protected $fillable = ['name', 'account_id', 'aliquot', 'days_in_account'];
 
     protected $dates = ['deleted_at'];
 

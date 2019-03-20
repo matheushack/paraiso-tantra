@@ -27,6 +27,9 @@ class ServicePaymentMethods
             ->editColumn('aliquot', function($payment){
                 return $payment->aliquot > 0 ? number_format($payment->aliquot, 2, ',', '.').'%' : '0,00%';
             })
+            ->editColumn('days_in_account', function($payment){
+                return !empty($payment->days_in_account) ? $payment->days_in_account : 0;
+            })
             ->rawColumns(['actions'])
             ->make(true);
     }
@@ -85,6 +88,7 @@ class ServicePaymentMethods
                 $payment->name = $request->input('name');
                 $payment->account_id = $request->input('account_id');
                 $payment->aliquot = $request->input('aliquot');
+                $payment->days_in_account = $request->input('days_in_account');
 
                 if (!$payment->save())
                     throw new \Exception('Não foi possível editar a forma de pagamento. Por favor, tente mais tarde!');

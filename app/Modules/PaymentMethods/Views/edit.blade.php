@@ -60,13 +60,17 @@
                             </label>
                             <input name="name" type="text" class="form-control m-input" id="name" placeholder="" required value="{{$payment->name}}">
                         </div>
-                        <div class="col-lg-4">
+                        <div class="col-lg-3">
                             @component('Accounts::components.accounts', ['account_id' => $payment->account_id])
                             @endcomponent
                         </div>
-                        <div class="col-lg-4">
+                        <div class="col-lg-2">
                             <label>Alíquota</label>
                             <input type="text" name="aliquot" id="aliquot" class="form-control m-input mask-percentage" value="{{$payment->aliquot > 0 ? number_format($payment->aliquot, 2, ',', '.') : ''}}">
+                        </div>
+                        <div class="col-lg-3">
+                            <label>Dias entrada na conta</label>
+                            <input type="number" name="days_in_account" id="days_in_account" class="form-control m-input" value="{{$payment->days_in_account}}">
                         </div>
                     </div>
                 </div>

@@ -19,10 +19,10 @@
                     @break
                 @endswitch
             </td>
-            <td>{{$report->amount}}</td>
-            <td>{{$report->aliquot}}</td>
-            <td>{{$report->discount}}</td>
-            <td>{{$report->total}}</td>
+            <td>{{'R$ '.number_format($report->amount, 2, ',', '.')}}</td>
+            <td>{{$report->aliquot > 0 ? number_format($report->aliquot, 2, ',', '.').'%' : '0,00%'}}</td>
+            <td>{{'R$ '.number_format($report->discount, 2, ',', '.')}}</td>
+            <td>{{'R$ '.number_format($report->total, 2, ',', '.')}}</td>
         </tr>
     @endforeach
 @else

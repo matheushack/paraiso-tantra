@@ -63,7 +63,7 @@ class ServiceCallsReport
             $query->where('customers.id', '=', $request->input('customer_id'));
 
         if(!empty($request->input('unity_id')))
-            $query->whereIn('units.unity_id', $request->input('unity_id'));
+            $query->whereIn('units.id', $request->input('unity_id'));
 
         if(!empty($request->input('employees')))
             $query->whereIn('employees.id', $request->input('employees'));

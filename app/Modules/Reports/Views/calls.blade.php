@@ -197,7 +197,7 @@
 
                 submitHandler: function (form) {
                     $.ajax({
-                        url: '{{route('reports.customers.filter')}}',
+                        url: '{{route('reports.calls.filter')}}',
                         type: 'POST',
                         data: $(form).serialize(),
                         beforeSend: function(xhr, type) {
