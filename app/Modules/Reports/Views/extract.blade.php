@@ -75,7 +75,7 @@
                 <div class="m-portlet__head-tools">
                     <ul class="m-portlet__nav">
                         <li class="m-portlet__nav-item">
-                            <a href="{{route('reports.extract.excel')}}" class="btn btn-dark m-btn m-btn--custom m-btn--icon m-btn--air" id="btn-excel">
+                            <a  href="" data-url="{{route('reports.extract.excel')}}" class="btn btn-dark m-btn m-btn--custom m-btn--icon m-btn--air" id="btn-excel">
                                 <span>
                                     <i class="la la-file-excel-o"></i>
                                     <span>
@@ -85,7 +85,7 @@
                             </a>
                         </li>
                         <li class="m-portlet__nav-item">
-                            <a href="{{route('reports.extract.pdf')}}" class="btn btn-dark m-btn m-btn--custom m-btn--icon m-btn--air">
+                            <a  href="" data-url="{{route('reports.extract.pdf')}}" class="btn btn-dark m-btn m-btn--custom m-btn--icon m-btn--air">
                                 <span>
                                     <i class="la la-file-pdf-o"></i>
                                     <span>
@@ -186,6 +186,24 @@
     <script>
         $(document).ready(function(){
             ParaisoTantra.masks();
+
+            $('body').on('click', '#btn-excel', function(e){
+                var url = $(this).data('url');
+                var form = $("#form-report-filter").serialize();
+
+                $(this).attr('href', url+"?"+form);
+
+                return true;
+            });
+
+            $('body').on('click', '#btn-pdf', function(e){
+                var url = $(this).data('url');
+                var form = $("#form-report-filter").serialize();
+
+                $(this).attr('href', url+"?"+form);
+
+                return true;
+            });
 
             $("#form-report-filter").validate({
                 invalidHandler: function(event, validator) {
