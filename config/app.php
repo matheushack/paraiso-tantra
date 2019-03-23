@@ -150,6 +150,8 @@ return [
         /*
          * Package Service Providers...
          */
+        Spatie\Backup\BackupServiceProvider::class,
+        \App\Providers\GoogleDriveServiceProvider::class,
 
         /*
          * Application Service Providers...

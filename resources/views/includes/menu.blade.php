@@ -178,6 +178,12 @@
                     <div class="m-menu__submenu ">
                         <span class="m-menu__arrow"></span>
                         <ul class="m-menu__subnav">
+                            <li class="m-menu__item  {{isset($menu_active) && $menu_active == 'task' ? 'm-menu__item--active' : ''}}" aria-haspopup="true" >
+                                <a  href="{{route('tasks')}}" class="m-menu__link ">
+                                    <i class="m-menu__link-icon flaticon-multimedia-2"></i>
+                                    <span class="m-menu__link-text">Tarefas</span>
+                                </a>
+                            </li>
                             <li class="m-menu__item  {{isset($menu_active) && $menu_active == 'users' ? 'm-menu__item--active' : ''}}" aria-haspopup="true" >
                                 <a  href="{{route('users')}}" class="m-menu__link ">
                                     <i class="m-menu__link-icon flaticon-users"></i>
