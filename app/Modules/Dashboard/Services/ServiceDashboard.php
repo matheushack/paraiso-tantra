@@ -68,7 +68,11 @@ class ServiceDashboard
                 )
                 ->join('payment_methods', 'calls.payment_id', '=', 'payment_methods.id')
                 ->where('status', '=', 'P')
-                ->where('payment_methods.account_id', '=', $account->id);
+                ->where('payment_methods.account_id', '=', $account->id)
+                ->where(function($query){
+                    $query->whereNull('date_in_account')
+                        ->orWhere('date_in_account', '<=', Carbon::now()->format('Y-m-d'));
+                });
 
             $bills = Bills::select(
                     DB::raw('(bills.amount - ROUND((bills.amount * payment_methods.aliquot)/100, 2)) AS amount')

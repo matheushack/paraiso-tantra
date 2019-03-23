@@ -49,7 +49,8 @@ class ServiceCallsReport
                 DB::raw('calls.amount'),
                 DB::raw('calls.aliquot'),
                 DB::raw('calls.discount'),
-                DB::raw('calls.total')
+                DB::raw('calls.total'),
+                DB::raw('calls.date_in_account'),
             ])
             ->join('units', 'calls.unity_id', '=', 'units.id')
             ->join('services', 'calls.service_id', '=', 'services.id')

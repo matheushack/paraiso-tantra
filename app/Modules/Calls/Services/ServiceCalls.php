@@ -233,6 +233,11 @@ class ServiceCalls
                 $call->aliquot = $request->input('aliquot');
                 $call->total = $total;
 
+                if($request->input('status') == 'P' && empty($call->date_in_account) && $request->input('payment_id')){
+                    $payment = PaymentMethods::find($request->input('payment_id'));
+                    $call->date_in_account = Carbon::now()->addDays($payment->days_in_account)->format('Y-m-d');
+                }
+
                 if(!$call->save())
                     throw new \Exception('Houve um problema ao tentar atualziar o atendimento. Por favor, tente mais tarde!');
             });
