@@ -54,7 +54,7 @@ class ServiceCallsReport
             ->join('units', 'calls.unity_id', '=', 'units.id')
             ->join('services', 'calls.service_id', '=', 'services.id')
             ->join('rooms', 'calls.room_id', '=', 'rooms.id')
-            ->join('payment_methods', 'calls.payment_id', '=', 'payment_methods.id')
+            ->leftJoin('payment_methods', 'calls.payment_id', '=', 'payment_methods.id')
             ->join('customers', 'calls.customer_id', '=', 'customers.id')
             ->join('call_employees', 'calls.id', '=', 'call_employees.call_id')
             ->join('employees', 'call_employees.employee_id', '=', 'employees.id');

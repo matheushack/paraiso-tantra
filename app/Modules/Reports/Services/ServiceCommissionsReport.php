@@ -61,7 +61,7 @@ class ServiceCommissionsReport
                 DB::raw('IF(calls.type_discount = "C", ROUND((calls.amount * employees.commission)/100, 2), ROUND(((calls.amount - calls.discount) * employees.commission)/100, 2)) as amountCommission')
             )
             ->join('calls', 'call_employees.call_id', '=', 'calls.id')
-            ->join('payment_methods', 'calls.payment_id', '=', 'payment_methods.id')
+            ->leftJoin('payment_methods', 'calls.payment_id', '=', 'payment_methods.id')
             ->join('employees', 'call_employees.employee_id', '=', 'employees.id')
             ->join('services', 'calls.service_id', '=', 'services.id')
             ->join('units', 'calls.unity_id', '=', 'units.id');

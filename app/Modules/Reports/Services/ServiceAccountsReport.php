@@ -44,8 +44,8 @@ class ServiceAccountsReport
                 DB::raw("calls.start as date"),
                 DB::raw("(calls.amount - ROUND((calls.amount * calls.aliquot)/100, 2)) AS amount")
             )
-            ->join('payment_methods', 'calls.payment_id', '=', 'payment_methods.id')
-            ->join('accounts', 'payment_methods.account_id', '=', 'accounts.id')
+            ->leftJoin('payment_methods', 'calls.payment_id', '=', 'payment_methods.id')
+            ->leftJoin('accounts', 'payment_methods.account_id', '=', 'accounts.id')
             ->join('units', 'calls.unity_id', '=', 'units.id')
             ->join('services', 'calls.service_id', '=', 'services.id')
             ->where('calls.status', '=', 'P');
@@ -58,8 +58,8 @@ class ServiceAccountsReport
                 DB::raw("bills.expiration_date as date"),
                 DB::raw("IF(bills.type = 'R', (bills.amount - ROUND((bills.amount * payment_methods.aliquot)/100, 2)), bills.amount) AS amount")
             )
-            ->join('payment_methods', 'bills.payment_id', '=', 'payment_methods.id')
-            ->join('accounts', 'payment_methods.account_id', '=', 'accounts.id')
+            ->leftJoin('payment_methods', 'bills.payment_id', '=', 'payment_methods.id')
+            ->leftJoin('accounts', 'payment_methods.account_id', '=', 'accounts.id')
             ->join('units', 'bills.unity_id', '=', 'units.id')
             ->join('providers', 'bills.provider_id', '=', 'providers.id')
             ->whereIn('bills.status', ['P', 'R']);
