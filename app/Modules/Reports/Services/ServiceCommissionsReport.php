@@ -90,7 +90,8 @@ class ServiceCommissionsReport
             $query->where('calls.end', '<=', $request->input('end'));
         }
 
-        return $query->orderBy('calls.start')
+        return $query->whereNull('calls.deleted_at')
+            ->orderBy('calls.start')
             ->get();
     }
 }
