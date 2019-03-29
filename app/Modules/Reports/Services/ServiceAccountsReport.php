@@ -69,6 +69,11 @@ class ServiceAccountsReport
             $bills->where('accounts.id', '=', $request->input('account_id'));
         }
 
+        if(!empty($request->input('unity_id'))) {
+            $calls->whereIn('units.id', $request->input('unity_id'));
+            $bills->whereIn('units.id', $request->input('unity_id'));
+        }
+
         if(!empty($request->input('start')) && !empty($request->input('end'))){
             $calls->where('calls.start', '>=', $request->input('start'))
                 ->where('calls.end', '<=', $request->input('end'));
