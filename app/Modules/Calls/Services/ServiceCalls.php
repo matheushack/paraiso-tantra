@@ -172,6 +172,18 @@ class ServiceCalls
                 if($call->count() == 0)
                     throw new \Exception('Atendimento não encontrado!');
 
+                if($call->service_id != $request->input('service_id')){
+                    $service = Services::find($request->input('service_id'));
+                    $total = $service->amount - $call->discount;
+                    $total = $total - ($call->aliquot * $total)/100;
+
+                    if($total < 0)
+                        throw new \Exception('O valor total ficará negativo, por favor verifique!');
+
+                    $call->amount = $service->amount;
+                    $call->total = $total;
+                }
+
                 $call->unity_id = $request->input('unity_id');
                 $call->service_id = $request->input('service_id');
                 $call->room_id = $request->input('room_id');
@@ -224,6 +236,9 @@ class ServiceCalls
 
                 $total = $request->input('amount') - $request->input('discount');
                 $total = $total - ($request->input('aliquot') * $total)/100;
+
+                if($total < 0)
+                    throw new \Exception('O valor total ficará negativo, por favor verifique!');
 
                 $call->status = $request->input('status');
                 $call->payment_id = $request->input('payment_id');
