@@ -26,6 +26,7 @@ var newExportAction = function (e, dt, button, config) {
         // Just this once, load all data from the server...
         data.start = 0;
         data.length = 2147483647;
+        data.excelExport = true;
 
         dt.one('preDraw', function (e, settings) {
             // Call the original action function

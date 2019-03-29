@@ -53,8 +53,11 @@ class ServiceBills
             ->editColumn('expiration_date', function($bill){
                 return Carbon::parse($bill->expiration_date)->format('d/m/Y');
             })
-            ->editColumn('amount', function($bill){
-                return 'R$ '.number_format($bill->amount, 2, ',', '.');
+            ->editColumn('amount', function($bill) use($request){
+                if(empty($request->input('excelExport')))
+                    return 'R$ '.number_format($bill->amount, 2, ',', '.');
+
+                return $bill->amount;
             })
             ->addColumn('account', function($bill){
                 return $bill->payment->account()->name;
