@@ -52,7 +52,7 @@ class ServiceCalls
     {
         $service = Services::find($request->input('service_id'));
         $start = Carbon::createFromFormat('d/m/Y H:i', $request->input('start'))->addSecond(1);
-        $end = Carbon::createFromFormat('d/m/Y H:i', $request->input('start'))->addMinutes($service->duration);
+        $end = Carbon::createFromFormat('d/m/Y H:i', $request->input('start'))->addMinutes($service->duration)->subSeconds(1);
 
         $request->merge(['start' => $start->format('Y-m-d H:i:s')]);
         $request->merge(['end' => $end->format('Y-m-d H:i:s')]);
