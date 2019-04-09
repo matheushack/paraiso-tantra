@@ -7,8 +7,21 @@
             @endcomponent
         </div>
         <div class="col-lg-6">
-            @component('PaymentMethods::components.payments', ['payment_id' => $call->payment_id])
-            @endcomponent
+            <label>Tipo desconto</label>
+            <div class="m-radio-inline">
+                <label class="m-radio">
+                    <input type="radio" name="type_discount" value="C" {{$call->type_discount == \App\Modules\Calls\Constants\DiscountTypes::COMPANY ? 'checked="checked"' : ''}} {{$call->discount > 0 ? 'required="required"' : ''}}> Empresa
+                    <span></span>
+                </label>
+                <label class="m-radio">
+                    <input type="radio" name="type_discount" value="T" {{$call->type_discount == \App\Modules\Calls\Constants\DiscountTypes::THERAPEUTICS ? 'checked="checked"' : ''}} {{$call->discount > 0 ? 'required="required"' : ''}}> Terapeutas
+                    <span></span>
+                </label>
+                <label class="m-radio">
+                    <input type="radio" name="type_discount" value="B" {{$call->type_discount == \App\Modules\Calls\Constants\DiscountTypes::BOTH ? 'checked="checked"' : ''}} {{$call->discount > 0 ? 'required="required"' : ''}}> Ambos
+                    <span></span>
+                </label>
+            </div>
         </div>
     </div>
 
@@ -27,21 +40,32 @@
         </div>
     </div>
     <div class="form-group m-form__group row">
-        <div class="col-lg-9">
-            <label>Tipo desconto</label>
-            <div class="m-radio-inline">
-                <label class="m-radio">
-                    <input type="radio" name="type_discount" value="C" {{$call->type_discount == \App\Modules\Calls\Constants\DiscountTypes::COMPANY ? 'checked="checked"' : ''}} {{$call->discount > 0 ? 'required="required"' : ''}}> Empresa
-                    <span></span>
-                </label>
-                <label class="m-radio">
-                    <input type="radio" name="type_discount" value="T" {{$call->type_discount == \App\Modules\Calls\Constants\DiscountTypes::THERAPEUTICS ? 'checked="checked"' : ''}} {{$call->discount > 0 ? 'required="required"' : ''}}> Terapeutas
-                    <span></span>
-                </label>
-                <label class="m-radio">
-                    <input type="radio" name="type_discount" value="B" {{$call->type_discount == \App\Modules\Calls\Constants\DiscountTypes::BOTH ? 'checked="checked"' : ''}} {{$call->discount > 0 ? 'required="required"' : ''}}> Ambos
-                    <span></span>
-                </label>
+        <div id="payment_methods">
+            <div data-repeater-list="payments" >
+                <div data-repeater-item class="form-group m-form__group row align-items-center">
+                    <div class="col-lg-6">
+                        @component('PaymentMethods::components.payments')
+                        @endcomponent
+                    </div>
+                    <div class="col-lg-5">
+                        <label>Valor</label>
+                        <input type="text" name="total" id="total" class="form-control m-input" value="">
+                    </div>
+                    <div class="col-md-1">
+                        <div data-repeater-delete="" class="btn btn-danger m-btn m-btn--custom m-btn--icon m-btn--air btn-delete-operating" style="display: none;">
+                            <span>
+                                <i class="la la-trash-o"></i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group m-form__group row">
+                <div data-repeater-create="" class="btn btn-success m-btn m-btn--custom m-btn--icon m-btn--air">
+                    <span>
+                        <i class="la la-plus"></i> Nova forma de pagamento
+                    </span>
+                </div>
             </div>
         </div>
     </div>
