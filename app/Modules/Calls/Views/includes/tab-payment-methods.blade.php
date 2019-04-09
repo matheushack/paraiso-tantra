@@ -10,10 +10,10 @@
                     </div>
                     <div class="col-lg-5">
                         <label>Valor</label>
-                        <input type="text" name="total" id="total" class="form-control m-input" value="">
+                        <input type="text" name="amount" class="form-control m-input mask-currency payment_amount" value="">
                     </div>
                     <div class="col-md-1">
-                        <div data-repeater-delete="" class="btn btn-danger m-btn m-btn--custom m-btn--icon m-btn--air btn-delete-operating" style="display: none;">
+                        <div data-repeater-delete="" class="btn btn-danger m-btn m-btn--custom m-btn--icon m-btn--air btn-delete-payment" style="display: none;">
                             <span>
                                 <i class="la la-trash-o"></i>
                             </span>

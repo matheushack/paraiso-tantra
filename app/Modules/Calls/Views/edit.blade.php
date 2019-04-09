@@ -290,8 +290,27 @@
         $("#payment_methods").repeater({
             initEmpty: !1,
             show: function() {
+                var total = $("#total").val().replace(/\D/g,'')/100;
+                var paymentTotal = 0 ;
+
+                $('.payment_amount').each(function(key, item){
+                    var paymentAmount = $(item).val().replace(/\D/g,'')/100;
+                    paymentTotal =  paymentAmount + paymentTotal;
+                    $(item).val(numberToReal(paymentTotal));
+                });
+
+                if(paymentTotal > total) {
+                    $('.payment_amount:last-child').val('');
+                    swal({
+                        title: 'Atendimento',
+                        text: 'Valores dos pagamentos devem ser menor ou igual ao valor total do atendimento!',
+                        type: 'warning'
+                    });
+                    return false;
+                }
+
                 $(this).slideDown();
-                $(this).find('.btn-delete-operating').show();
+                $(this).find('.btn-delete-payment').show();
                 ParaisoTantra.masks();
             },
             hide: function(e) {
