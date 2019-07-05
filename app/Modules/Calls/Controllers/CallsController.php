@@ -94,7 +94,14 @@ class CallsController extends Controller
             $employees[] = $item->employee_id;
         });
 
-        return view("Calls::edit", ['call' => $call, 'employees' => implode(',',$employees)]);
+        $call->payments()->get()->each(function($item) use(&$payments){
+            $payments[] = [
+                'payment_id' => $item->payment_id,
+                'amount' => $item->amount
+            ];
+        });
+
+        return view("Calls::edit", ['call' => $call, 'employees' => implode(',',$employees), 'payments' => $payments]);
     }
 
     /**
@@ -121,16 +128,35 @@ class CallsController extends Controller
         return response()->json($return, 200);
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function updateFinancial(Request $request)
     {
         $request->validate([
             'call_id' => 'required',
             'status' => 'required',
-            'payment_id' => 'required',
             'type_discount' => 'required_with:discount'
         ]);
 
         $return = $this->serviceCalls->updateFinancial($request);
+
+        return response()->json($return, 200);
+    }
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function updatePayment(Request $request)
+    {
+        $request->validate([
+            'call_id' => 'required',
+            'payments' => 'required'
+        ]);
+
+        $return = $this->serviceCalls->updatePayment($request);
 
         return response()->json($return, 200);
     }
@@ -147,6 +173,10 @@ class CallsController extends Controller
         return response()->json($return, 200);
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function availability(Request $request)
     {
         $return = $this->serviceCalls->availability($request);

@@ -133,10 +133,10 @@
                         <th>Data final</th>
                         <th>Status</th>
                         <th>Data compensação</th>
-                        <th>Valor</th>
+                        <th>Valor atendimento</th>
+                        <th>Valor cobrado</th>
                         <th>Alíquota</th>
                         <th>Desconto</th>
-                        <th>Total</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -162,10 +162,10 @@
                                     @endswitch
                                 </td>
                                 <td>{{!empty($report->date_in_account) ? \Carbon\Carbon::parse($report->date_in_account)->format('d/m/Y') : ''}}</td>
+                                <td>{{'R$ '.number_format($report->total, 2, ',', '.')}}</td>
                                 <td>{{'R$ '.number_format($report->amount, 2, ',', '.')}}</td>
                                 <td>{{$report->aliquot > 0 ? number_format($report->aliquot, 2, ',', '.').'%' : '0,00%'}}</td>
                                 <td>{{'R$ '.number_format($report->discount, 2, ',', '.')}}</td>
-                                <td>{{'R$ '.number_format($report->total, 2, ',', '.')}}</td>
                             </tr>
                         @endforeach
                     @else

@@ -11,6 +11,7 @@ namespace App\Modules\Calls\Services;
 
 use App\Modules\Calls\Constants\StatusPayment;
 use App\Modules\Calls\Models\CallEmployees;
+use App\Modules\Calls\Models\CallPayments;
 use App\Modules\PaymentMethods\Models\PaymentMethods;
 use App\Modules\Rooms\Services\ServiceRooms;
 use Carbon\Carbon;
@@ -30,6 +31,10 @@ use App\Modules\Employees\Services\ServiceEmployees;
  */
 class ServiceCalls
 {
+    /**
+     * @param Request $request
+     * @return Request
+     */
     private function formatRequest(Request $request)
     {
         $service = Services::find($request->input('service_id'));
@@ -48,6 +53,10 @@ class ServiceCalls
         return $request;
     }
 
+    /**
+     * @param Request $request
+     * @return Request
+     */
     private function formatRequestAvailability(Request $request)
     {
         $service = Services::find($request->input('service_id'));
@@ -61,6 +70,10 @@ class ServiceCalls
         return $request;
     }
 
+    /**
+     * @param Request $request
+     * @return Request
+     */
     private function formatRequestFinancial(Request $request)
     {
         $amount = !empty($request->input('amount')) ? $request->input('amount') : 0;
@@ -68,9 +81,6 @@ class ServiceCalls
 
         $discount = !empty($request->input('discount')) ? $request->input('discount') : 0;
         $request->merge(['discount' => filter_var($discount, FILTER_SANITIZE_NUMBER_FLOAT) / 100]);
-
-        $aliquot = PaymentMethods::find($request->input('payment_id'))->aliquot;
-        $request->merge(['aliquot' => filter_var($aliquot, FILTER_SANITIZE_NUMBER_FLOAT) / 100]);
 
         $typeDiscount = !empty($request->input('type_discount')) ? $request->input('type_discount') : null;
         $request->merge(['type_discount' => $typeDiscount]);
@@ -80,6 +90,10 @@ class ServiceCalls
         return $request;
     }
 
+    /**
+     * @param $id
+     * @return mixed
+     */
     public function find($id)
     {
         return Calls::find($id);
@@ -125,6 +139,10 @@ class ServiceCalls
         return $calendar;
     }
 
+    /**
+     * @param Request $request
+     * @return array
+     */
     public function store(Request $request)
     {
         try {
@@ -161,6 +179,10 @@ class ServiceCalls
         }
     }
 
+    /**
+     * @param Request $request
+     * @return array
+     */
     public function update(Request $request)
     {
         try {
@@ -223,6 +245,10 @@ class ServiceCalls
         }
     }
 
+    /**
+     * @param Request $request
+     * @return array
+     */
     public function updateFinancial(Request $request)
     {
         try {
@@ -241,16 +267,21 @@ class ServiceCalls
                     throw new \Exception('O valor total ficará negativo, por favor verifique!');
 
                 $call->status = $request->input('status');
-                $call->payment_id = $request->input('payment_id');
                 $call->type_discount = $request->input('type_discount');
                 $call->amount = $request->input('amount');
                 $call->discount = $request->input('discount');
-                $call->aliquot = $request->input('aliquot');
                 $call->total = $total;
 
-                if($request->input('status') == 'P' && empty($call->date_in_account) && $request->input('payment_id')){
-                    $payment = PaymentMethods::find($request->input('payment_id'));
-                    $call->date_in_account = Carbon::now()->addDays($payment->days_in_account)->format('Y-m-d');
+                if($request->input('status') == 'P' && empty($call->date_in_account) && $call->payments->count() > 0){
+                    foreach($call->payments  as $callPayment) {
+                        $payment = $callPayment->payment;
+
+                        $callPayment->aliquot = filter_var($payment->aliquot, FILTER_SANITIZE_NUMBER_FLOAT) / 100;
+                        $callPayment->date_in_account = Carbon::now()->addDays($payment->days_in_account)->format('Y-m-d');
+
+                        if(!$callPayment->save())
+                            throw new \Exception('Houve um problema ao tentar atualziar o atendimento. Por favor, tente mais tarde!');
+                    }
                 }
 
                 if(!$call->save())
@@ -273,6 +304,47 @@ class ServiceCalls
         }
     }
 
+    /**
+     * @param Request $request
+     * @return array
+     */
+    public function updatePayment(Request $request)
+    {
+        try {
+            Capsule::transaction(function() use ($request) {
+                CallPayments::where('call_id', '=', $request->input('call_id'))->delete();
+
+                foreach($request->input('payments') as $item) {
+                    $callPayment = new CallPayments();
+                    $callPayment->call_id = $request->input('call_id');
+                    $callPayment->payment_id = $item['payment_id'];
+                    $callPayment->amount = filter_var($item['amount'], FILTER_SANITIZE_NUMBER_FLOAT) / 100;
+
+                    if (!$callPayment->save())
+                        throw new \Exception('Houve um problema ao tentar atualziar o atendimento. Por favor, tente mais tarde!');
+                }
+            });
+
+            $call = Calls::find($request->input('call_id'));
+
+            return [
+                'callId' => $call->id,
+                'paid' => $call->status == 'P' ? true : false,
+                'message' => 'Atendimento atualizado com sucesso!',
+                'save' => true
+            ];
+        }catch(\Exception $e){
+            return [
+                'message' => $e->getMessage(),
+                'save' => false
+            ];
+        }
+    }
+
+    /**
+     * @param Request $request
+     * @return array
+     */
     public function availability(Request $request)
     {
         try {
@@ -320,6 +392,10 @@ class ServiceCalls
         }
     }
 
+    /**
+     * @param $id
+     * @return array
+     */
     public function destroy($id)
     {
         try {
@@ -338,6 +414,10 @@ class ServiceCalls
         }
     }
 
+    /**
+     * @param Calls $call
+     * @return mixed
+     */
     public function destroyCallEmployees(Calls $call)
     {
         return CallEmployees::where('call_id', '=', $call->id)

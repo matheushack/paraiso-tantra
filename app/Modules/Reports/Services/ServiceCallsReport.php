@@ -46,19 +46,20 @@ class ServiceCallsReport
                 DB::raw('calls.start'),
                 DB::raw('calls.end'),
                 DB::raw('calls.status'),
-                DB::raw('calls.amount'),
-                DB::raw('calls.aliquot'),
+                DB::raw('call_payments.amount'),
+                DB::raw('call_payments.aliquot'),
                 DB::raw('calls.discount'),
                 DB::raw('calls.total'),
-                DB::raw('calls.date_in_account'),
+                DB::raw('call_payments.date_in_account'),
             ])
             ->join('units', 'calls.unity_id', '=', 'units.id')
             ->join('services', 'calls.service_id', '=', 'services.id')
             ->join('rooms', 'calls.room_id', '=', 'rooms.id')
-            ->leftJoin('payment_methods', 'calls.payment_id', '=', 'payment_methods.id')
             ->join('customers', 'calls.customer_id', '=', 'customers.id')
             ->join('call_employees', 'calls.id', '=', 'call_employees.call_id')
-            ->join('employees', 'call_employees.employee_id', '=', 'employees.id');
+            ->join('employees', 'call_employees.employee_id', '=', 'employees.id')
+            ->leftJoin('call_payments', 'calls.id', '=', 'call_payments.call_id')
+            ->leftJoin('payment_methods', 'call_payments.payment_id', '=', 'payment_methods.id');
 
         if(!empty($request->input('customer_id')))
             $query->where('customers.id', '=', $request->input('customer_id'));
@@ -73,7 +74,7 @@ class ServiceCallsReport
             $query->where('calls.status', '=', $request->input('status'));
 
         if(!empty($request->input('payment_id')))
-            $query->where('calls.payment_id', '=', $request->input('payment_id'));
+            $query->where('call_payments.payment_id', '=', $request->input('payment_id'));
 
         if(!empty($request->input('service_id')))
             $query->where('services.id', '=', $request->input('service_id'));
@@ -87,7 +88,7 @@ class ServiceCallsReport
             $query->where('calls.end', '<=', $request->input('end'));
         }
 
-        return $query->groupBy('calls.id')
+        return $query->groupBy('calls.id', 'call_payments.payment_id', 'call_payments.amount', 'call_payments.aliquot', 'call_payments.date_in_account')
             ->orderBy('calls.start')
             ->get();
     }
