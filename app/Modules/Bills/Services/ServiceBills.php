@@ -192,8 +192,24 @@ class ServiceBills
                                 $bill->payment_id = $payment['id'];
                                 $bill->description = $request->input('description');
 
+                                if(in_array($bill->status, ['R', 'P']))
+                                    $bill->date_in_account = Carbon::now()->format('Y-m-d');
+
                                 if (!$bill->save())
                                     throw new \Exception('Não foi possível cadastrar uma nova conta. Por favor, tente mais tarde!');
+
+                                if(!empty($bill->date_in_account)) {
+                                    $account = $bill->payment->account();
+
+                                    if ($bill->type == 'R') {
+                                        $account->balance = $account->balance + $bill->amount;
+                                    } else {
+                                        $account->balance = $account->balance - $bill->amount;
+                                    }
+
+                                    if (!$account->save())
+                                        throw new \Exception('Houve um problema ao tentar atualziar o atendimento. Por favor, tente mais tarde!');
+                                }
                             }
                         }
                     } else {
@@ -208,8 +224,24 @@ class ServiceBills
                             $bill->payment_id = $payment['id'];
                             $bill->description = $request->input('description');
 
+                            if(in_array($bill->status, ['R', 'P']))
+                                $bill->date_in_account = Carbon::now()->format('Y-m-d');
+
                             if (!$bill->save())
                                 throw new \Exception('Não foi possível cadastrar uma nova conta. Por favor, tente mais tarde!');
+
+                            if(!empty($bill->date_in_account)) {
+                                $account = $bill->payment->account();
+
+                                if ($bill->type == 'R') {
+                                    $account->balance = $account->balance + $bill->amount;
+                                } else {
+                                    $account->balance = $account->balance - $bill->amount;
+                                }
+
+                                if (!$account->save())
+                                    throw new \Exception('Houve um problema ao tentar atualziar o atendimento. Por favor, tente mais tarde!');
+                            }
                         }
                     }
                 }
@@ -242,8 +274,28 @@ class ServiceBills
                 $bill->amount = $request->input('amount');
                 $bill->description = $request->input('description');
 
+                $isUpdateBalanceAccount = false;
+
+                if(in_array($bill->status, ['R', 'P']) && empty($bill->date_in_account)) {
+                    $isUpdateBalanceAccount = true;
+                    $bill->date_in_account = Carbon::now()->format('Y-m-d');
+                }
+
                 if (!$bill->save())
                     throw new \Exception('Não foi possível editar a conta. Por favor, tente mais tarde!');
+
+                if($isUpdateBalanceAccount) {
+                    $account = $bill->payment->account();
+
+                    if ($bill->type == 'R') {
+                        $account->balance = $account->balance + $bill->amount;
+                    } else {
+                        $account->balance = $account->balance - $bill->amount;
+                    }
+
+                    if (!$account->save())
+                        throw new \Exception('Houve um problema ao tentar atualziar o atendimento. Por favor, tente mais tarde!');
+                }
             });
 
             return [
@@ -262,6 +314,22 @@ class ServiceBills
     {
         try {
             $bill = Bills::find($id);
+
+            if($bill->type == 'R'){
+                $account = $bill->payment->account();
+                $account->balance = $account->balance - $bill->amount;
+
+                if(!$account->save())
+                    throw new \Exception('Houve um problema ao tentar atualziar o atendimento. Por favor, tente mais tarde!');
+
+            } else{
+                $account = $bill->payment->account();
+                $account->balance = $account->balance + $bill->amount;
+
+                if(!$account->save())
+                    throw new \Exception('Houve um problema ao tentar atualziar o atendimento. Por favor, tente mais tarde!');
+            }
+
             $bill->delete();
 
             return [

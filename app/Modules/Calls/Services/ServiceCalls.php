@@ -286,6 +286,16 @@ class ServiceCalls
 
                 if(!$call->save())
                     throw new \Exception('Houve um problema ao tentar atualziar o atendimento. Por favor, tente mais tarde!');
+
+                if($call->status == 'P'){
+                    foreach($call->payments  as $callPayment) {
+                        $account = $callPayment->payment->account();
+                        $account->balance = $account->balance + $callPayment->amount;
+
+                        if(!$account->save())
+                            throw new \Exception('Houve um problema ao tentar atualziar o atendimento. Por favor, tente mais tarde!');
+                    }
+                }
             });
 
             $call = Calls::find($request->input('call_id'));
@@ -322,6 +332,18 @@ class ServiceCalls
 
                     if (!$callPayment->save())
                         throw new \Exception('Houve um problema ao tentar atualziar o atendimento. Por favor, tente mais tarde!');
+                }
+
+                $call = Calls::find($request->input('call_id'));
+
+                if($call->status == 'P'){
+                    foreach($call->payments  as $callPayment) {
+                        $account = $callPayment->payment->account();
+                        $account->balance = $account->balance + $callPayment->amount;
+
+                        if(!$account->save())
+                            throw new \Exception('Houve um problema ao tentar atualziar o atendimento. Por favor, tente mais tarde!');
+                    }
                 }
             });
 
@@ -400,6 +422,15 @@ class ServiceCalls
     {
         try {
             $call = Calls::find($id);
+
+            foreach($call->payments  as $callPayment) {
+                $account = $callPayment->payment->account();
+                $account->balance = $account->balance - $callPayment->amount;
+
+                if(!$account->save())
+                    throw new \Exception('Houve um problema ao tentar atualziar o atendimento. Por favor, tente mais tarde!');
+            }
+
             $call->delete();
 
             return [

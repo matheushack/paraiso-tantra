@@ -14,7 +14,7 @@ class Accounts extends Model {
     protected $table = 'accounts';
 
     protected $fillable = [
-        'id', 'name', 'type', 'bank_id', 'account_type', 'agency_number', 'account_number'
+        'id', 'name', 'type', 'bank_id', 'account_type', 'agency_number', 'account_number', 'balance'
     ];
 
     protected $dates = ['deleted_at'];

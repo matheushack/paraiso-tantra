@@ -1,8 +1,8 @@
-<label>Conta</label>
+<label>{{isset($label) ? $label : 'Conta'}}</label>
 <div>
-    {!! Form::select('account_id', (isset($options) ? \App\Modules\Accounts\Models\Accounts::optionSelect($options) : \App\Modules\Accounts\Models\Accounts::optionSelect()), (isset($account_id) ? $account_id : null), [
+    {!! Form::select((isset($name) ? $name : 'account_id'), (isset($options) ? \App\Modules\Accounts\Models\Accounts::optionSelect($options) : \App\Modules\Accounts\Models\Accounts::optionSelect()), (isset($account_id) ? $account_id : null), [
             'class' => 'form-control m-input m-bootstrap-select m_selectpicker',
-            'id' => 'account_id',
+            'id' => (isset($name) ? $name : 'account_id'),
             'required' => 'required',
             'style' => 'width: 100%',
     ]) !!}
