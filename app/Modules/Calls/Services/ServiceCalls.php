@@ -100,6 +100,13 @@ class ServiceCalls
             $colors = [];
             $employees = [];
 
+            $service = $call->service()->name;
+            $room = $call->room()->name;
+            $customer = $call->customer()->name;
+
+            if(empty($service) || empty($room) || empty($customer))
+                continue;
+
             $call->employees->each(function($item) use(&$colors, &$employees){
                 $colors[] = hexdec($item->employee()->color);
                 $employees[] = $item->employee()->name;
@@ -108,12 +115,6 @@ class ServiceCalls
             $color = dechex(array_sum($colors));
             $color = strlen($color) == 6 ? $color : str_pad($color, 6, 0, STR_PAD_LEFT);
             $color = substr($color,0, 6);
-            $service = $call->service()->name;
-            $room = $call->room()->name;
-            $customer = $call->customer()->name;
-
-            if(empty($service) || empty($room) || empty($customer))
-                continue;
 
             $calendar[] = [
                 'id' => $call->id,
