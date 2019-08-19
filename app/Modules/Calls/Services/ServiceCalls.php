@@ -108,9 +108,12 @@ class ServiceCalls
             $color = dechex(array_sum($colors));
             $color = strlen($color) == 6 ? $color : str_pad($color, 6, 0, STR_PAD_LEFT);
             $color = substr($color,0, 6);
-            $service = !empty($call->service()->name) ? $call->service()->name : 'Serviço não identificado';
-            $room = !empty($call->room()->name) ? $call->room()->name : 'Sala não identificada';
-            $customer = !empty($call->customer()->name) ? $call->customer()->name : 'Cliente não identificado';
+            $service = $call->service()->name;
+            $room = $call->room()->name;
+            $customer = $call->customer()->name;
+
+            if(empty($service) || empty($room) || empty($customer))
+                continue;
 
             $calendar[] = [
                 'id' => $call->id,
