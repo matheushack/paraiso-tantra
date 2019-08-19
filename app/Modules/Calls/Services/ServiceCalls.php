@@ -100,11 +100,7 @@ class ServiceCalls
             $colors = [];
             $employees = [];
 
-            $service = $call->service()->name;
-            $room = $call->room()->name;
-            $customer = $call->customer()->name;
-
-            if(empty($service) || empty($room) || empty($customer))
+            if(empty($call->service()->name) || empty($call->room()->name) || empty($call->customer()->name))
                 continue;
 
             $call->employees->each(function($item) use(&$colors, &$employees){
@@ -118,7 +114,7 @@ class ServiceCalls
 
             $calendar[] = [
                 'id' => $call->id,
-                'title' => $service.' - '.$room.PHP_EOL.'Cliente: '.$customer.PHP_EOL,
+                'title' => $call->service()->name.' - '.$call->room()->name.PHP_EOL.'Cliente: '.$call->customer()->name.PHP_EOL,
                 'description' => 'Terapeutas: '.implode('/', $employees),
                 'start' => $call->start->format('Y-m-d H:i:s'),
                 'end' => $call->end->format('Y-m-d H:i:s'),
