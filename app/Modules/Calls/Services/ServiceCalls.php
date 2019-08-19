@@ -108,16 +108,11 @@ class ServiceCalls
             $color = dechex(array_sum($colors));
             $color = strlen($color) == 6 ? $color : str_pad($color, 6, 0, STR_PAD_LEFT);
             $color = substr($color,0, 6);
-            $title = !empty($call->service()->name) ? $call->service()->name : "Serviço não identificado";
-            $title .= " - ";
-            $title .= !empty($call->room()->name) ? $call->room()->name : "Serviço não identificado";
-            $title .= PHP_EOL.'Cliente: ';
-            $title .= !empty($call->customer()->name) ? $call->customer()->name : "Não identificado";
-            $title .= PHP_EOL;
+            $title = $call->service()->name.' - '.$call->room()->name.PHP_EOL.'Cliente: '.$call->customer()->name.PHP_EOL;
 
             $calendar[] = [
                 'id' => $call->id,
-                'title' => $title,
+                'title' => utf8_encode($title),
                 'description' => 'Terapeutas: '.implode('/', $employees),
                 'start' => $call->start->format('Y-m-d H:i:s'),
                 'end' => $call->end->format('Y-m-d H:i:s'),
