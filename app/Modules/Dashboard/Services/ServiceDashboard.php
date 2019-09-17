@@ -94,8 +94,13 @@ class ServiceDashboard
 
             $total = $accounts_in - $accounts_out;
 
-            $percentage_account_in = ($accounts_in > 0 ? ($accounts_in * 100) / abs($total) : 0);
-            $percentage_account_out = ($accounts_out > 0 ? ($accounts_out * 100) / abs($total) : 0);
+            if($total == 0){
+                $percentage_account_in = 50;
+                $percentage_account_out = 50;
+            } else {
+                $percentage_account_in = ($accounts_in > 0 ? ($accounts_in * 100) / abs($total) : 0);
+                $percentage_account_out = ($accounts_out > 0 ? ($accounts_out * 100) / abs($total) : 0);
+            }
 
             $collection->put('accounts_in', 'R$ ' . number_format($accounts_in, 2, ',', '.'));
             $collection->put('accounts_out', 'R$ ' . number_format($accounts_out, 2, ',', '.'));
