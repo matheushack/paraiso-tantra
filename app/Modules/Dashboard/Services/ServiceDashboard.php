@@ -38,7 +38,7 @@ class ServiceDashboard
             $collection = new Collection();
 
             $calls = Calls::select(
-                    DB::raw('(calls.amount - ROUND((calls.amount * calls.aliquot)/100, 2)) AS amount')
+                    DB::raw('(call_payments.amount - ROUND((call_payments.amount * call_payments.aliquot)/100, 2)) AS amount')
                 )
                 ->leftJoin('call_payments', 'calls.id', '=', 'call_payments.call_id')
                 ->leftJoin('payment_methods', 'call_payments.payment_id', '=', 'payment_methods.id')

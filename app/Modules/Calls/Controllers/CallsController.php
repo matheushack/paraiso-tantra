@@ -137,7 +137,8 @@ class CallsController extends Controller
         $request->validate([
             'call_id' => 'required',
             'status' => 'required',
-            'type_discount' => 'required_with:discount'
+            'type_discount' => 'required_with:discount',
+            'payments' => 'required'
         ]);
 
         $return = $this->serviceCalls->updateFinancial($request);

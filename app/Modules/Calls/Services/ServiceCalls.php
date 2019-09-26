@@ -272,30 +272,11 @@ class ServiceCalls
                 $call->discount = $request->input('discount');
                 $call->total = $total;
 
-                if($request->input('status') == 'P' && empty($call->date_in_account) && $call->payments->count() > 0){
-                    foreach($call->payments  as $callPayment) {
-                        $payment = $callPayment->payment;
-
-                        $callPayment->aliquot = filter_var($payment->aliquot, FILTER_SANITIZE_NUMBER_FLOAT) / 100;
-                        $callPayment->date_in_account = Carbon::now()->addDays($payment->days_in_account)->format('Y-m-d');
-
-                        if(!$callPayment->save())
-                            throw new \Exception('Houve um problema ao tentar atualziar o atendimento. Por favor, tente mais tarde!');
-                    }
-                }
-
                 if(!$call->save())
                     throw new \Exception('Houve um problema ao tentar atualziar o atendimento. Por favor, tente mais tarde!');
 
-                if($call->status == 'P'){
-                    foreach($call->payments  as $callPayment) {
-                        $account = $callPayment->payment->account();
-                        $account->balance = $account->balance + $callPayment->amount;
-
-                        if(!$account->save())
-                            throw new \Exception('Houve um problema ao tentar atualziar o atendimento. Por favor, tente mais tarde!');
-                    }
-                }
+                if(!empty($request->input('payments')))
+                    $this->updatePayment($request, $call);
             });
 
             $call = Calls::find($request->input('call_id'));
@@ -318,49 +299,37 @@ class ServiceCalls
      * @param Request $request
      * @return array
      */
-    public function updatePayment(Request $request)
+    public function updatePayment(Request $request, Calls $call)
     {
-        try {
-            Capsule::transaction(function() use ($request) {
-                CallPayments::where('call_id', '=', $request->input('call_id'))->delete();
+        CallPayments::where('call_id', '=', $request->input('call_id'))->delete();
 
-                foreach($request->input('payments') as $item) {
-                    $callPayment = new CallPayments();
-                    $callPayment->call_id = $request->input('call_id');
-                    $callPayment->payment_id = $item['payment_id'];
-                    $callPayment->amount = filter_var($item['amount'], FILTER_SANITIZE_NUMBER_FLOAT) / 100;
+        foreach($request->input('payments') as $item) {
+            $callPayment = new CallPayments();
+            $callPayment->call_id = $request->input('call_id');
+            $callPayment->payment_id = $item['payment_id'];
+            $callPayment->amount = filter_var($item['amount'], FILTER_SANITIZE_NUMBER_FLOAT) / 100;
 
-                    if (!$callPayment->save())
-                        throw new \Exception('Houve um problema ao tentar atualziar o atendimento. Por favor, tente mais tarde!');
-                }
+            if($call->status == 'P' && empty($call->date_in_account)){
+                $payment = PaymentMethods::find($item['payment_id']);
 
-                $call = Calls::find($request->input('call_id'));
+                $callPayment->aliquot = filter_var($payment->aliquot, FILTER_SANITIZE_NUMBER_FLOAT) / 100;
+                $callPayment->date_in_account = Carbon::now()->addDays($payment->days_in_account)->format('Y-m-d');
+            }
 
-                if($call->status == 'P'){
-                    foreach($call->payments  as $callPayment) {
-                        $account = $callPayment->payment->account();
-                        $account->balance = $account->balance + $callPayment->amount;
+            if (!$callPayment->save())
+                throw new \Exception('Houve um problema ao tentar atualziar o atendimento. Por favor, tente mais tarde!');
 
-                        if(!$account->save())
-                            throw new \Exception('Houve um problema ao tentar atualziar o atendimento. Por favor, tente mais tarde!');
-                    }
-                }
-            });
 
-            $call = Calls::find($request->input('call_id'));
+            if($call->status == 'P') {
+                $account = $callPayment->payment->account();
+                $account->balance = $account->balance + $callPayment->amount;
 
-            return [
-                'callId' => $call->id,
-                'paid' => $call->status == 'P' ? true : false,
-                'message' => 'Atendimento atualizado com sucesso!',
-                'save' => true
-            ];
-        }catch(\Exception $e){
-            return [
-                'message' => $e->getMessage(),
-                'save' => false
-            ];
+                if(!$account->save())
+                    throw new \Exception('Houve um problema ao tentar atualziar o atendimento. Por favor, tente mais tarde!');
+            }
         }
+
+        return true;
     }
 
     /**

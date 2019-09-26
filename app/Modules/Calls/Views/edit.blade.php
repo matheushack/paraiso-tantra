@@ -10,11 +10,6 @@
                 <i class="flaticon-piggy-bank"></i> Financeiro
             </a>
         </li>
-        <li class="nav-item m-tabs__item">
-            <a class="nav-link m-tabs__link" data-toggle="tab" href="#tab-formas-pagamento" role="tab">
-                <i class="flaticon-cart"></i> Formas de pagamento
-            </a>
-        </li>
     </ul>
 
     <div class="tab-content" id="tabs-call">
@@ -23,9 +18,6 @@
         </div>
         <div class="tab-pane" id="tab-financeiro" role="tabpanel">
             @include('Calls::includes.tab-financial')
-        </div>
-        <div class="tab-pane" id="tab-formas-pagamento" role="tabpanel">
-            @include('Calls::includes.tab-payment-methods')
         </div>
     </div>
 
