@@ -311,58 +311,6 @@
             }
         });
 
-        $("#form-edit-payments").validate({
-            invalidHandler: function(event, validator) {
-                mApp.scrollTo("#form-edit-payments");
-
-                swal({
-                    title: "",
-                    text: "Existem alguns erros do seu formulário. Por favor, corrija-os!",
-                    type: "error",
-                    confirmButtonClass: "btn btn-secondary m-btn m-btn--wide"
-                });
-            },
-
-            submitHandler: function (form) {
-                $.ajax({
-                    url: '{{route('calls.update.payment')}}',
-                    type: 'POST',
-                    data: $(form).serialize(),
-                    beforeSend: function(xhr, type) {
-                        if (!type.crossDomain) {
-                            xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'));
-                        }
-                    },
-                    success: function (data) {
-                        if(data.save){
-                            swal({
-                                title: 'Atendimento',
-                                text: data.message,
-                                type: 'success'
-                            }).then(results => {
-                                if(data.paid)
-                                    $('#call_content_'+data.callId).addClass('call-paid');
-                                else
-                                    $('#call_content_'+data.callId).removeClass('call-paid');
-
-                                $('#atendimento').fullCalendar('refetchEvents');
-
-                                $('#edit-call').modal('hide');
-                            });
-                        }else{
-                            swal({
-                                title: 'Atendimento',
-                                text: data.message,
-                                type: 'error'
-                            });
-                        }
-                    }
-                });
-
-                return false;
-            }
-        });
-
         $('input[required]').each(function(key, item){
             $(item).rules('add', {required: true});
         });

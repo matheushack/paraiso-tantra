@@ -301,13 +301,17 @@ class ServiceCalls
      */
     public function updatePayment(Request $request, Calls $call)
     {
+        $quantityPayments = count($request->input('payments'));
         CallPayments::where('call_id', '=', $request->input('call_id'))->delete();
 
         foreach($request->input('payments') as $item) {
+            if($quantityPayments > 1 && empty($item['amount']))
+                throw new \Exception('Necessário preencher o valor pago por forma de pagamento');
+
             $callPayment = new CallPayments();
             $callPayment->call_id = $request->input('call_id');
             $callPayment->payment_id = $item['payment_id'];
-            $callPayment->amount = filter_var($item['amount'], FILTER_SANITIZE_NUMBER_FLOAT) / 100;
+            $callPayment->amount = ($quantityPayments > 1 ? filter_var($item['amount'], FILTER_SANITIZE_NUMBER_FLOAT) / 100 : $call->amount);
 
             if($call->status == 'P' && empty($call->date_in_account)){
                 $payment = PaymentMethods::find($item['payment_id']);
