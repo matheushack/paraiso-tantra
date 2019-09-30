@@ -113,4 +113,16 @@ class AccountsController extends Controller
         $return = $this->serviceAccounts->destroy($id);
         return response()->json($return, 200);
     }
+
+    public function transfer(Request $request)
+    {
+        $request->validate([
+            'account_in' => 'required',
+            'account_out' => 'required',
+            'amount' => 'required'
+        ]);
+
+        $return = $this->serviceAccounts->transfer($request);
+        return response()->json($return, 200);
+    }
 }

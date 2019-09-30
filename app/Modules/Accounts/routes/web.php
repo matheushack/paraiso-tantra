@@ -9,5 +9,6 @@ Route::group(['prefix' => 'contas', 'module' => 'Accounts', 'middleware' => ['we
     Route::get('editar/{id}', 'AccountsController@edit');
     Route::post('atualizar', 'AccountsController@update')->name('accounts.update');
     Route::post('deletar/{id}', 'AccountsController@destroy')->name('accounts.destroy');
+    Route::post('transferencia', 'AccountsController@transfer')->name('accounts.transfer');
 
 });

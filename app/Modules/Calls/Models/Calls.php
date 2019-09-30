@@ -40,4 +40,9 @@ class Calls extends Model
         return $this->hasMany(CallEmployees::class, 'call_id', 'id');
     }
 
+    public function payments()
+    {
+        return $this->hasMany(CallPayments::class, 'call_id', 'id');
+    }
+
 }

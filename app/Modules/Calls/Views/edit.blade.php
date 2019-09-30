@@ -279,6 +279,38 @@
             }
         });
 
+        $("#payment_methods").repeater({
+            initEmpty: !1,
+            show: function() {
+                var total = $("#total").val().replace(/\D/g,'')/100;
+                var paymentTotal = 0 ;
+
+                $('.payment_amount').each(function(key, item){
+                    var paymentAmount = $(item).val().replace(/\D/g,'')/100;
+                    paymentTotal =  paymentAmount + paymentTotal;
+                });
+
+                if(paymentTotal > total) {
+                    $(this).find('.payment_amount').val('');
+                    swal({
+                        title: 'Atendimento',
+                        text: 'Valores dos pagamentos devem ser menor ou igual ao valor total do atendimento!',
+                        type: 'warning'
+                    });
+                    return false;
+                }
+
+                $(this).slideDown();
+                $(this).find('.btn-delete-payment').show();
+                $(this).find(".mask-currency").inputmask("R$ 999.999,99",{numericInput:!0});
+                $('.m-bootstrap-select').selectpicker();
+                $('[data-repeater-item]:last > div').find('button:eq(1)').remove();
+            },
+            hide: function(e) {
+                $(this).slideUp(e)
+            }
+        });
+
         $('input[required]').each(function(key, item){
             $(item).rules('add', {required: true});
         });

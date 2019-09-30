@@ -129,6 +129,10 @@ function updateChart(id, percentageIn, percentageOut){
 
 $(document).ready(function() {
 
+    $('#btn-transfer-accounts').click(function () {
+        $('#transfer-accounts').modal('show');
+    });
+
     $('.btn-detail').click(function(){
         var id = $(this).data('id');
         var url = $(this).data('url');

@@ -11,6 +11,8 @@ namespace App\Modules\Accounts\Services;
 
 use App\Modules\Accounts\Constants\AccountTypes;
 use App\Modules\Accounts\Constants\Types;
+use App\Modules\Accounts\Models\AccountTransfers;
+use App\Modules\Calls\Models\Calls;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 use App\Modules\Accounts\Models\Accounts;
@@ -129,6 +131,63 @@ class ServiceAccounts
             return [
                 'message' => $e->getMessage(),
                 'deleted' => false
+            ];
+        }
+    }
+
+    public function transfer(Request $request)
+    {
+        try {
+            Capsule::transaction(function() use ($request) {
+                $amount = !empty($request->input('amount')) ? $request->input('amount') : 0;
+                $amount = filter_var($amount, FILTER_SANITIZE_NUMBER_FLOAT) / 100;
+
+                if($request->input('account_in') == $request->input('account_out'))
+                    throw new \Exception('Conta de saída e entrada devem ser diferentes!');
+
+                $in = Accounts::find($request->input('account_in'));
+                $out = Accounts::find($request->input('account_out'));
+
+                if($out->balance < $amount)
+                    throw new \Exception('Saldo insuficiente para transferência (Saldo atual '.$out->balance.')');
+
+                $in->balance = $in->balance + $amount;
+
+                if(!$in->save())
+                    throw new \Exception('Não foi possível fazer a transferência. Por favor, tente mais tarde!');
+
+                $accountIn = new AccountTransfers();
+                $accountIn->account_id = $request->input('account_in');
+                $accountIn->is_negative = 0;
+                $accountIn->amount = $amount;
+                $accountIn->description = "Transferência da conta {$out->name}";
+
+                if (!$accountIn->save())
+                    throw new \Exception('Não foi possível fazer a transferência. Por favor, tente mais tarde!');
+
+                $out->balance = $out->balance - $amount;
+
+                if(!$out->save())
+                    throw new \Exception('Não foi possível fazer a transferência. Por favor, tente mais tarde!');
+
+                $accountOut = new AccountTransfers();
+                $accountOut->account_id = $request->input('account_out');
+                $accountOut->is_negative = 1;
+                $accountOut->amount = $amount;
+                $accountOut->description = "Transferência para a conta {$in->name}";
+
+                if (!$accountOut->save())
+                    throw new \Exception('Não foi possível fazer a transferência. Por favor, tente mais tarde!');
+            });
+
+            return [
+                'message' => 'Transferência realizada com sucesso!',
+                'save' => true
+            ];
+        }catch(\Exception $e){
+            return [
+                'message' => $e->getMessage(),
+                'save' => false
             ];
         }
     }

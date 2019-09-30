@@ -3,10 +3,13 @@
 @section('content')
     <div class="m-subheader ">
         <div class="d-flex align-items-center">
-            <div class="mr-auto">
+            <div class="w-100">
                 <h3 class="m-subheader__title ">
                     Dashboard
                 </h3>
+                <a href="javascript:void(0);" class="btn btn-warning m-btn m-btn--custom m-btn--icon m-btn--air float-right" id="btn-transfer-accounts">
+                    <i class="fa fa-exchange"></i> Transferencia entre contas
+                </a>
             </div>
         </div>
     </div>
@@ -91,9 +94,10 @@
             </div>
         @endif
     </div>
+
+    @include('Dashboard::transfer')
 @endsection
 
 @push('scripts')
-<script src="{{url('assets/vendors/custom/fullcalendar/fullcalendar.bundle.js')}}" type="text/javascript"></script>
-<script src="{{url('assets/app/js/dashboard.js')}}" type="text/javascript"></script>
+    <script src="{{url('assets/app/js/dashboard.js')}}" type="text/javascript"></script>
 @endpush

@@ -10,6 +10,7 @@ namespace App\Modules\Dashboard\Services;
 
 
 use App\Modules\Accounts\Models\Accounts;
+use App\Modules\Accounts\Models\AccountTransfers;
 use App\Modules\Bills\Models\Bills;
 use App\Modules\Calls\Models\Calls;
 use Carbon\Carbon;
@@ -21,36 +22,9 @@ class ServiceDashboard
     public function dashboard()
     {
         $dashboard = new Collection();
-        $dashboard = $this->makeMonthsYears($dashboard);
         $dashboard = $this->makeAccounts($dashboard);
 
         return $dashboard->all();
-    }
-
-    public function makeMonthsYears(Collection $dashboard)
-    {
-        $years = array_merge(range(Carbon::now()->year, Carbon::now()->subYears(10)->year), range(Carbon::now()->year, Carbon::now()->addYears(10)->year));
-        sort($years);
-
-        $dashboard->put('yearSelected', Carbon::now()->year);
-        $dashboard->put('monthSelected', Carbon::now()->month);
-        $dashboard->put('years', array_unique($years));
-        $dashboard->put('months', [
-            1 => 'Janeiro',
-            2 => 'Fevereiro',
-            3 => 'Março',
-            4 => 'Abril',
-            5 => 'Maio',
-            6 => 'Junho',
-            7 => 'Julho',
-            8 => 'Agosto',
-            9 => 'Setembro',
-            10 => 'Outubro',
-            11 => 'Novembro',
-            12 => 'Dezembro'
-        ]);
-
-        return $dashboard;
     }
 
     public function makeAccounts(Collection $dashboard)
@@ -64,14 +38,15 @@ class ServiceDashboard
             $collection = new Collection();
 
             $calls = Calls::select(
-                    DB::raw('(calls.amount - ROUND((calls.amount * calls.aliquot)/100, 2)) AS amount')
+                    DB::raw('(call_payments.amount - ROUND((call_payments.amount * call_payments.aliquot)/100, 2)) AS amount')
                 )
-                ->join('payment_methods', 'calls.payment_id', '=', 'payment_methods.id')
-                ->where('status', '=', 'P')
+                ->leftJoin('call_payments', 'calls.id', '=', 'call_payments.call_id')
+                ->leftJoin('payment_methods', 'call_payments.payment_id', '=', 'payment_methods.id')
+                ->where('calls.status', '=', 'P')
                 ->where('payment_methods.account_id', '=', $account->id)
                 ->where(function($query){
-                    $query->whereNull('date_in_account')
-                        ->orWhere('date_in_account', '<=', Carbon::now()->format('Y-m-d'));
+                    $query->whereNull('call_payments.date_in_account')
+                        ->orWhere('call_payments.date_in_account', '<=', Carbon::now()->format('Y-m-d'));
                 });
 
             $bills = Bills::select(
@@ -92,12 +67,27 @@ class ServiceDashboard
                 ->get()
                 ->sum('amount');
 
+            $transfer_in = AccountTransfers::select('amount')
+                ->where('account_id', '=', $account->id)
+                ->where('is_negative', '=', 0)
+                ->get()
+                ->sum('amount');
+
+            $transfer_out = AccountTransfers::select('amount')
+                ->where('account_id', '=', $account->id)
+                ->where('is_negative', '=', 1)
+                ->get()
+                ->sum('amount');
+
+            $accounts_in = $accounts_in + $transfer_in;
+            $accounts_out = $accounts_out + $transfer_out;
+
             $total = $accounts_in - $accounts_out;
 
-            if($total == 0){
-                $percentage_account_in = 50;
-                $percentage_account_out = 50;
-            } else {
+            $percentage_account_in = 50;
+            $percentage_account_out = 50;
+
+            if($total > 0) {
                 $percentage_account_in = ($accounts_in > 0 ? ($accounts_in * 100) / abs($total) : 0);
                 $percentage_account_out = ($accounts_out > 0 ? ($accounts_out * 100) / abs($total) : 0);
             }

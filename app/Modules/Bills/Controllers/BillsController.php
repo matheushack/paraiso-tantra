@@ -55,10 +55,9 @@ class BillsController extends Controller
         $request->validate([
             'provider_id' => 'required',
             'unity_id' => 'required',
-            'payment_id' => 'required',
+            'payments' => 'required',
             'type' => 'required',
             'expiration_date' => 'required',
-            'amount' => 'required',
             'status' => 'required',
             'recurrent' => 'required',
             'months' => 'required_if:recurrent,S'
