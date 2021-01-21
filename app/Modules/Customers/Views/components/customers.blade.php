@@ -5,7 +5,9 @@
             'id' => 'customer_id',
             'required' => 'required',
             'multiple' => 'multiple',
-            'style' => 'width: 93%'
+            'style' => 'width: 93%',
+            'data-customer-id' => (isset($id) ? $id : null),
+            'data-customer-name' => (isset($id) ? \App\Modules\Customers\Models\Customers::find($id)->name : null)
     ]) !!}
 
     @if(empty($notSearch))

@@ -158,7 +158,7 @@ class ServiceCustomers
 					'success' => true,
 					'html' => (string) View::make('Customers::components.search', [
 						'status' => 'success',
-						'customers' => $customers
+						'customers' => $query->get()
 					])
 				];
 			}

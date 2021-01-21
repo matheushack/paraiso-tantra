@@ -13,7 +13,7 @@
         @foreach($customers as $customer)
             <tr>
                 <td>
-                    <input type="radio" name="customer_id" class="customer-select" value="{{$customer->id}}">
+                    <input type="radio" name="customer_id" data-name="{{$customer->name}}" class="customer-select" value="{{$customer->id}}">
                 </td>
                 <td>
                     {{$customer->name}}

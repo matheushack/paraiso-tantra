@@ -34,7 +34,41 @@
             tags: true,
             maximumSelectionLength: 1,
             language: "pt-BR",
-            placeholder: "Selecionar os terapeutas para o atendimento"
+            placeholder: "Selecionar um cliente",
+            data: [
+                { // Each of these gets processed by fnRenderResults.
+                    id: $('#customer_id').data('customer-id'),
+                    text: $('#customer_id').data('customer-name'),
+                    selected: true // Causes the selection to actually get selected.
+                }
+            ],
+            ajax: {
+                url: '{{route('customers.search')}}',
+                type: 'POST',
+                dataType: 'json',
+                beforeSend: function(xhr, type) {
+                    if (!type.crossDomain) {
+                        xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'));
+                    }
+                },
+                data: function (params) {
+                    return {
+                        autocomplete: params.term,
+                        json: true
+                    };
+                },
+                processResults: function (response) {
+                    if(response.success) {
+                        return {
+                            results: response.data
+                        };
+                    }
+
+                    return {
+                        results: []
+                    };
+                }
+            }
         }).on('select2:select', function (e) {
             e.preventDefault();
             var data = e.params.data;

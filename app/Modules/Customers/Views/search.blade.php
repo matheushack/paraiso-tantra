@@ -81,7 +81,7 @@
             $("body").on("click", ".customer-select", function(e){
                 var value = $(this).val();
                 var name = $(this).data('name');
-                $('#customer_id').val(value).trigger('change');
+                $('#customer_id').select2('data', {id: value, text: name}, true);
                 $('#search-customers').find('.close').trigger('click');
             });
 
