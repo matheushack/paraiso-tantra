@@ -1,6 +1,6 @@
 <label>Cliente</label>
 <div class="input-group">
-    {!! Form::select('customer_id', \App\Modules\Customers\Models\Customers::optionSelect(), (isset($id) ? $id : null), [
+    {!! Form::select('customer_id', [], (isset($id) ? $id : null), [
             'class' => 'form-control m-input m-select2',
             'id' => 'customer_id',
             'required' => 'required',
@@ -25,7 +25,34 @@
                 tags: true,
                 maximumSelectionLength: 1,
                 language: "pt-BR",
-                placeholder: "Selecionar um cliente"
+                placeholder: "Selecionar um cliente",
+                ajax: {
+                    url: '{{route('customers.search')}}',
+                    type: 'POST',
+                    dataType: 'json',
+                    beforeSend: function(xhr, type) {
+                        if (!type.crossDomain) {
+                            xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'));
+                        }
+                    },
+                    data: function (params) {
+                        return {
+                            autocomplete: params.term,
+                            json: true
+                        };
+                    },
+                    processResults: function (response) {
+                        if(response.success) {
+                            return {
+                                results: response.data
+                            };
+                        }
+
+                        return {
+                            results: []
+                        };
+                    }
+                }
             }).on('select2:select', function (e) {
                 e.preventDefault();
                 var data = e.params.data;

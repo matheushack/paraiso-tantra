@@ -105,7 +105,19 @@ class ServiceCalls
     public function calendar(Request $request)
     {
         $calendar = [];
-        $calls = Calls::where('unity_id', '=', $request->input('unity_id'))->get();
+		$query = Calls::where('unity_id', '=', $request->input('unity_id'));
+
+		if (!empty($request->input('start'))) {
+			$start = Carbon::parse($request->input('start'))->startOfDay();
+			$query->where('start', '>=', $start);
+		}
+
+		if (!empty($request->input('end'))) {
+			$start = Carbon::parse($request->input('end'))->endOfDay();
+			$query->where('end', '<=', $start);
+		}
+
+		$calls = $query->get();
 
         if($calls->count() == 0)
             return [];

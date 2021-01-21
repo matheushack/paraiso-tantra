@@ -131,23 +131,51 @@ class ServiceCustomers
             if($request->input('gender'))
                 $query->where('gender', '=', $request->input('gender'));
 
+            if($request->input('autocomplete')){
+				$query->where('name', 'like', '%'.$request->input('autocomplete').'%')
+					->orWhere('email', 'like', '%'.$request->input('autocomplete').'%')
+					->orWhere('phone', 'like', '%'.$request->input('autocomplete').'%')
+					->orWhere('cell_phone', 'like', '%'.$request->input('autocomplete').'%');
+			}
+
             $customers = $query->get();
 
             if($customers->count() == 0)
                 throw new \Exception('404');
 
-            return [
-                'success' => true,
-                'html' => (string) View::make('Customers::components.search', [
-                    'status' => 'success',
-                    'customers' => $customers
-                ])
-            ];
+			$response = [
+				'success' => true,
+				'data' => $customers->transform(function($customer){
+					return [
+						'id' => $customer->id,
+						'text' => $customer->name
+					];
+				})
+			];
+
+            if(empty($request->input('json'))){
+				$response = [
+					'success' => true,
+					'html' => (string) View::make('Customers::components.search', [
+						'status' => 'success',
+						'customers' => $customers
+					])
+				];
+			}
+
         }catch (\Exception $e){
-            return [
-                'success' => false,
-                'html' => (string) View::make('Customers::components.search', ['status' => $e->getMessage()])
-            ];
+			$response = [
+				'success' => false
+			];
+
+			if(empty($request->input('json'))) {
+				$response = [
+					'success' => false,
+					'html' => (string)View::make('Customers::components.search', ['status' => $e->getMessage()])
+				];
+			}
         }
+
+        return $response;
     }
 }
